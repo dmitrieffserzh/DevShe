@@ -9,7 +9,15 @@ use App\Orchid\Screens\Examples\ExampleFieldsScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+
+
+
+
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\Girl\GirlListScreen;
+
+
+
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -32,6 +40,35 @@ use Tabuna\Breadcrumbs\Trail;
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
+
+// Girls
+Route::screen('/girls', GirlListScreen::class)
+     ->name('platform.girls');
+
+// Mens
+Route::screen('/mens', PlatformScreen::class)
+     ->name('platform.men');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
