@@ -413,7 +413,7 @@
 
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-            <img src="/images/logo.png" alt="" width="150px" style="margin: 0 0 0 30px">
+            <img src="/images/logo.png" alt="" width="150px" style="margin: 0 0 0 30px;">
         </div>
     </div>
 </div>
