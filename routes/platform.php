@@ -15,6 +15,7 @@ use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Girl\GirlListScreen;
+use App\Orchid\Screens\Girl\GirlEditScreen;
 
 
 
@@ -37,13 +38,23 @@ use Tabuna\Breadcrumbs\Trail;
 |
 */
 
-// Main
+// MAIN
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');
 
-// Girls
-Route::screen('/girls', GirlListScreen::class)
+// MAIN > GIRLS
+Route::screen('girls', GirlListScreen::class)
      ->name('platform.girls');
+
+// MAIN > GIRLS > CREATE
+Route::screen('girls/create', GirlEditScreen::class)
+     ->name('platform.girls.create')
+     ->breadcrumbs(function (Trail $trail) {
+         return $trail
+             //->parent('platform.girls')
+             ->push(__('Create'), route('platform.girls.create'));
+     });
+
 
 // Mens
 Route::screen('/mens', PlatformScreen::class)
