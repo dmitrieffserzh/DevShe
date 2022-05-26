@@ -214,10 +214,10 @@ class GirlEditScreen extends Screen {
 
 
                 Layout::rows( [
-                    CheckBox::make( 'express' )
-                            ->sendTrueOrFalse()
-                            ->title( 'Экспресс' )
-                            ->placeholder( 'Есть' ),
+//                    CheckBox::make( 'express' )
+//                            ->sendTrueOrFalse()
+//                            ->title( 'Экспресс' )
+//                            ->placeholder( 'Есть' ),
                     Group::make( [
                         Select::make( 'section' )
                               ->title( 'Раздел' )
@@ -255,14 +255,14 @@ class GirlEditScreen extends Screen {
                              ->title( 'Номер Telegram' )
                              ->placeholder( '' ),
                     ] ),
-                    Group::make( [
+
                         Input::make( 'city' )
                              ->title( 'Город' )
                              ->placeholder( 'Введите город' ),
                         Select::make( 'metro' )
                               ->title( 'Станция метро' )
                               ->options( [
-                                      0   => 'Выберите станцию метро',
+                                      //0   => 'Не выбрано',
                                       1   => 'Авиамоторная',
                                       2   => 'Автозаводская',
                                       3   => 'Академическая',
@@ -565,9 +565,9 @@ class GirlEditScreen extends Screen {
                                       300 => 'Ясенево'
                                   ]
                               )
-                              ->multiple()
-                              ->value( 0 ),
-                    ] )
+                              //->value(0)
+                              ->multiple(),
+
                 ] )->title( 'Информация' ),
             ] ),
 
