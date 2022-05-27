@@ -21,10 +21,10 @@ class MainController extends Controller {
        $test = Service::all() ->load('ServicesField.field')
         dd($test3);
         */
-        $test =  DB::table('services')
+        $test = DB::table('services')
             ->join('services_field', 'services.id', '=', 'services_field.service_id')
             ->join('fields', 'services_field.id', '=', 'fields.field_id')
-            ->select('services.*', 'services_field.name', 'fields.description')
+            ->select('services.name as block_title', 'services_field.name', 'fields.description')
             ->get();
         dd($test);
         return view( 'in_dev' );
