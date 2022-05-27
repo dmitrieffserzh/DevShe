@@ -92,9 +92,80 @@ class GirlEditScreen extends Screen {
         ];
     }
 
-    /**
-     * @return \Orchid\Screen\Layout[]
-     */
+    public function ddddd() {
+        return [
+
+            Group::make( [
+                CheckBox::make( 'readonly_checkbox' )
+                        ->title( 'Readonly Checkbox' )
+                        ->placeholder( 'Remember me' ),
+                TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+            Group::make( [
+                CheckBox::make( 'readonly_checkbox' )
+                        ->title( 'Readonly Checkbox' )
+                        ->placeholder( 'Remember me' ),
+                TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+            Group::make( [
+                CheckBox::make( 'readonly_checkbox' )
+                        ->title( 'Readonly Checkbox' )
+                        ->placeholder( 'Remember me' ),
+                TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+            Group::make( [
+                CheckBox::make( 'readonly_checkbox' )
+                        ->title( 'Readonly Checkbox' )
+                        ->placeholder( 'Remember me' ),
+                TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+
+
+            Group::make( [
+                CheckBox::make( 'readonly_checkbox' )
+                        ->title( 'Readonly Checkbox' )
+                        ->placeholder( 'Remember me' ),
+                TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+            Group::make( [
+                CheckBox::make( 'readonly_checkbox' )
+                        ->title( 'Readonly Checkbox' )
+                        ->placeholder( 'Remember me' ),
+                TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+            Group::make( [
+                CheckBox::make( 'readonly_checkbox' )
+                        ->title( 'Readonly Checkbox' )
+                        ->placeholder( 'Remember me' ),
+                TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+            Group::make( [
+                CheckBox::make( 'readonly_checkbox' )
+                        ->title( 'Readonly Checkbox' )
+                        ->placeholder( 'Remember me' ),
+                TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+
+        ];
+    }
+
+
     public function layout(): iterable {
         return [
 
@@ -600,8 +671,6 @@ class GirlEditScreen extends Screen {
                              ->title( 'У меня 2 часа:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
-                    ] ),
-                    Group::make( [
                         Input::make( 'currency' )
                              ->title( 'У тебя 1 час:' )
                              ->mask( '₽ 9999999' )
@@ -622,8 +691,6 @@ class GirlEditScreen extends Screen {
                              ->title( 'У меня 2 часа:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
-                    ] ),
-                    Group::make( [
                         Input::make( 'currency' )
                              ->title( 'У тебя 1 час:' )
                              ->mask( '₽ 9999999' )
@@ -637,7 +704,9 @@ class GirlEditScreen extends Screen {
             ] ),
 
             // SERVICES
-            GirlEditLayout::class,
+            //GirlEditLayout::class,
+
+            Layout::view('platform.row',[ 'title'=> 'Предпочтения', 'forms'=>$this->ddddd()] ),
 
 
 //            Layout::view( 'platform::dummy.block' ),

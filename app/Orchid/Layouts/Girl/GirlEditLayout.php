@@ -8,6 +8,7 @@ use Orchid\Screen\Field;
 use Orchid\Screen\Fields\CheckBox;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Layouts\Rows;
 use Orchid\Support\Facades\Layout;
 
@@ -23,9 +24,15 @@ class GirlEditLayout extends Rows
 
 
         return [
+            Group::make([
             CheckBox::make('readonly_checkbox')
                     ->title('Readonly Checkbox')
                     ->placeholder('Remember me'),
+            TextArea::make( 'descriptiond' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ]),
+
             CheckBox::make('readonly_checkbox')
                     ->title('Readonly Checkbox')
                     ->placeholder('Remember me'),
@@ -43,9 +50,9 @@ class GirlEditLayout extends Rows
     {
 
         return  [
-            Group::make(
+
                 $this->ddddd()
-                )
+
         ];
     }
 }
