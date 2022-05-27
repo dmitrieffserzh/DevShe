@@ -14,19 +14,15 @@ class MainController extends Controller {
 
     public function index() {
 
-        /*
-        $test = Profile::find(1);
-        $test2 = $test->fields->find(1);
-        $test3 = $test2->servicesField->services;
-       $test = Service::all() ->load('ServicesField.field')
-        dd($test3);
-        */
         $test = DB::table('services')
             ->join('services_field', 'services.id', '=', 'services_field.service_id')
-            ->join('fields', 'services_field.id', '=', 'fields.field_id')
-            ->select('services.name as block_title', 'services_field.name', 'fields.description')
+            ->leftJoin('fields', 'services_field.id', '=', 'fields.field_id')
+            ->select('services.name as block_title', 'services_field.name', 'fields.id', 'fields.description')
+            ->orderBy('services.id')
             ->get();
+
         dd($test);
+
         return view( 'in_dev' );
     }
 }
