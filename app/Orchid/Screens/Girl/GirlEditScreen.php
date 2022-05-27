@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace App\Orchid\Screens\Girl;
 
+use App\Models\Models\Service;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
@@ -93,76 +94,97 @@ class GirlEditScreen extends Screen {
     }
 
     public function ddddd() {
-        return [
 
-            Group::make( [
-                CheckBox::make( 'readonly_checkbox' )
-                        ->title( 'Readonly Checkbox' )
-                        ->placeholder( 'Remember me' ),
-                TextArea::make( 'descriptiond' )
-                        ->placeholder( 'Короткое описание' )
-                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
-            ] ),
-            Group::make( [
-                CheckBox::make( 'readonly_checkbox' )
-                        ->title( 'Readonly Checkbox' )
-                        ->placeholder( 'Remember me' ),
-                TextArea::make( 'descriptiond' )
-                        ->placeholder( 'Короткое описание' )
-                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
-            ] ),
-            Group::make( [
-                CheckBox::make( 'readonly_checkbox' )
-                        ->title( 'Readonly Checkbox' )
-                        ->placeholder( 'Remember me' ),
-                TextArea::make( 'descriptiond' )
-                        ->placeholder( 'Короткое описание' )
-                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
-            ] ),
-            Group::make( [
-                CheckBox::make( 'readonly_checkbox' )
-                        ->title( 'Readonly Checkbox' )
-                        ->placeholder( 'Remember me' ),
-                TextArea::make( 'descriptiond' )
-                        ->placeholder( 'Короткое описание' )
-                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
-            ] ),
+        $test = Service::all()->load('ServicesField.field');
 
+        $arr = [];
+        foreach ($test as $item) {
+           // dd($item->ServicesField[0]->name);
+            $arr = [
+            Group::make( [
+                CheckBox::make('service['.$item->id.']')
+                        ->title( )
+                        ->placeholder( $item->service ),
+                TextArea::make( 'description' )
+                        ->placeholder( 'Короткое описание' )
+                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+            ] ),
+            ];
 
-            Group::make( [
-                CheckBox::make( 'readonly_checkbox' )
-                        ->title( 'Readonly Checkbox' )
-                        ->placeholder( 'Remember me' ),
-                TextArea::make( 'descriptiond' )
-                        ->placeholder( 'Короткое описание' )
-                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
-            ] ),
-            Group::make( [
-                CheckBox::make( 'readonly_checkbox' )
-                        ->title( 'Readonly Checkbox' )
-                        ->placeholder( 'Remember me' ),
-                TextArea::make( 'descriptiond' )
-                        ->placeholder( 'Короткое описание' )
-                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
-            ] ),
-            Group::make( [
-                CheckBox::make( 'readonly_checkbox' )
-                        ->title( 'Readonly Checkbox' )
-                        ->placeholder( 'Remember me' ),
-                TextArea::make( 'descriptiond' )
-                        ->placeholder( 'Короткое описание' )
-                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
-            ] ),
-            Group::make( [
-                CheckBox::make( 'readonly_checkbox' )
-                        ->title( 'Readonly Checkbox' )
-                        ->placeholder( 'Remember me' ),
-                TextArea::make( 'descriptiond' )
-                        ->placeholder( 'Короткое описание' )
-                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
-            ] ),
+        }
+        //dd($item->name);
+        return $arr;
 
-        ];
+//        return [
+//
+//            Group::make( [
+//                CheckBox::make( 'readonly_checkbox' )
+//                        ->title( 'Readonly Checkbox' )
+//                        ->placeholder( 'Remember me' ),
+//                TextArea::make( 'descriptiond' )
+//                        ->placeholder( 'Короткое описание' )
+//                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+//            ] ),
+//            Group::make( [
+//                CheckBox::make( 'readonly_checkbox' )
+//                        ->title( 'Readonly Checkbox' )
+//                        ->placeholder( 'Remember me' ),
+//                TextArea::make( 'descriptiond' )
+//                        ->placeholder( 'Короткое описание' )
+//                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+//            ] ),
+//            Group::make( [
+//                CheckBox::make( 'readonly_checkbox' )
+//                        ->title( 'Readonly Checkbox' )
+//                        ->placeholder( 'Remember me' ),
+//                TextArea::make( 'descriptiond' )
+//                        ->placeholder( 'Короткое описание' )
+//                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+//            ] ),
+//            Group::make( [
+//                CheckBox::make( 'readonly_checkbox' )
+//                        ->title( 'Readonly Checkbox' )
+//                        ->placeholder( 'Remember me' ),
+//                TextArea::make( 'descriptiond' )
+//                        ->placeholder( 'Короткое описание' )
+//                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+//            ] ),
+//
+//
+//            Group::make( [
+//                CheckBox::make( 'readonly_checkbox' )
+//                        ->title( 'Readonly Checkbox' )
+//                        ->placeholder( 'Remember me' ),
+//                TextArea::make( 'descriptiond' )
+//                        ->placeholder( 'Короткое описание' )
+//                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+//            ] ),
+//            Group::make( [
+//                CheckBox::make( 'readonly_checkbox' )
+//                        ->title( 'Readonly Checkbox' )
+//                        ->placeholder( 'Remember me' ),
+//                TextArea::make( 'descriptiond' )
+//                        ->placeholder( 'Короткое описание' )
+//                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+//            ] ),
+//            Group::make( [
+//                CheckBox::make( 'readonly_checkbox' )
+//                        ->title( 'Readonly Checkbox' )
+//                        ->placeholder( 'Remember me' ),
+//                TextArea::make( 'descriptiond' )
+//                        ->placeholder( 'Короткое описание' )
+//                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+//            ] ),
+//            Group::make( [
+//                CheckBox::make( 'readonly_checkbox' )
+//                        ->title( 'Readonly Checkbox' )
+//                        ->placeholder( 'Remember me' ),
+//                TextArea::make( 'descriptiond' )
+//                        ->placeholder( 'Короткое описание' )
+//                        ->rows( 2 )->style( 'max-width: 100%;width: 100%;' ),
+//            ] ),
+//
+//        ];
     }
 
 
@@ -240,7 +262,7 @@ class GirlEditScreen extends Screen {
                     Group::make( [
                         Select::make( 'breast_size' )
                               ->title( 'Размер груди' )
-                              ->options( [
+                                ->options( [
                                   1,
                                   1.5,
                                   2,
