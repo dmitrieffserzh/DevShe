@@ -21,8 +21,10 @@ class MainController extends Controller {
             ->orderBy('services.id')
             ->get();
 
-        dd($test);
+        //dd($test);
 
-        return view( 'in_dev' );
+        return view( 'main' , [
+            'test' => $test
+        ]);
     }
 }
