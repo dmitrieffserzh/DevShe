@@ -1,14 +1,17 @@
 <fieldset class="mb-3" data-async>
 
     <style>
+        #services.p-4 {
+            padding: 1.5rem .8rem 0!important;
+        }
         #services .row.form-group {
-            display: flex;
-            flex-direction: column;
-            margin: 0 0 1rem;
+            display: flex !important;
+            flex-direction: column !important;
+            margin: 0 0 2rem !important;
         }
         #services textarea {
-            margin: 0.5rem 0 0;
-            font-size: .9rem;
+            margin: 0.5rem 0 0 !important;
+            font-size: .8rem !important;
         }
     </style>
 

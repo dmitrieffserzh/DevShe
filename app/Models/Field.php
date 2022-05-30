@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
-use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Field extends Model
-{
+class Field extends Model {
     use HasFactory;
 
 
@@ -24,14 +22,11 @@ class Field extends Model
     ];
 
 
-
-
-
     public function profile() {
-        return $this->hasOne(Profile::class);
+        return $this->hasOne( Profile::class );
     }
 
     public function servicesField() {
-        return $this->belongsTo(ServicesField::class, 'field_id');
+        return $this->belongsTo( ServicesField::class, 'field_id' );
     }
 }

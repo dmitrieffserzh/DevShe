@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Models\Models;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
-{
+class Service extends Model {
     use HasFactory;
 
     protected $table = 'services';
@@ -21,6 +20,6 @@ class Service extends Model
 
 
     public function servicesField() {
-        return $this->hasMany(ServicesField::class, 'service_id');
+        return $this->hasMany( ServicesField::class, 'service_id' );
     }
 }
