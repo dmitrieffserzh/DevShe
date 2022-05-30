@@ -290,6 +290,9 @@ class GirlEditScreen extends Screen {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function save( User $user, Request $request ) {
+
+        dd($request);
+
         $request->validate( [
             'user.email' => [
                 'required',
