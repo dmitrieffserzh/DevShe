@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
 
     public function up() {
-        Schema::create( 'users_profiles', function ( Blueprint $table ) {
+        Schema::create( 'profiles', function ( Blueprint $table ) {
             $table->id();
             $table->foreignId( 'user_id' );
-            $table->integer( 'services_id' );
             $table->string( 'name', 160 );
             $table->string( 'phone', 160 );
             $table->string( 'whatsapp', 255 )->nullable();
@@ -25,7 +24,6 @@ return new class extends Migration {
             $table->integer( 'express' );
             $table->integer( 'meeting_place' );
             $table->string( 'city', 160 );
-            $table->integer( 'metro' )->nullable();
             $table->integer( 'haircut' )->nullable();
             $table->text( 'description' )->nullable();
             $table->text( 'images' )->nullable();
@@ -34,8 +32,7 @@ return new class extends Migration {
         } );
     }
 
-
     public function down() {
-        Schema::dropIfExists( 'users_profiles' );
+        Schema::dropIfExists( 'profiles' );
     }
 };

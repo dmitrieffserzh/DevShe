@@ -18,7 +18,6 @@ class Service extends Model {
 
     ];
 
-
     public function servicesField() {
         return $this->hasMany( ServicesField::class, 'service_id' );
     }

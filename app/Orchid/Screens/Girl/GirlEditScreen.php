@@ -4,6 +4,9 @@ declare( strict_types=1 );
 
 namespace App\Orchid\Screens\Girl;
 
+use App\Models\Price;
+use App\Models\Profile;
+use App\Models\Station;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +20,7 @@ use Orchid\Screen\Fields\CheckBox;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\RadioButtons;
+use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Fields\Upload;
@@ -111,10 +115,11 @@ class GirlEditScreen extends Screen {
 
             array_push( $fields,
                 Group::make( [
-                    CheckBox::make( 'service[' . $item->id . ']' )
+                    CheckBox::make( 'profile[service][' . $item->id . ']' )
                         //->title( $item->name )
-                            ->placeholder( $item->name ),
-                    TextArea::make( 'description' )
+                            ->placeholder( $item->name )
+                            ->checked( $item->id ? true : false ),
+                    TextArea::make( 'profile[service][' . $item->id . '][description]' )
                             ->placeholder( 'Короткое описание' )
                             ->value( $item->description )
                             ->rows( 2 )->style( 'max-width: 100%;width: 100%;' )
@@ -134,29 +139,29 @@ class GirlEditScreen extends Screen {
 
             Layout::columns( [
                 Layout::rows( [
-                    Input::make( 'name' )
+                    Input::make( 'profile[name]' )
                          ->title( 'Имя' )
                          ->placeholder( 'Введите имя' ),
                     Group::make( [
-                        Select::make( 'age' )
+                        Select::make( 'profile[age]' )
                               ->title( 'Возраст' )
                               ->options( Helpers::getGirlAge() )
                               ->value( 0 ),
-                        Input::make( 'height' )
+                        Input::make( 'profile[height]' )
                              ->mask( '999' )
                              ->title( 'Рост' )
                              ->placeholder( '' ),
-                        Input::make( 'weight' )
+                        Input::make( 'profile[weight]' )
                              ->mask( '999' )
                              ->title( 'Вес' )
                              ->placeholder( '' ),
                     ] ),
                     Group::make( [
-                        Select::make( 'breast_size' )
+                        Select::make( 'profile[breast_size]' )
                               ->title( 'Размер груди' )
                               ->options( Helpers::getGirlBreast() )
                               ->value( 0 ),
-                        RadioButtons::make( 'breast_type' )
+                        RadioButtons::make( 'profile[breast_type]' )
                                     ->title( 'Тип' )
                                     ->options( [
                                         0 => 'Натуральная',
@@ -164,11 +169,11 @@ class GirlEditScreen extends Screen {
                                     ] )->value( 0 ),
                     ] ),
                     Group::make( [
-                        Select::make( 'appearance' )
+                        Select::make( 'profile[appearance]' )
                               ->title( 'Внешность' )
                               ->options( Helpers::getGirlAppearance() )
                               ->value( 0 ),
-                        Select::make( 'haircut' )
+                        Select::make( 'profile[haircut]' )
                               ->title( 'Интимная стрижка' )
                               ->options( Helpers::getGirlHaircut() )
                               ->value( 0 ),
@@ -177,55 +182,55 @@ class GirlEditScreen extends Screen {
 
 
                 Layout::rows( [
-//                    CheckBox::make( 'express' )
-//                            ->sendTrueOrFalse()
-//                            ->title( 'Экспресс' )
-//                            ->placeholder( 'Есть' ),
+                    CheckBox::make( 'profile[express]' )
+                            ->sendTrueOrFalse()
+                            ->title( 'Экспресс' )
+                            ->placeholder( 'Есть' ),
                     Group::make( [
-                        Select::make( 'section' )
+                        Select::make( 'profile[section]' )
                               ->title( 'Раздел' )
                               ->options( Helpers::getGirlSection() )
                               ->value( 0 ),
-                        Select::make( 'meeting_place' )
+                        Select::make( 'profile[meeting_place]' )
                               ->title( 'Место вастречи' )
                               ->options( Helpers::getGirlPlace() )
                               ->value( 0 ),
                     ] ),
                     Group::make( [
-                        Input::make( 'phone' )
+                        Input::make( 'profile[phone]' )
                              ->mask( '+7 (999) 999-99-99' )
                              ->title( 'Номер телефона' )
                              ->placeholder( '' ),
-                        Input::make( 'whatsapp' )
+                        Input::make( 'profile[whatsapp]' )
                              ->title( 'Номер WhatsApp' )
                              ->placeholder( '' ),
-                        Input::make( 'telegram' )
+                        Input::make( 'profile[telegram]' )
                              ->title( 'Номер Telegram' )
                              ->placeholder( '' ),
                     ] ),
 
-                    Input::make( 'city' )
+                    Input::make( 'profile[city]' )
                          ->title( 'Город' )
                          ->placeholder( 'Введите город' ),
-                    Select::make( 'metro' )
-                          ->title( 'Станция метро' )
-                          ->options( Helpers::getListStations() )
-                        //->value(0)
-                          ->multiple(),
+
+                    Relation::make( 'profile.stations' )
+                            ->fromModel( Station::class, 'name' )
+                            ->title( 'Станция метро' )
+                            ->multiple(),
 
                 ] )->title( 'Информация' ),
             ] ),
 
             Layout::columns( [
                 Layout::rows( [
-                    Upload::make( 'files' )
-                          ->title( 'Upload files' )
+                    Upload::make( 'profile.photos' )
+                          ->title( 'Загрузить' )
                 ] )->title( 'Изображения' ),
             ] ),
 
             Layout::columns( [
                 Layout::rows( [
-                    TextArea::make( 'description' )
+                    TextArea::make( 'profile.description' )
                             ->placeholder( 'Короткое описание' )
                             ->rows( 6 )->style( 'max-width: 100%;width: 100%;' ),
                 ] )->title( 'Описание' ),
@@ -236,19 +241,19 @@ class GirlEditScreen extends Screen {
             Layout::columns( [
                 Layout::rows( [
                     Group::make( [
-                        Input::make( 'currency' )
+                        Input::make( 'profile.prices.day_one_hour_in' )
                              ->title( 'У меня 1 час:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
-                        Input::make( 'currency' )
+                        Input::make( 'profile.prices.day_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
-                        Input::make( 'currency' )
+                        Input::make( 'profile.prices.day_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
-                        Input::make( 'currency' )
+                        Input::make( 'profile.prices.day_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
@@ -256,19 +261,19 @@ class GirlEditScreen extends Screen {
                 ] )->title( 'Тариф "День"' ),
                 Layout::rows( [
                     Group::make( [
-                        Input::make( 'currency' )
+                        Input::make( 'profile.prices.night_one_hour_in' )
                              ->title( 'У меня 1 час:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
-                        Input::make( 'currency' )
+                        Input::make( 'profile.prices.night_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
-                        Input::make( 'currency' )
+                        Input::make( 'profile.prices.night_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
-                        Input::make( 'currency' )
+                        Input::make( 'profile.prices.night_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
                              ->mask( '₽ 9999999' )
                              ->placeholder( '₽' ),
@@ -290,37 +295,77 @@ class GirlEditScreen extends Screen {
      * @return \Illuminate\Http\RedirectResponse
      */
     public function save( User $user, Request $request ) {
+        // NEW USER
+        $user           = new User();
+        $user->name     = 'something';
+        $user->password = Hash::make( 'userpassword' );
+        $user->email    = 'user_' . rand( 0, 99999 ) . '@something.com';
 
-        dd($request);
 
-        $request->validate( [
-            'user.email' => [
-                'required',
-                Rule::unique( User::class, 'email' )->ignore( $user ),
-            ],
-        ] );
+        if ( $user->save() ) {
 
-        $permissions = collect( $request->get( 'permissions' ) )
-            ->map( function ( $value, $key ) {
-                return [ base64_decode( $key ) => $value ];
-            } )
-            ->collapse()
-            ->toArray();
 
-        $user->when( $request->filled( 'user.password' ), function ( Builder $builder ) use ( $request ) {
-            $builder->getModel()->password = Hash::make( $request->input( 'user.password' ) );
-        } );
+            $profile                = new Profile();
+            $profile->user_id       = $user->id;
+            $profile->name          = $request->profile['name'];
+            $profile->phone         = $request->profile['phone'];
+            $profile->whatsapp      = $request->profile['whatsapp'];
+            $profile->telegram      = $request->profile['telegram'];
+            $profile->age           = $request->profile['age'];
+            $profile->height        = $request->profile['height'];
+            $profile->weight        = $request->profile['weight'];
+            $profile->breast_size   = $request->profile['breast_size'];
+            $profile->breast_type   = $request->profile['breast_type'];
+            $profile->appearance    = $request->profile['appearance'];
+            $profile->section       = $request->profile['section'];
+            $profile->express       = $request->profile['express'];
+            $profile->meeting_place = $request->profile['meeting_place'];
+            $profile->city          = $request->profile['city'];
+            $profile->haircut       = $request->profile['haircut'];
+            $profile->description   = $request->profile['description'];
+            //$profile->images        = $request->profile['photos'] ? $request->profile['photos'] : '';
+            //$profile->videos        = $request->profile['videos'];
 
-        $user
-            ->fill( $request->collect( 'user' )->except( [ 'password', 'permissions', 'roles' ] )->toArray() )
-            ->fill( [ 'permissions' => $permissions ] )
-            ->save();
 
-        $user->replaceRoles( $request->input( 'user.roles' ) );
+            if ( $profile->save() ) {
+                $profile->stations()->attach( $request->profile['stations'] );
+
+                $prices = Price::create( array_push( $request->profile['prices'], [ 'profile_id' => $profile->id ] ) );
+                $profile->prices()->attach( $prices->id );
+            }
+        }
+
+
+        dd( $request );
+
+//        $request->validate( [
+//            'user.email' => [
+//                'required',
+//                Rule::unique( User::class, 'email' )->ignore( $user ),
+//            ],
+//        ] );
+//
+//        $permissions = collect( $request->get( 'permissions' ) )
+//            ->map( function ( $value, $key ) {
+//                return [ base64_decode( $key ) => $value ];
+//            } )
+//            ->collapse()
+//            ->toArray();
+//
+//        $user->when( $request->filled( 'user.password' ), function ( Builder $builder ) use ( $request ) {
+//            $builder->getModel()->password = Hash::make( $request->input( 'user.password' ) );
+//        } );
+//
+//        $user
+//            ->fill( $request->collect( 'user' )->except( [ 'password', 'permissions', 'roles' ] )->toArray() )
+//            ->fill( [ 'permissions' => $permissions ] )
+//            ->save();
+//
+//        $user->replaceRoles( $request->input( 'user.roles' ) );
 
         Toast::info( __( 'User was saved.' ) );
 
-        return redirect()->route( 'platform.systems.users' );
+        //return redirect()->route( 'platform.systems.users' );
     }
 
     /**
