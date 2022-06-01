@@ -182,10 +182,16 @@ class GirlEditScreen extends Screen {
 
 
                 Layout::rows( [
+                    Group::make( [
                     CheckBox::make( 'profile[express]' )
                             ->sendTrueOrFalse()
                             ->title( 'Экспресс' )
                             ->placeholder( 'Есть' ),
+                    CheckBox::make( 'profile[express]' )
+                            ->sendTrueOrFalse()
+                            ->title( 'Закрытый каталог' )
+                            ->placeholder( 'Да' ),
+                    ] ),
                     Group::make( [
                         Select::make( 'profile[section]' )
                               ->title( 'Раздел' )
@@ -244,19 +250,23 @@ class GirlEditScreen extends Screen {
                         Input::make( 'profile.prices.day_one_hour_in' )
                              ->title( 'У меня 1 час:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' ),
+                             ->placeholder( '₽' )
+                             ->required(),
                         Input::make( 'profile.prices.day_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' ),
+                             ->placeholder( '₽' )
+                             ->required(),
                         Input::make( 'profile.prices.day_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' ),
+                             ->placeholder( '₽' )
+                             ->required(),
                         Input::make( 'profile.prices.day_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' ),
+                             ->placeholder( '₽' )
+                             ->required(),
                     ] ),
                 ] )->title( 'Тариф "День"' ),
                 Layout::rows( [
@@ -264,19 +274,23 @@ class GirlEditScreen extends Screen {
                         Input::make( 'profile.prices.night_one_hour_in' )
                              ->title( 'У меня 1 час:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' ),
+                             ->placeholder( '₽' )
+                             ->required(),
                         Input::make( 'profile.prices.night_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' ),
+                             ->placeholder( '₽' )
+                             ->required(),
                         Input::make( 'profile.prices.night_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' ),
+                             ->placeholder( '₽' )
+                             ->required(),
                         Input::make( 'profile.prices.night_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' ),
+                             ->placeholder( '₽' )
+                             ->required(),
                     ] ),
                 ] )->title( 'Тариф "Ночь"' ),
             ] ),
@@ -329,9 +343,7 @@ class GirlEditScreen extends Screen {
 
             if ( $profile->save() ) {
                 $profile->stations()->attach( $request->profile['stations'] );
-
-                $prices = Price::create( array_push( $request->profile['prices'], [ 'profile_id' => $profile->id ] ) );
-                $profile->prices()->attach( $prices->id );
+                $profile->prices()->create( $request->profile['prices'] );
             }
         }
 

@@ -22,7 +22,7 @@ class Price extends Model {
     ];
 
 
-    public function prices() {
-        return $this->hasOne( Price::class );
+    public function profile() {
+        return $this->belongsTo( Price::class );
     }
 }
