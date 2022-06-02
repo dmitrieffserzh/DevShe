@@ -18,6 +18,7 @@ class Service extends Model {
 
     ];
 
+    // RELATIONS
     public function servicesField() {
         return $this->hasMany( ServicesField::class, 'service_id' );
     }

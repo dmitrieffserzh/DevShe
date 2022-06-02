@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->integer('profile_id');
             $table->integer('field_id');
-            $table->text('description');
+            $table->text('description')->nullable();
         });
     }
 

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\Girl;
 
+use App\Models\Profile;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserFiltersLayout;
-use App\Orchid\Layouts\User\UserListLayout;
+use App\Orchid\Layouts\Girl\GirlListLayout;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Orchid\Platform\Models\User;
@@ -20,11 +21,7 @@ class GirlListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'users' => User::with('roles')
-                ->filters()
-                ->filtersApplySelection(UserFiltersLayout::class)
-                ->defaultSort('id', 'desc')
-                ->paginate(),
+            'profile' => Profile::filters()->defaultSort('id', 'desc')->paginate(),
         ];
     }
 
@@ -62,11 +59,11 @@ class GirlListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            UserFiltersLayout::class,
-            UserListLayout::class,
+            //UserFiltersLayout::class,
+            GirlListLayout::class,
 
-            Layout::modal('asyncEditUserModal', UserEditLayout::class)
-                ->async('asyncGetUser'),
+//            Layout::modal('asyncEditUserModal', UserEditLayout::class)
+//                ->async('asyncGetUser'),
         ];
     }
 

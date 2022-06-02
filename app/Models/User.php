@@ -5,6 +5,9 @@ namespace App\Models;
 use Orchid\Platform\Models\User as Authenticatable;
 
 class User extends Authenticatable {
+
+    protected $table = 'users';
+
     protected $fillable = [
         'type',
         'email',

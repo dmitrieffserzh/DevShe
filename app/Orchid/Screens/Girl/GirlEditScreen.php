@@ -4,8 +4,9 @@ declare( strict_types=1 );
 
 namespace App\Orchid\Screens\Girl;
 
-use App\Models\Price;
+use App\Models\User;
 use App\Models\Profile;
+use App\Models\Price;
 use App\Models\Station;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -13,7 +14,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Orchid\Access\UserSwitch;
-use Orchid\Platform\Models\User;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\CheckBox;
@@ -115,11 +115,11 @@ class GirlEditScreen extends Screen {
 
             array_push( $fields,
                 Group::make( [
-                    CheckBox::make( 'profile[service][' . $item->id . ']' )
+                    CheckBox::make( 'profile[services][' . $item->id . '][field_id]' )
                         //->title( $item->name )
                             ->placeholder( $item->name )
                             ->checked( $item->id ? true : false ),
-                    TextArea::make( 'profile[service][' . $item->id . '][description]' )
+                    TextArea::make( 'profile[services][' . $item->id . '][description]' )
                             ->placeholder( 'Короткое описание' )
                             ->value( $item->description )
                             ->rows( 2 )->style( 'max-width: 100%;width: 100%;' )
@@ -183,14 +183,14 @@ class GirlEditScreen extends Screen {
 
                 Layout::rows( [
                     Group::make( [
-                    CheckBox::make( 'profile[express]' )
-                            ->sendTrueOrFalse()
-                            ->title( 'Экспресс' )
-                            ->placeholder( 'Есть' ),
-                    CheckBox::make( 'profile[express]' )
-                            ->sendTrueOrFalse()
-                            ->title( 'Закрытый каталог' )
-                            ->placeholder( 'Да' ),
+                        CheckBox::make( 'profile[express]' )
+                                ->sendTrueOrFalse()
+                                ->title( 'Экспресс' )
+                                ->placeholder( 'Есть' ),
+                        CheckBox::make( 'profile[express]' )
+                                ->sendTrueOrFalse()
+                                ->title( 'Закрытый каталог' )
+                                ->placeholder( 'Да' ),
                     ] ),
                     Group::make( [
                         Select::make( 'profile[section]' )
@@ -250,23 +250,23 @@ class GirlEditScreen extends Screen {
                         Input::make( 'profile.prices.day_one_hour_in' )
                              ->title( 'У меня 1 час:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
+                        //->required(),
                         Input::make( 'profile.prices.day_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
+                        //->required(),
                         Input::make( 'profile.prices.day_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
+                        //->required(),
                         Input::make( 'profile.prices.day_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
+                        // ->required(),
                     ] ),
                 ] )->title( 'Тариф "День"' ),
                 Layout::rows( [
@@ -274,23 +274,23 @@ class GirlEditScreen extends Screen {
                         Input::make( 'profile.prices.night_one_hour_in' )
                              ->title( 'У меня 1 час:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
+                        //->required(),
                         Input::make( 'profile.prices.night_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
+                        //->required(),
                         Input::make( 'profile.prices.night_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
+                        // ->required(),
                         Input::make( 'profile.prices.night_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
                              ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
+                        // ->required(),
                     ] ),
                 ] )->title( 'Тариф "Ночь"' ),
             ] ),
@@ -310,45 +310,54 @@ class GirlEditScreen extends Screen {
      */
     public function save( User $user, Request $request ) {
         // NEW USER
-        $user           = new User();
+        $user           = new User;
         $user->name     = 'something';
         $user->password = Hash::make( 'userpassword' );
         $user->email    = 'user_' . rand( 0, 99999 ) . '@something.com';
+        $user->save();
 
+        // NEW PROFILE
+        $profile                = new Profile;
+        $profile->name          = $request->profile['name'];
+        $profile->phone         = $request->profile['phone'];
+        $profile->whatsapp      = $request->profile['whatsapp'];
+        $profile->telegram      = $request->profile['telegram'];
+        $profile->age           = $request->profile['age'];
+        $profile->height        = $request->profile['height'];
+        $profile->weight        = $request->profile['weight'];
+        $profile->breast_size   = $request->profile['breast_size'];
+        $profile->breast_type   = $request->profile['breast_type'];
+        $profile->appearance    = $request->profile['appearance'];
+        $profile->section       = $request->profile['section'];
+        $profile->express       = $request->profile['express'];
+        $profile->meeting_place = $request->profile['meeting_place'];
+        $profile->city          = $request->profile['city'];
+        $profile->haircut       = $request->profile['haircut'];
+        $profile->description   = $request->profile['description'];
 
-        if ( $user->save() ) {
+        $user->profile()->save( $profile );
+        $user->profile->stations()->attach( [ 1, 5, 7 ] );
+        $user->profile->prices()->create( $request->profile['prices'] );
 
-
-            $profile                = new Profile();
-            $profile->user_id       = $user->id;
-            $profile->name          = $request->profile['name'];
-            $profile->phone         = $request->profile['phone'];
-            $profile->whatsapp      = $request->profile['whatsapp'];
-            $profile->telegram      = $request->profile['telegram'];
-            $profile->age           = $request->profile['age'];
-            $profile->height        = $request->profile['height'];
-            $profile->weight        = $request->profile['weight'];
-            $profile->breast_size   = $request->profile['breast_size'];
-            $profile->breast_type   = $request->profile['breast_type'];
-            $profile->appearance    = $request->profile['appearance'];
-            $profile->section       = $request->profile['section'];
-            $profile->express       = $request->profile['express'];
-            $profile->meeting_place = $request->profile['meeting_place'];
-            $profile->city          = $request->profile['city'];
-            $profile->haircut       = $request->profile['haircut'];
-            $profile->description   = $request->profile['description'];
-            //$profile->images        = $request->profile['photos'] ? $request->profile['photos'] : '';
-            //$profile->videos        = $request->profile['videos'];
-
-
-            if ( $profile->save() ) {
-                $profile->stations()->attach( $request->profile['stations'] );
-                $profile->prices()->create( $request->profile['prices'] );
+        $collection       = collect( $request->profile['services'] );
+        $filteredServices = $collection->filter( function ( $value ) {
+            if ( isset( $value['field_id'] ) && $value['field_id'] == 'on' ) {
+                return $value;
             }
-        }
+        } );
+
+        $services = $filteredServices->map( function ( $value, $key ) {
+            return [
+                'field_id'    => $key,
+                'description' => isset( $value['description'] ) ? $value['description'] : null
+            ];
+        } );
+        $user->profile->fields()->createMany( $services );
 
 
-        dd( $request );
+        Toast::info( 'Пользователь успешно сохранен' );
+
+        return redirect()->route( 'platform.girls' );
 
 //        $request->validate( [
 //            'user.email' => [

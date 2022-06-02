@@ -46,12 +46,21 @@ Route::screen('/main', PlatformScreen::class)
 Route::screen('girls', GirlListScreen::class)
      ->name('platform.girls');
 
+// MAIN > GIRLS > EDIT
+Route::screen('girls/{profile}/edit', GirlEditScreen::class)
+     ->name('platform.girls.edit')
+     ->breadcrumbs(function (Trail $trail, $profile) {
+         return $trail
+            // ->parent('platform.girls')
+             ->push(__('User'), route('platform.girls.edit', $profile));
+     });
+
 // MAIN > GIRLS > CREATE
 Route::screen('girls/create', GirlEditScreen::class)
      ->name('platform.girls.create')
      ->breadcrumbs(function (Trail $trail) {
          return $trail
-             //->parent('platform.girls')
+             //->parent('platform.index')
              ->push(__('Create'), route('platform.girls.create'));
      });
 

@@ -21,7 +21,9 @@ class Field extends Model {
 
     ];
 
+    public $timestamps = false;
 
+    // RELATIONS
     public function profile() {
         return $this->hasOne( Profile::class );
     }

@@ -21,8 +21,8 @@ class Price extends Model {
         'night_two_hours_out',
     ];
 
-
-    public function profile() {
+    // RELATIONS
+    public function profiless() {
         return $this->belongsTo( Price::class );
     }
 }

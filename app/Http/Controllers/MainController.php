@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller {
@@ -12,8 +13,8 @@ class MainController extends Controller {
 
     public function index() {
 
-        $profile = Profile::find(1);
-        dd($profile->stations);
+        $profile = User::find(51);
+        dd($profile->profile);
 
 
 //        $test = DB::table('services')

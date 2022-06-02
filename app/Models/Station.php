@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Station extends Model {
     use HasFactory;
 
+    // RELATIONS
     public function profiles() {
         return $this->belongsToMany( Profile::class );
     }

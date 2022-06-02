@@ -29,6 +29,8 @@ return new class extends Migration {
             $table->text( 'images' )->nullable();
             $table->text( 'videos' )->nullable();
             $table->integer( 'balance' )->default( 0 );
+
+            $table->foreign( 'user_id' )->references( 'id' )->on( 'users' )->onDelete( 'cascade' );
         } );
     }
 

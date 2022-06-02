@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Filters\Filterable;
 
 class Profile extends Model {
     use HasFactory;
+    use Filterable;
+
+    protected $table = 'profiles';
 
     protected $fillable = [
         'user_id',
@@ -33,11 +37,18 @@ class Profile extends Model {
         'balance',
     ];
 
-    protected $hidden = [
-
-    ];
+    protected $hidden = [];
 
     public $timestamps = false;
+
+    protected $allowedFilters = [ 'id', 'name', 'phone' ];
+    protected $allowedSorts = [ 'id' ];
+
+
+    // RELATIONS
+    public function user() {
+        return $this->belongsTo( User::class );
+    }
 
     public function fields() {
         return $this->hasMany( Field::class );
@@ -50,5 +61,4 @@ class Profile extends Model {
     public function prices() {
         return $this->hasOne( Price::class );
     }
-
 }
