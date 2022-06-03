@@ -28,11 +28,11 @@ class PlatformProvider extends OrchidServiceProvider
     public function registerMainMenu(): array
     {
         return [
-            Menu::make('Девушки')
+            Menu::make('Профили девушек ')
                 ->icon('user-female')
-                ->title('Пользователи')
+                ->title('Профили')
                 ->route('platform.girls'),
-            Menu::make('Мужчины')
+            Menu::make('Профили мужчин')
                 ->icon('user')
                 ->route('platform.men'),
 //            Menu::make('Все пользователи')

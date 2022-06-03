@@ -28,13 +28,13 @@ class GirlListScreen extends Screen
 
     public function name(): ?string
     {
-        return 'Девушки';
+        return 'Профили девушек';
     }
 
 
     public function description(): ?string
     {
-        return 'Все зарегистрированные девушки';
+        return 'Все зарегистрированные профили девушек';
     }
 
 
@@ -93,8 +93,8 @@ class GirlListScreen extends Screen
 
     public function remove(Request $request): void
     {
-        User::findOrFail($request->get('id'))->delete();
+        Profile::findOrFail($request->get('id'))->delete();
 
-        Toast::info(__('User was removed'));
+        Toast::info('Профиль успешно удален');
     }
 }

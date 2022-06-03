@@ -39,19 +39,16 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // MAIN
-Route::screen('/main', PlatformScreen::class)
+Route::screen('main', PlatformScreen::class)
     ->name('platform.main');
 
-// MAIN > GIRLS
-Route::screen('girls', GirlListScreen::class)
-     ->name('platform.girls');
 
 // MAIN > GIRLS > EDIT
 Route::screen('girls/{profile}/edit', GirlEditScreen::class)
      ->name('platform.girls.edit')
      ->breadcrumbs(function (Trail $trail, $profile) {
          return $trail
-            // ->parent('platform.girls')
+             //->parent('platform.girls')
              ->push(__('User'), route('platform.girls.edit', $profile));
      });
 
@@ -60,13 +57,17 @@ Route::screen('girls/create', GirlEditScreen::class)
      ->name('platform.girls.create')
      ->breadcrumbs(function (Trail $trail) {
          return $trail
-             //->parent('platform.index')
+             //->parent('platform.girls')
              ->push(__('Create'), route('platform.girls.create'));
      });
 
+// MAIN > GIRLS
+Route::screen('girls', GirlListScreen::class)
+     ->name('platform.girls');
+
 
 // Mens
-Route::screen('/mens', PlatformScreen::class)
+Route::screen('mens', PlatformScreen::class)
      ->name('platform.men');
 
 
@@ -86,10 +87,10 @@ Route::screen('/mens', PlatformScreen::class)
 
 
 
-
-
-
-
+//
+//
+//
+//
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')
