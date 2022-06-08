@@ -27,6 +27,7 @@ return new class extends Migration {
             $table->integer( 'meeting_place' );
             $table->string( 'city', 160 );
             $table->integer( 'haircut' )->nullable();
+            $table->integer( 'haircolor' );
             $table->text( 'description' )->nullable();
             //$table->text( 'images' )->nullable();
             //$table->text( 'videos' )->nullable();

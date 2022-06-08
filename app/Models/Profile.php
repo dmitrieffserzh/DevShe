@@ -19,8 +19,9 @@ class Profile extends Model {
 
     protected $fillable = [
         'user_id',
-        'price_id',
-        'services_id',
+        'active',
+        'private',
+        'express',
         'name',
         'phone',
         'whatsapp',
@@ -32,13 +33,11 @@ class Profile extends Model {
         'breast_type',
         'appearance',
         'section',
-        'express',
         'meeting_place',
         'city',
+        'haircolor',
         'haircut',
         'description',
-        'images',
-        'videos',
         'balance',
     ];
 

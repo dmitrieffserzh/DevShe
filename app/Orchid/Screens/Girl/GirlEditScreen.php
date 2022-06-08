@@ -150,12 +150,12 @@ class GirlEditScreen extends Screen {
                               ->options( Helpers::getGirlAge() )
                               ->required(),
                         Input::make( 'profile.height' )
-                             ->mask( '999' )
+                            //->mask( '999' )
                              ->title( 'Рост' )
                              ->placeholder( '' )
                              ->required(),
                         Input::make( 'profile.weight' )
-                             ->mask( '999' )
+                            //->mask( '999' )
                              ->title( 'Вес' )
                              ->placeholder( '' )
                              ->required(),
@@ -177,7 +177,10 @@ class GirlEditScreen extends Screen {
                     Group::make( [
                         Select::make( 'profile.appearance' )
                               ->title( 'Внешность' )
-                              ->options( Helpers::getGirlAppearance() )
+                              ->options( Helpers::getGirlAppearance() ),
+                        Select::make( 'profile.haircolor' )
+                              ->title( 'Цвет волос' )
+                              ->options( Helpers::getGirlHaircut() )
                               ->required(),
                         Select::make( 'profile.haircut' )
                               ->title( 'Интимная стрижка' )
@@ -189,24 +192,25 @@ class GirlEditScreen extends Screen {
                 Layout::rows( [
                     Group::make( [
                         CheckBox::make( 'profile.express' )
-                                ->sendTrueOrFalse()
                                 ->title( 'Экспресс' )
-                                ->placeholder( 'Есть' ),
+                                ->placeholder( 'Есть' )
+                                ->sendTrueOrFalse(),
                         CheckBox::make( 'profile.private' )
-                                ->sendTrueOrFalse()
                                 ->title( 'Закрытый каталог' )
-                                ->placeholder( 'Да' ),
+                                ->placeholder( 'Да' )
+                                ->sendTrueOrFalse(),
                     ] ),
-                    Group::make( [
-                        Select::make( 'profile.section' )
-                              ->title( 'Раздел' )
-                              ->options( Helpers::getGirlSection() )
-                              ->required(),
-                        Select::make( 'profile.meeting_place' )
-                              ->title( 'Место вастречи' )
-                              ->options( Helpers::getGirlPlace() )
-                              ->required(),
-                    ] ),
+
+                    Select::make( 'profile.section' )
+                          ->title( 'Раздел' )
+                          ->options( Helpers::getGirlSection() )
+                          ->required(),
+                    Select::make( 'profile.meeting_place' )
+                          ->title( 'Место вастречи' )
+                          ->options( Helpers::getGirlPlace() )->value( 2 )
+                          ->multiple()
+                          ->required(),
+
                     Group::make( [
                         Input::make( 'profile.phone' )
                              ->mask( '+7 (999) 999-99-99' )
@@ -258,22 +262,22 @@ class GirlEditScreen extends Screen {
                     Group::make( [
                         Input::make( 'profile.prices.day_one_hour_in' )
                              ->title( 'У меня 1 час:' )
-                             ->mask( '₽ 9999999' )
+                            //->mask( '₽ 9999999' )
                              ->placeholder( '₽' )
                              ->required(),
                         Input::make( 'profile.prices.day_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
-                             ->mask( '₽ 9999999' )
+                            //->mask( '₽ 9999999' )
                              ->placeholder( '₽' )
                              ->required(),
                         Input::make( 'profile.prices.day_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
-                             ->mask( '₽ 9999999' )
+                            //->mask( '₽ 9999999' )
                              ->placeholder( '₽' )
                              ->required(),
                         Input::make( 'profile.prices.day_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
-                             ->mask( '₽ 9999999' )
+                            //->mask( '₽ 9999999' )
                              ->placeholder( '₽' )
                              ->required(),
                     ] ),
@@ -282,24 +286,21 @@ class GirlEditScreen extends Screen {
                     Group::make( [
                         Input::make( 'profile.prices.night_one_hour_in' )
                              ->title( 'У меня 1 час:' )
-                             ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                            ///->mask( '₽ 9999999' )
+                             ->placeholder( '₽' ),
                         Input::make( 'profile.prices.night_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
-                             ->mask( '₽ 9999999' )
-                             ->required(),
+                            //->mask( '₽ 9999999' ),
+                             ->placeholder( '₽' ),
                         //->required(),
                         Input::make( 'profile.prices.night_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
-                             ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                            // ->mask( '₽ 9999999' )
+                             ->placeholder( '₽' ),
                         Input::make( 'profile.prices.night_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
-                             ->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                            //->mask( '₽ 9999999' )
+                             ->placeholder( '₽' ),
                     ] ),
                 ] )->title( 'Тариф "Ночь"' ),
             ] ),
@@ -316,6 +317,12 @@ class GirlEditScreen extends Screen {
                     Button::make( 'Сохранить' )
                           ->method( 'update' )
                           ->icon( 'check' )
+                          ->canSee( $this->profile->exists )
+                          ->class( 'float-end btn btn-' . Color::PRIMARY() ),
+                    Button::make( 'Сохранить' )
+                          ->method( 'create' )
+                          ->icon( 'check' )
+                          ->canSee( ! $this->profile->exists )
                           ->class( 'float-end btn btn-' . Color::PRIMARY() ),
                 ] )
             ] )
@@ -334,7 +341,7 @@ class GirlEditScreen extends Screen {
         // NEW PROFILE
         $profile                = new Profile;
         $profile->active        = $request->profile['active'];
-        $profile->hidden        = $request->profile['hidden'];
+        $profile->private       = $request->profile['private'];
         $profile->name          = $request->profile['name'];
         $profile->phone         = $request->profile['phone'];
         $profile->whatsapp      = $request->profile['whatsapp'];
@@ -353,7 +360,8 @@ class GirlEditScreen extends Screen {
         $profile->description   = $request->profile['description'];
 
         $profile->save();
-        $profile->stations()->attach( $request->profile['stations'] );
+
+        $profile->stations()->sync( $request->profile['stations'] );
         $profile->prices()->create( $request->profile['prices'] );
         $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
 
@@ -381,6 +389,7 @@ class GirlEditScreen extends Screen {
 
     public function update( Profile $profile, Request $request ) {
         $profile->update( $request->profile );
+
         $profile->stations()->sync( $request->profile['stations'] );
         $profile->prices()->update( $request->profile['prices'] );
         $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
