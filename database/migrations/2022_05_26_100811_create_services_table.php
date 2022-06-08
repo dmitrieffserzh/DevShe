@@ -15,6 +15,6 @@ return new class extends Migration {
     }
 
     public function down() {
-        Schema::dropIfExists( 'profiles_services' );
+        Schema::dropIfExists( 'services' );
     }
 };

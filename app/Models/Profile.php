@@ -5,10 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Filters\Filterable;
+use Orchid\Attachment\Attachable;
+use Orchid\Attachment\Models\Attachment;
+use Orchid\Screen\AsSource;
 
 class Profile extends Model {
     use HasFactory;
     use Filterable;
+    use Attachable;
+    use AsSource;
 
     protected $table = 'profiles';
 

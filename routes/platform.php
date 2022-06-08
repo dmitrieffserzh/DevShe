@@ -11,7 +11,7 @@ use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 
 
-
+use Illuminate\Support\Facades\Artisan;
 
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Girl\GirlListScreen;
@@ -69,15 +69,6 @@ Route::screen('girls', GirlListScreen::class)
 // Mens
 Route::screen('mens', PlatformScreen::class)
      ->name('platform.men');
-
-
-
-
-
-
-
-
-
 
 
 

@@ -11,8 +11,8 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
-            $table->integer('profile_id');
-            $table->integer('field_id');
+            $table->bigInteger('profile_id');
+            $table->bigInteger('field_id');
             $table->text('description')->nullable();
         });
     }

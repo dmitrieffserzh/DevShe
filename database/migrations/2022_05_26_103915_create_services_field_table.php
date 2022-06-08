@@ -9,7 +9,7 @@ return new class extends Migration {
     public function up() {
         Schema::create( 'services_field', function ( Blueprint $table ) {
             $table->id();
-            $table->integer( 'service_id' );
+            $table->bigInteger( 'service_id' );
             $table->string( 'name', 255 );
         } );
     }

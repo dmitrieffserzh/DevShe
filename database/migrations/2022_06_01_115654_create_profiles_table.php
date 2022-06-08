@@ -9,7 +9,10 @@ return new class extends Migration {
     public function up() {
         Schema::create( 'profiles', function ( Blueprint $table ) {
             $table->id();
-            $table->foreignId( 'user_id' );
+            $table->foreignId( 'user_id' )->nullable();
+            $table->integer( 'active' )->default( 1 );
+            $table->integer( 'private' )->default( 0 );
+            $table->integer( 'express' )->default( 0 );
             $table->string( 'name', 160 );
             $table->string( 'phone', 160 );
             $table->string( 'whatsapp', 255 )->nullable();
@@ -21,13 +24,12 @@ return new class extends Migration {
             $table->integer( 'breast_type' );
             $table->integer( 'appearance' );
             $table->integer( 'section' );
-            $table->integer( 'express' );
             $table->integer( 'meeting_place' );
             $table->string( 'city', 160 );
             $table->integer( 'haircut' )->nullable();
             $table->text( 'description' )->nullable();
-            $table->text( 'images' )->nullable();
-            $table->text( 'videos' )->nullable();
+            //$table->text( 'images' )->nullable();
+            //$table->text( 'videos' )->nullable();
             $table->integer( 'balance' )->default( 0 );
 
             $table->foreign( 'user_id' )->references( 'id' )->on( 'users' )->onDelete( 'cascade' );

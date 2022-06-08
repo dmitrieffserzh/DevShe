@@ -4,7 +4,6 @@ declare( strict_types=1 );
 
 namespace App\Orchid\Screens\Girl;
 
-use App\Models\User;
 use App\Models\Profile;
 use App\Models\Station;
 use Illuminate\Http\Request;
@@ -23,6 +22,7 @@ use Orchid\Screen\Fields\Upload;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
+use Orchid\Support\Color;
 use App\Helpers;
 
 
@@ -31,7 +31,7 @@ class GirlEditScreen extends Screen {
     public $profile;
 
     public function query( Profile $profile ): iterable {
-        $profile->load( 'prices' );
+        $profile->load( 'prices', 'attachment' );
 
         return [
             'profile' => $profile,
@@ -59,15 +59,21 @@ class GirlEditScreen extends Screen {
                   ->icon( 'trash' )
                   ->confirm( __( 'Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' ) )
                   ->method( 'remove' )
-                  ->canSee( $this->profile->exists ),
+                  ->canSee( $this->profile->exists )
+                  ->style( 'color: #df0031;' ),
+            Button::make( 'Отменить' )
+                  ->icon( 'close' )
+                  ->method( 'cancel' ),
             Button::make( 'Сохранить' )
                   ->icon( 'check' )
                   ->method( 'update' )
-                  ->canSee( $this->profile->exists ),
+                  ->canSee( $this->profile->exists )
+                  ->class( 'float-end btn btn-' . Color::PRIMARY() ),
             Button::make( __( 'Save' ) )
                   ->icon( 'check' )
                   ->method( 'create' )
-                  ->canSee( ! $this->profile->exists ),
+                  ->canSee( ! $this->profile->exists )
+                  ->class( 'float-end btn btn-' . Color::PRIMARY() ),
         ];
     }
 
@@ -79,11 +85,11 @@ class GirlEditScreen extends Screen {
                       $join->on( 'services_field.id', '=', 'fields.field_id' )
                            ->where( 'fields.profile_id', '=', $this->profile->id );
                   } )
-                  ->select( 'services.name as block_title', 'services_field.name', 'fields.id', 'fields.description' )
+                  ->select( 'services.name as block_title', 'services_field.name', 'services_field.id as service_id', 'fields.id', 'fields.description' )
                   ->orderBy( 'services.id' )
                   ->get();
 
-
+        //dd($test);
         $arr = [];
         $tmp = '';
         if ( count( $test ) > 0 ) {
@@ -92,7 +98,6 @@ class GirlEditScreen extends Screen {
         $fields = [];
 
         foreach ( $test as $item ) {
-
 
             if ( $tmp != $item->block_title ) {
                 array_push( $arr, Layout::view( 'platform.row', [
@@ -105,11 +110,11 @@ class GirlEditScreen extends Screen {
 
             array_push( $fields,
                 Group::make( [
-                    CheckBox::make( 'profile[services][' . $item->id . '][field_id]' )
+                    CheckBox::make( 'profile[services][' . $item->service_id . '][field_id]' )
                         //->title( $item->name )
                             ->placeholder( $item->name )
                             ->checked( $item->id ?: false ),
-                    TextArea::make( 'profile[services][' . $item->id . '][description]' )
+                    TextArea::make( 'profile[services][' . $item->service_id . '][description]' )
                             ->placeholder( 'Короткое описание' )
                             ->value( $item->description )
                             ->rows( 2 )->style( 'max-width: 100%;width: 100%;' )
@@ -128,6 +133,13 @@ class GirlEditScreen extends Screen {
         return [
             Layout::columns( [
                 Layout::rows( [
+                    Group::make( [
+                        CheckBox::make( 'profile.active' )
+                                ->title( 'Активировать' )
+                                ->sendTrueOrFalse()
+                                ->placeholder( 'Да' )
+                                ->checked(),
+                    ] ),
                     Input::make( 'profile.name' )
                          ->title( 'Имя' )
                          ->placeholder( 'Введите имя' )
@@ -173,8 +185,6 @@ class GirlEditScreen extends Screen {
                               ->required(),
                     ] ),
                 ] ),
-                //->title( 'О девушке' ),
-
 
                 Layout::rows( [
                     Group::make( [
@@ -182,7 +192,7 @@ class GirlEditScreen extends Screen {
                                 ->sendTrueOrFalse()
                                 ->title( 'Экспресс' )
                                 ->placeholder( 'Есть' ),
-                        CheckBox::make( 'profile.hidden' )
+                        CheckBox::make( 'profile.private' )
                                 ->sendTrueOrFalse()
                                 ->title( 'Закрытый каталог' )
                                 ->placeholder( 'Да' ),
@@ -227,8 +237,9 @@ class GirlEditScreen extends Screen {
 
             Layout::columns( [
                 Layout::rows( [
-                    Upload::make( 'profile.photos' )
+                    Upload::make( 'profile.attachment' )
                           ->title( 'Загрузить' )
+                          ->targetRelativeUrl()
                 ] )->title( 'Изображения' )
             ] ),
 
@@ -296,19 +307,34 @@ class GirlEditScreen extends Screen {
             // SERVICES
             $this->getServices(),
 
+            Layout::rows( [
+                Group::make( [
+                    Button::make( 'Отменить' )
+                          ->method( 'cancel' )
+                          ->icon( 'close' )
+                          ->class( 'float-start btn btn-' . Color::SECONDARY() ),
+                    Button::make( 'Сохранить' )
+                          ->method( 'update' )
+                          ->icon( 'check' )
+                          ->class( 'float-end btn btn-' . Color::PRIMARY() ),
+                ] )
+            ] )
+
         ];
     }
 
     public function create( Request $request ) {
         // NEW USER
-        $user           = new User;
-        $user->name     = 'something';
-        $user->password = Hash::make( 'userpassword' );
-        $user->email    = 'user_' . rand( 0, 99999 ) . '@something.com';
-        $user->save();
+//        $user           = new User;
+//        $user->name     = 'something';
+//        $user->password = Hash::make( 'userpassword' );
+//        $user->email    = 'user_' . rand( 0, 99999 ) . '@something.com';
+//        $user->save();
 
         // NEW PROFILE
         $profile                = new Profile;
+        $profile->active        = $request->profile['active'];
+        $profile->hidden        = $request->profile['hidden'];
         $profile->name          = $request->profile['name'];
         $profile->phone         = $request->profile['phone'];
         $profile->whatsapp      = $request->profile['whatsapp'];
@@ -326,9 +352,10 @@ class GirlEditScreen extends Screen {
         $profile->haircut       = $request->profile['haircut'];
         $profile->description   = $request->profile['description'];
 
-        $user->profile()->save( $profile );
-        $user->profile->stations()->attach( [ 1, 5, 7 ] );
-        $user->profile->prices()->create( $request->profile['prices'] );
+        $profile->save();
+        $profile->stations()->attach( $request->profile['stations'] );
+        $profile->prices()->create( $request->profile['prices'] );
+        $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
 
         $collection       = collect( $request->profile['services'] );
         $filteredServices = $collection->filter( function ( $value ) {
@@ -343,7 +370,8 @@ class GirlEditScreen extends Screen {
                 'description' => isset( $value['description'] ) ? $value['description'] : null
             ];
         } );
-        $user->profile->fields()->createMany( $services );
+
+        $profile->fields()->createMany( $services->toArray() );
 
 
         Toast::success( 'Профиль успешно сохранен' );
@@ -355,6 +383,7 @@ class GirlEditScreen extends Screen {
         $profile->update( $request->profile );
         $profile->stations()->sync( $request->profile['stations'] );
         $profile->prices()->update( $request->profile['prices'] );
+        $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
 
         $collection       = collect( $request->profile['services'] );
         $filteredServices = $collection->filter( function ( $value ) {
@@ -369,7 +398,10 @@ class GirlEditScreen extends Screen {
                 'description' => isset( $value['description'] ) ? $value['description'] : null
             ];
         } );
-        $profile->fields()->updateOrInsert( $services );
+
+
+        $profile->fields()->delete();
+        $profile->fields()->createMany( $services->toArray() );
 
         Toast::success( 'Профиль успешно обновлен' );
 
@@ -381,6 +413,10 @@ class GirlEditScreen extends Screen {
 
         Toast::info( __( 'User was removed' ) );
 
+        return redirect()->route( 'platform.girls' );
+    }
+
+    public function cancel() {
         return redirect()->route( 'platform.girls' );
     }
 }

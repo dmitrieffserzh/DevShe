@@ -5,28 +5,31 @@ declare( strict_types=1 );
 namespace App\Orchid\Layouts\Girl;
 
 use App\Models\Profile;
-use Orchid\Screen\Layouts\Persona;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
 class GirlListLayout extends Table {
-    /**
-     * @var string
-     */
+
     public $target = 'profile';
 
-    /**
-     * @return TD[]
-     */
     public function columns(): array {
 
         return [
-
+            TD::make( 'active', '' )
+              ->align( 'left' )
+              ->cantHide()
+              ->width( '30px' )
+              ->render( function ( $profile ) {
+                  $color = '#eff1f9';
+                  if ( $profile->active == 1 ) {
+                      $color = '#43d040';
+                  }
+                  return '<span style="display: block;width: 16px;height: 16px;border-radius: 50%;background: ' . $color . ';"></span>';
+              } ),
             TD::make( 'id', 'ID' )
               ->sort()
               ->cantHide()
@@ -34,12 +37,13 @@ class GirlListLayout extends Table {
               ->render( function ( Profile $profile ) {
                   return '<strong>' . $profile->id . '</strong>';
               } )->width( '100px' ),
+
             TD::make( 'name', 'Имя' )
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
               ->render( function ( Profile $profile ) {
-                  return '<strong>' . $profile->name . '</strong>';
+                  return '<strong><a href=' . route( 'platform.girls.edit', $profile->id ) . '>' .$profile->name . '</a></strong>';
               } ),
             TD::make( 'phone', 'Телефон' )
               ->sort()
@@ -56,65 +60,25 @@ class GirlListLayout extends Table {
                   return DropDown::make()
                                  ->icon( 'options-vertical' )
                                  ->list( [
-
+                                     Button::make( $profile->active == 1 ? 'Деактивировать' : 'Активировать' )
+                                           ->route( 'platform.girls' )
+                                           ->icon( 'power' )
+                                           ->method( 'status', [
+                                               'id'     => $profile->id,
+                                               'status' => $profile->active == 1 ? 0 : 1
+                                           ] ),
                                      Link::make( __( 'Edit' ) )
                                          ->route( 'platform.girls.edit', $profile->id )
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )
-                                           ->icon( 'trash' )
+                                           ->icon( 'trash' )->style('color: #df0031;')
                                            ->confirm( __( 'Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' ) )
                                            ->method( 'remove', [
                                                'id' => $profile->id,
                                            ] ),
                                  ] );
               } ),
-
-
-//
-//
-//
-//
-//            TD::make('email', __('Email'))
-//                ->sort()
-//                ->cantHide()
-//                ->filter(Input::make())
-//                ->render(function (User $user) {
-//                    return ModalToggle::make($user->email)
-//                        ->modal('asyncEditUserModal')
-//                        ->modalTitle($user->presenter()->title())
-//                        ->method('saveUser')
-//                        ->asyncParameters([
-//                            'user' => $user->id,
-//                        ]);
-//                }),
-//
-//            TD::make('updated_at', __('Last edit'))
-//                ->sort()
-//                ->render(function (User $profiles) {
-//                    return $user->updated_at->toDateTimeString();
-//                }),
-//
-//            TD::make(__('Actions'))
-//                ->align(TD::ALIGN_CENTER)
-//                ->width('100px')
-//                ->render(function (User $user) {
-//                    return DropDown::make()
-//                        ->icon('options-vertical')
-//                        ->list([
-//
-//                            Link::make(__('Edit'))
-//                                ->route('platform.systems.users.edit', $user->id)
-//                                ->icon('pencil'),
-//
-//                            Button::make(__('Delete'))
-//                                ->icon('trash')
-//                                ->confirm(__('Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.'))
-//                                ->method('remove', [
-//                                    'id' => $user->id,
-//                                ]),
-//                        ]);
-//                }),
         ];
     }
 }

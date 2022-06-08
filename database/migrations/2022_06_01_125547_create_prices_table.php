@@ -9,7 +9,7 @@ return new class extends Migration {
     public function up() {
         Schema::create( 'prices', function ( Blueprint $table ) {
             $table->id();
-            $table->integer( 'profile_id' )->unsigned();
+            $table->bigInteger( 'profile_id' )->unsigned();
             $table->string( 'day_one_hour_in' )->default( 0 );
             $table->string( 'day_two_hours_in' )->default( 0 );
             $table->string( 'day_one_hour_out' )->default( 0 );

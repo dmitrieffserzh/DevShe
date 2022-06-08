@@ -8,8 +8,8 @@ return new class extends Migration {
 
     public function up() {
         Schema::create( 'profile_station', function ( Blueprint $table ) {
-            $table->integer( 'profile_id' )->unsigned();
-            $table->integer( 'station_id' )->unsigned();
+            $table->bigInteger( 'profile_id' )->unsigned();
+            $table->bigInteger( 'station_id' )->unsigned();
 
             $table->foreign( 'profile_id' )->references( 'id' )->on( 'profiles' )->onDelete( 'cascade' );
         } );
