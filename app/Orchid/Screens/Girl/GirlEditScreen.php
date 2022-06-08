@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace App\Orchid\Screens\Girl;
 
+use App\Models\Place;
 use App\Models\Profile;
 use App\Models\Station;
 use Illuminate\Http\Request;
@@ -205,12 +206,11 @@ class GirlEditScreen extends Screen {
                           ->title( 'Раздел' )
                           ->options( Helpers::getGirlSection() )
                           ->required(),
-                    Select::make( 'profile.meeting_place' )
-                          ->title( 'Место вастречи' )
-                          ->options( Helpers::getGirlPlace() )->value( 2 )
-                          ->multiple()
-                          ->required(),
-
+                    Relation::make( 'profile.places' )
+                            ->fromModel( Place::class, 'name' )
+                            ->title( 'Место вастречи' )
+                            ->multiple()
+                            ->required(),
                     Group::make( [
                         Input::make( 'profile.phone' )
                              ->mask( '+7 (999) 999-99-99' )
@@ -339,28 +339,29 @@ class GirlEditScreen extends Screen {
 //        $user->save();
 
         // NEW PROFILE
-        $profile                = new Profile;
-        $profile->active        = $request->profile['active'];
-        $profile->private       = $request->profile['private'];
-        $profile->name          = $request->profile['name'];
-        $profile->phone         = $request->profile['phone'];
-        $profile->whatsapp      = $request->profile['whatsapp'];
-        $profile->telegram      = $request->profile['telegram'];
-        $profile->age           = $request->profile['age'];
-        $profile->height        = $request->profile['height'];
-        $profile->weight        = $request->profile['weight'];
-        $profile->breast_size   = $request->profile['breast_size'];
-        $profile->breast_type   = $request->profile['breast_type'];
-        $profile->appearance    = $request->profile['appearance'];
-        $profile->section       = $request->profile['section'];
-        $profile->express       = $request->profile['express'];
-        $profile->meeting_place = $request->profile['meeting_place'];
-        $profile->city          = $request->profile['city'];
-        $profile->haircut       = $request->profile['haircut'];
-        $profile->description   = $request->profile['description'];
+        $profile              = new Profile;
+        $profile->active      = $request->profile['active'];
+        $profile->private     = $request->profile['private'];
+        $profile->name        = $request->profile['name'];
+        $profile->phone       = $request->profile['phone'];
+        $profile->whatsapp    = $request->profile['whatsapp'];
+        $profile->telegram    = $request->profile['telegram'];
+        $profile->age         = $request->profile['age'];
+        $profile->height      = $request->profile['height'];
+        $profile->weight      = $request->profile['weight'];
+        $profile->breast_size = $request->profile['breast_size'];
+        $profile->breast_type = $request->profile['breast_type'];
+        $profile->appearance  = $request->profile['appearance'];
+        $profile->section     = $request->profile['section'];
+        $profile->express     = $request->profile['express'];
+        //$profile->meeting_place = $request->profile['meeting_place'];
+        $profile->city        = $request->profile['city'];
+        $profile->haircut     = $request->profile['haircut'];
+        $profile->description = $request->profile['description'];
 
         $profile->save();
 
+        $profile->places()->sync( $request->profile['places'] );
         $profile->stations()->sync( $request->profile['stations'] );
         $profile->prices()->create( $request->profile['prices'] );
         $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
@@ -390,6 +391,7 @@ class GirlEditScreen extends Screen {
     public function update( Profile $profile, Request $request ) {
         $profile->update( $request->profile );
 
+        $profile->places()->sync( $request->profile['places'] );
         $profile->stations()->sync( $request->profile['stations'] );
         $profile->prices()->update( $request->profile['prices'] );
         $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );

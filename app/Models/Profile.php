@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Filters\Filterable;
 use Orchid\Attachment\Attachable;
-use Orchid\Attachment\Models\Attachment;
 use Orchid\Screen\AsSource;
 
 class Profile extends Model {
@@ -59,7 +58,11 @@ class Profile extends Model {
     }
 
     public function stations() {
-        return $this->belongsToMany( Station::class );
+        return $this->belongsToMany( Station::class, 'profile_station' );
+    }
+
+    public function places() {
+        return $this->belongsToMany( Place::class, 'profile_place' );
     }
 
     public function prices() {

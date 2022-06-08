@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->integer( 'breast_type' );
             $table->integer( 'appearance' );
             $table->integer( 'section' );
-            $table->integer( 'meeting_place' );
+            //$table->integer( 'meeting_place' );
             $table->string( 'city', 160 );
             $table->integer( 'haircut' )->nullable();
             $table->integer( 'haircolor' );
