@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->bigInteger( 'service_id' );
             $table->string( 'name', 255 );
+            $table->integer('sort')->default(100);
         } );
     }
 

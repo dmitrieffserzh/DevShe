@@ -93,6 +93,17 @@ class Helpers {
         ];
     }
 
+    public static function getGirlHaircolor() {
+        return [
+            0 => 'Выберите вет',
+            1 => 'Блондинка',
+            2 => 'Шатенка',
+            3 => 'Брюнетка',
+            4 => 'Рыжая',
+            5 => 'Русая',
+        ];
+    }
+
     public static function getGirlSection() {
         return [
             0 => 'Выберите раздел',
@@ -101,18 +112,6 @@ class Helpers {
             3 => 'Дешевые',
             4 => 'БДСМ',
             5 => 'Массажистки'
-        ];
-    }
-
-    public static function getGirlPlace() {
-        return [
-            0 => 'Выберите место',
-            1 => 'Квартиры',
-            2 => 'Гостиницы',
-            3 => 'Сауны',
-            4 => 'Офисы',
-            5 => 'За город МО',
-            6 => 'Апартаменты',
         ];
     }
 }

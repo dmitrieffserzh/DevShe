@@ -88,9 +88,9 @@ class GirlEditScreen extends Screen {
                   } )
                   ->select( 'services.name as block_title', 'services_field.name', 'services_field.id as service_id', 'fields.id', 'fields.description' )
                   ->orderBy( 'services.id' )
+                  ->orderBy( 'services_field.sort')
                   ->get();
 
-        //dd($test);
         $arr = [];
         $tmp = '';
         if ( count( $test ) > 0 ) {
@@ -123,7 +123,7 @@ class GirlEditScreen extends Screen {
             );
         }
         array_push( $arr, Layout::view( 'platform.row', [
-            'title' => 'Предпочтения "' . $item->block_title . '"',
+            'title' => $item->block_title,
             'forms' => $fields
         ] ) );
 
@@ -136,16 +136,22 @@ class GirlEditScreen extends Screen {
                 Layout::rows( [
                     Group::make( [
                         CheckBox::make( 'profile.active' )
-                                ->title( 'Активировать' )
+                                ->placeholder( 'Активировать' )
                                 ->sendTrueOrFalse()
-                                ->placeholder( 'Да' )
                                 ->checked(),
+                        CheckBox::make( 'profile.express' )
+                                ->placeholder( 'Экспресс' )
+                                ->sendTrueOrFalse(),
+                        CheckBox::make( 'profile.private' )
+                                ->placeholder( 'Закрытый каталог' )
+                                ->sendTrueOrFalse(),
                     ] ),
-                    Input::make( 'profile.name' )
-                         ->title( 'Имя' )
-                         ->placeholder( 'Введите имя' )
-                         ->required(),
+
                     Group::make( [
+                        Input::make( 'profile.name' )
+                             ->title( 'Имя' )
+                             ->placeholder( 'Введите имя' )
+                             ->required(),
                         Select::make( 'profile.age' )
                               ->title( 'Возраст' )
                               ->options( Helpers::getGirlAge() )
@@ -161,6 +167,7 @@ class GirlEditScreen extends Screen {
                              ->placeholder( '' )
                              ->required(),
                     ] ),
+
                     Group::make( [
                         Select::make( 'profile.breast_size' )
                               ->title( 'Размер груди' )
@@ -175,42 +182,33 @@ class GirlEditScreen extends Screen {
                                     ] )
                                     ->required(),
                     ] ),
+
                     Group::make( [
                         Select::make( 'profile.appearance' )
                               ->title( 'Внешность' )
                               ->options( Helpers::getGirlAppearance() ),
                         Select::make( 'profile.haircolor' )
-                              ->title( 'Цвет волос' )
-                              ->options( Helpers::getGirlHaircut() )
+                              ->title( 'Типаж' )
+                              ->options( Helpers::getGirlHaircolor() )
                               ->required(),
                         Select::make( 'profile.haircut' )
                               ->title( 'Интимная стрижка' )
                               ->options( Helpers::getGirlHaircut() )
                               ->required(),
                     ] ),
-                ] ),
 
-                Layout::rows( [
                     Group::make( [
-                        CheckBox::make( 'profile.express' )
-                                ->title( 'Экспресс' )
-                                ->placeholder( 'Есть' )
-                                ->sendTrueOrFalse(),
-                        CheckBox::make( 'profile.private' )
-                                ->title( 'Закрытый каталог' )
-                                ->placeholder( 'Да' )
-                                ->sendTrueOrFalse(),
+                        Select::make( 'profile.section' )
+                              ->title( 'Раздел' )
+                              ->options( Helpers::getGirlSection() )
+                              ->required(),
+                        Relation::make( 'profile.places' )
+                                ->fromModel( Place::class, 'name' )
+                                ->title( 'Место встречи' )
+                                ->multiple()
+                                ->required(),
                     ] ),
 
-                    Select::make( 'profile.section' )
-                          ->title( 'Раздел' )
-                          ->options( Helpers::getGirlSection() )
-                          ->required(),
-                    Relation::make( 'profile.places' )
-                            ->fromModel( Place::class, 'name' )
-                            ->title( 'Место вастречи' )
-                            ->multiple()
-                            ->required(),
                     Group::make( [
                         Input::make( 'profile.phone' )
                              ->mask( '+7 (999) 999-99-99' )
@@ -225,15 +223,17 @@ class GirlEditScreen extends Screen {
                              ->placeholder( '' ),
                     ] ),
 
-                    Input::make( 'profile.city' )
-                         ->title( 'Город' )
-                         ->placeholder( 'Введите город' )
-                         ->required(),
+                    Group::make( [
+                        Input::make( 'profile.city' )
+                             ->title( 'Город' )
+                             ->placeholder( 'Введите город' )
+                             ->required(),
 
-                    Relation::make( 'profile.stations' )
-                            ->fromModel( Station::class, 'name' )
-                            ->title( 'Станция метро' )
-                            ->multiple(),
+                        Relation::make( 'profile.stations' )
+                                ->fromModel( Station::class, 'name' )
+                                ->title( 'Станция метро' )
+                                ->multiple(),
+                    ] )
 
                 ] ),
                 //->title( 'Информация' ),
@@ -282,6 +282,7 @@ class GirlEditScreen extends Screen {
                              ->required(),
                     ] ),
                 ] )->title( 'Тариф "День"' ),
+
                 Layout::rows( [
                     Group::make( [
                         Input::make( 'profile.prices.night_one_hour_in' )
@@ -326,17 +327,10 @@ class GirlEditScreen extends Screen {
                           ->class( 'float-end btn btn-' . Color::PRIMARY() ),
                 ] )
             ] )
-
         ];
     }
 
     public function create( Request $request ) {
-        // NEW USER
-//        $user           = new User;
-//        $user->name     = 'something';
-//        $user->password = Hash::make( 'userpassword' );
-//        $user->email    = 'user_' . rand( 0, 99999 ) . '@something.com';
-//        $user->save();
 
         // NEW PROFILE
         $profile              = new Profile;
@@ -354,9 +348,9 @@ class GirlEditScreen extends Screen {
         $profile->appearance  = $request->profile['appearance'];
         $profile->section     = $request->profile['section'];
         $profile->express     = $request->profile['express'];
-        //$profile->meeting_place = $request->profile['meeting_place'];
         $profile->city        = $request->profile['city'];
         $profile->haircut     = $request->profile['haircut'];
+        $profile->haircolor   = $request->profile['haircolor'];
         $profile->description = $request->profile['description'];
 
         $profile->save();

@@ -10,6 +10,6 @@ class Place extends Model {
 
     // RELATIONS
     public function profiles() {
-        return $this->belongsToMany( Profile::class );
+        return $this->belongsToMany( Profile::class, 'profile_place' );
     }
 }

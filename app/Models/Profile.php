@@ -32,10 +32,9 @@ class Profile extends Model {
         'breast_type',
         'appearance',
         'section',
-        'meeting_place',
         'city',
-        'haircolor',
         'haircut',
+        'haircolor',
         'description',
         'balance',
     ];
