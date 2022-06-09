@@ -1,15 +1,11 @@
+@extends('app')
 
+{{--@section('sidebar')--}}
+{{--    @parent--}}
 
-<div>
-@php( $tmp = '')
-@foreach($test as $block)
+{{--@stop--}}
 
-    @if ($tmp != $block->block_title)
-            <h3> {{$block->block_title }}</h3>
-            @php( $tmp = $block->block_title )
-    @endif
+{{--@section('content')--}}
+{{--	@include('forms.create')--}}
 
-    <p>{{ $block->name }}</p>
-    <p>{{ $block->description }}</p>
-@endforeach
-</div>
+{{--@stop--}}

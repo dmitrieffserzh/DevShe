@@ -1,0 +1,203 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+@font-face {
+  font-family: "Core Sans C 15";
+  src: url(/fonts/CoreSansC-15Thin.eot?bd2fd8b63116b7802ac4393463023781);
+  src: local("Core Sans C 15 Thin"), local("CoreSansC-15Thin"), url(/fonts/CoreSansC-15Thin.eot?bd2fd8b63116b7802ac4393463023781?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-15Thin.woff2?e7306adf7c9bc8feecf622cd55bf632a) format("woff2"), url(/fonts/CoreSansC-15Thin.woff?359aea64df224be71a9da26c32e05b7a) format("woff"), url(/fonts/CoreSansC-15Thin.ttf?c5166e799ad66ff9c6780b9ba6f1edb7) format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Core Sans C 65";
+  src: url(/fonts/CoreSansC-65BoldIt.eot?0d4e2769ab349e0083942d461796f016);
+  src: local("Core Sans C 65 Bold Italic"), local("CoreSansC-65BoldIt"), url(/fonts/CoreSansC-65BoldIt.eot?0d4e2769ab349e0083942d461796f016?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-65BoldIt.woff2?c53c7fa816916449e098435083fab3c4) format("woff2"), url(/fonts/CoreSansC-65BoldIt.woff?22e6326e613a85adbecbd3f94eb7f5b7) format("woff"), url(/fonts/CoreSansC-65BoldIt.ttf?7f4066e41990a3044bc47036ee48f6e6) format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 25";
+  src: url(/fonts/CoreSansC-25ExtraLightIt.eot?ac6eecb8184e2c5d993a90612525d3fe);
+  src: local("Core Sans C 25 ExtraLight Italic"), local("CoreSansC-25ExtraLightIt"), url(/fonts/CoreSansC-25ExtraLightIt.eot?ac6eecb8184e2c5d993a90612525d3fe?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-25ExtraLightIt.woff2?b6821ac714cb5cd63817affde40068bf) format("woff2"), url(/fonts/CoreSansC-25ExtraLightIt.woff?af88e1525fd4e5a910687b83cb68a9a3) format("woff"), url(/fonts/CoreSansC-25ExtraLightIt.ttf?ba1970030bb54323f85b7beb7f04c7c6) format("truetype");
+  font-weight: 200;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 65";
+  src: url(/fonts/CoreSansC-65Bold.eot?4379a99cf0b6e689c5bdbdd205f4beb3);
+  src: local("Core Sans C 65 Bold"), local("CoreSansC-65Bold"), url(/fonts/CoreSansC-65Bold.eot?4379a99cf0b6e689c5bdbdd205f4beb3?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-65Bold.woff2?2ee1cf521b838e6fa9731f5d1bba007c) format("woff2"), url(/fonts/CoreSansC-65Bold.woff?38cfe81771b468c1a6c159bbab11b0cd) format("woff"), url(/fonts/CoreSansC-65Bold.ttf?0e024d0ee78669d437b25a5cf875d7ca) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Core Sans C 35";
+  src: url(/fonts/CoreSansC-35LightIt.eot?cf3785e4b791ecaea6db762fe3c62a9c);
+  src: local("Core Sans C 35 Light Italic"), local("CoreSansC-35LightIt"), url(/fonts/CoreSansC-35LightIt.eot?cf3785e4b791ecaea6db762fe3c62a9c?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-35LightIt.woff2?543d7f9aa15c8a00dc10d3df34e9c5f3) format("woff2"), url(/fonts/CoreSansC-35LightIt.woff?e134ec83046745953af2160b2a7bb2c9) format("woff"), url(/fonts/CoreSansC-35LightIt.ttf?467206c33a93944f04da2cd12f918f0a) format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 55";
+  src: url(/fonts/CoreSansC-55Medium.eot?43f17380c02b76fc17ae6ca4f791158e);
+  src: local("Core Sans C 55 Medium"), local("CoreSansC-55Medium"), url(/fonts/CoreSansC-55Medium.eot?43f17380c02b76fc17ae6ca4f791158e?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-55Medium.woff2?bfb534fcf191425186ef43148db60ae1) format("woff2"), url(/fonts/CoreSansC-55Medium.woff?6c434d2e8345090382d92c21956e483c) format("woff"), url(/fonts/CoreSansC-55Medium.ttf?e97ba63882c22d0d505bc31412d46bf7) format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Core Sans C 85";
+  src: url(/fonts/CoreSansC-85HeavyIt.eot?01328e78e8447442a55bbd98061fd973);
+  src: local("Core Sans C 85 Heavy Italic"), local("CoreSansC-85HeavyIt"), url(/fonts/CoreSansC-85HeavyIt.eot?01328e78e8447442a55bbd98061fd973?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-85HeavyIt.woff2?0ff06bc1c6c3c6478eb0b2d64e41027e) format("woff2"), url(/fonts/CoreSansC-85HeavyIt.woff?7ae15a671b7aaa61453c1e54a385afe2) format("woff"), url(/fonts/CoreSansC-85HeavyIt.ttf?834b6ad1f8c384398f6349160486257b) format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 15";
+  src: url(/fonts/CoreSansC-15ThinIt.eot?64a1f8af02d9a2a9b1246caa6cda188e);
+  src: local("Core Sans C 15 Thin Italic"), local("CoreSansC-15ThinIt"), url(/fonts/CoreSansC-15ThinIt.eot?64a1f8af02d9a2a9b1246caa6cda188e?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-15ThinIt.woff2?d26d979d4d652f4d9739bf6785fb939a) format("woff2"), url(/fonts/CoreSansC-15ThinIt.woff?334c20fb8385dab767a8a57baba34ba6) format("woff"), url(/fonts/CoreSansC-15ThinIt.ttf?408531722a6bf0d181dbf49ae5ce8de3) format("truetype");
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 45";
+  src: url(/fonts/CoreSansC-45RegularIt.eot?f0b6cdd7dc4fb3d809ec0749c65e4ade);
+  src: local("Core Sans C 45 Regular Italic"), local("CoreSansC-45RegularIt"), url(/fonts/CoreSansC-45RegularIt.eot?f0b6cdd7dc4fb3d809ec0749c65e4ade?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-45RegularIt.woff2?8e5512de7e1b332ea9b4b4e9a84a8030) format("woff2"), url(/fonts/CoreSansC-45RegularIt.woff?c9f231f7d37c3d528a3a25aeb83a0abf) format("woff"), url(/fonts/CoreSansC-45RegularIt.ttf?e2bd4d86f50cdd3c5e8c36de90ec22d3) format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 25";
+  src: url(/fonts/CoreSansC-25ExtraLight.eot?9f3461c7593ce90827c7eb619dc4f512);
+  src: local("Core Sans C 25 ExtraLight"), local("CoreSansC-25ExtraLight"), url(/fonts/CoreSansC-25ExtraLight.eot?9f3461c7593ce90827c7eb619dc4f512?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-25ExtraLight.woff2?ad43e89d2993c6c87a2585b07a433536) format("woff2"), url(/fonts/CoreSansC-25ExtraLight.woff?fb810a0c282c43bada635588bb98238e) format("woff"), url(/fonts/CoreSansC-25ExtraLight.ttf?9df19ce3c0da80be628c2fc7b542fe47) format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Core Sans C 75";
+  src: url(/fonts/CoreSansC-75ExtraBoldIt.eot?bc17389c0ee3e2592f1a19394712a9d1);
+  src: local("Core Sans C 75 ExtraBold Italic"), local("CoreSansC-75ExtraBoldIt"), url(/fonts/CoreSansC-75ExtraBoldIt.eot?bc17389c0ee3e2592f1a19394712a9d1?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-75ExtraBoldIt.woff2?f52c70af8ba0eaac3e0ae605ad332c52) format("woff2"), url(/fonts/CoreSansC-75ExtraBoldIt.woff?874120958202cc179c620a22ef7528d6) format("woff"), url(/fonts/CoreSansC-75ExtraBoldIt.ttf?8908b3f68d330389fa603f97a26d1e2b) format("truetype");
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 55";
+  src: url(/fonts/CoreSansC-55MediumIt.eot?737cf980699ebcfc04b9d3e38174e3e2);
+  src: local("Core Sans C 55 Medium Italic"), local("CoreSansC-55MediumIt"), url(/fonts/CoreSansC-55MediumIt.eot?737cf980699ebcfc04b9d3e38174e3e2?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-55MediumIt.woff2?c13707316febee79a64b242cd6804932) format("woff2"), url(/fonts/CoreSansC-55MediumIt.woff?c404e36dbd1647a8de38c701a3befbab) format("woff"), url(/fonts/CoreSansC-55MediumIt.ttf?1ec02512c97280d8925149ccde7ebc49) format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 95";
+  src: url(/fonts/CoreSansC-95Black.eot?d8012789c8f184eefa733e89d04982a1);
+  src: local("Core Sans C 95 Black"), local("CoreSansC-95Black"), url(/fonts/CoreSansC-95Black.eot?d8012789c8f184eefa733e89d04982a1?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-95Black.woff2?dec43e55f7f6ce307e21538d6744f51a) format("woff2"), url(/fonts/CoreSansC-95Black.woff?43cbf49f5fda3c1321f5fa126f59f466) format("woff"), url(/fonts/CoreSansC-95Black.ttf?08aaf321a4137322040130ed679a6eda) format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Core Sans C 75";
+  src: url(/fonts/CoreSansC-75ExtraBold.eot?c76bf6545268d180170710b57883a31d);
+  src: local("Core Sans C 75 ExtraBold"), local("CoreSansC-75ExtraBold"), url(/fonts/CoreSansC-75ExtraBold.eot?c76bf6545268d180170710b57883a31d?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-75ExtraBold.woff2?91987e1165cb32afe1b31f1f7ebeebc1) format("woff2"), url(/fonts/CoreSansC-75ExtraBold.woff?9c0fdafd8a902a7299b31943604bfb7d) format("woff"), url(/fonts/CoreSansC-75ExtraBold.ttf?d2a095401e59bfff4ec57c25347ca5fb) format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Core Sans C 95";
+  src: url(/fonts/CoreSansC-95BlackIt.eot?11082883a229479d41ef09f3c49ff099);
+  src: local("Core Sans C 95 Black Italic"), local("CoreSansC-95BlackIt"), url(/fonts/CoreSansC-95BlackIt.eot?11082883a229479d41ef09f3c49ff099?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-95BlackIt.woff2?e97fa2e7914ebcb1214633435a1fe0a2) format("woff2"), url(/fonts/CoreSansC-95BlackIt.woff?521c168e3bc7f916813c9388ede7824f) format("woff"), url(/fonts/CoreSansC-95BlackIt.ttf?512f33639475eb4289be8313eecf4e6a) format("truetype");
+  font-weight: 900;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Core Sans C 35";
+  src: url(/fonts/CoreSansC-35Light.eot?1e17099cd1b36bd02c016efd3a45df01);
+  src: local("Core Sans C 35 Light"), local("CoreSansC-35Light"), url(/fonts/CoreSansC-35Light.eot?1e17099cd1b36bd02c016efd3a45df01?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-35Light.woff2?2484d4d7d2248c309dcf4114c431e31b) format("woff2"), url(/fonts/CoreSansC-35Light.woff?42fa5b474bbbd133f28877bdcd8ef9e8) format("woff"), url(/fonts/CoreSansC-35Light.ttf?03ca56e1842c59195f2ca2034661eaa8) format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Core Sans C 85";
+  src: url(/fonts/CoreSansC-85Heavy.eot?55e27562ff9a45d4dec5e878ebb9faeb);
+  src: local("Core Sans C 85 Heavy"), local("CoreSansC-85Heavy"), url(/fonts/CoreSansC-85Heavy.eot?55e27562ff9a45d4dec5e878ebb9faeb?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-85Heavy.woff2?699a44c818c0286d42f7d1ec519cb061) format("woff2"), url(/fonts/CoreSansC-85Heavy.woff?5f90687ad2516bcc3afa9f459d17f3ae) format("woff"), url(/fonts/CoreSansC-85Heavy.ttf?c516857f87e6d3899902718343e6706d) format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Core Sans C 45";
+  src: url(/fonts/CoreSansC-45Regular.eot?a19ac9881c2e783b12137fa45a849be7);
+  src: local("Core Sans C 45 Regular"), local("CoreSansC-45Regular"), url(/fonts/CoreSansC-45Regular.eot?a19ac9881c2e783b12137fa45a849be7?#iefix) format("embedded-opentype"), url(/fonts/CoreSansC-45Regular.woff2?ded1f20adc1f9c82931ec8dd8f532999) format("woff2"), url(/fonts/CoreSansC-45Regular.woff?787c3a009f8b7b8acd2185c45cd25fdb) format("woff"), url(/fonts/CoreSansC-45Regular.ttf?403f49d3a68c1240a81c49ef372586c4) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+/*  MAIN  =========================================================================================================== */
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.body {
+  font-family: "Core Sans C 45";
+}
+
+.container, .footer__container {
+  padding: 0 30px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.footer {
+  background: #f8f8f8;
+}
+.footer .copyright {
+  background: #e4e4e4;
+  line-height: 3rem;
+}

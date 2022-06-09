@@ -1,0 +1,33 @@
+@import "reset.scss";
+@import "fonts.scss";
+/*  MAIN  =========================================================================================================== */
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+.body {
+    font-family: "Core Sans C 45";
+}
+
+
+
+.container {
+    padding: 0 30px;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.footer {
+    background: #f8f8f8;
+    &__container {
+        @extend .container;
+    }
+    & .copyright {
+        background: #e4e4e4;
+        line-height: 3rem;
+    }
+}
