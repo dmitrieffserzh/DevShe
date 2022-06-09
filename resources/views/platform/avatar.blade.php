@@ -1,4 +1,4 @@
-<div class="d-sm-flex flex-row flex-wrap text-center text-sm-left align-items-center">
+<div class="d-sm-flex flex-row flex-wrap text-sm-left align-items-center">
 	<span class="thumb-sm avatar m-r-xs" style="width: 40px; height: 40px; overflow: hidden">
         <img src="{{ $image ?: 'https://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mp' }}"
              class="bg-light" alt="{{ $name }}" style="height: 100%;width: auto;max-width: fit-content;">

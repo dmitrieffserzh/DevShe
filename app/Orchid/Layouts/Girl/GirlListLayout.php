@@ -33,23 +33,23 @@ class GirlListLayout extends Table {
 
                   return '<span style="display: block;width: 16px;height: 16px;border-radius: 50%;background: ' . $color . ';"></span>';
               } ),
-//            TD::make( 'private', '' )
-//              ->align( 'left' )
-//              ->filter( Select::make()->options(
-//                  [
-//                      0 => 'Публичная анкета',
-//                      1 => 'Закрытая анкета'
-//                  ]
-//              ) )
-//              ->width( '30px' )
-//              ->render( function ( $profile ) {
-//                  $color = '#eff1f9';
-//                  if ( $profile->private == 1 ) {
-//                      $color = '#43d040';
-//                  }
-//
-//                  return '<span style="display: block;width: 16px;height: 16px;border-radius: 50%;background: ' . $color . ';"></span>';
-//              } ),
+            TD::make( 'private', '' )
+              ->align( 'left' )
+              ->filter( Select::make()->options(
+                  [
+                      0 => 'Публичная анкета',
+                      1 => 'Закрытая анкета'
+                  ]
+              ) )
+              ->width( '30px' )
+              ->render( function ( $profile ) {
+                  $color = '#eff1f9';
+                  if ( $profile->private == 1 ) {
+                      $color = '#43d040';
+                  }
+
+                  return '<span style="display: block;width: 16px;height: 16px;border-radius: 50%;background: ' . $color . ';"></span>';
+              } ),
             TD::make( 'id', 'ID' )
               ->sort()
               ->cantHide()
