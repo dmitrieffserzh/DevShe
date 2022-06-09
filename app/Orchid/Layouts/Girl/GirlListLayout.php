@@ -5,10 +5,12 @@ declare( strict_types=1 );
 namespace App\Orchid\Layouts\Girl;
 
 use App\Models\Profile;
+use App\Orchid\Layouts\Girl\GirlListAvatarLayout;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -28,8 +30,26 @@ class GirlListLayout extends Table {
                   if ( $profile->active == 1 ) {
                       $color = '#43d040';
                   }
+
                   return '<span style="display: block;width: 16px;height: 16px;border-radius: 50%;background: ' . $color . ';"></span>';
               } ),
+//            TD::make( 'private', '' )
+//              ->align( 'left' )
+//              ->filter( Select::make()->options(
+//                  [
+//                      0 => 'Публичная анкета',
+//                      1 => 'Закрытая анкета'
+//                  ]
+//              ) )
+//              ->width( '30px' )
+//              ->render( function ( $profile ) {
+//                  $color = '#eff1f9';
+//                  if ( $profile->private == 1 ) {
+//                      $color = '#43d040';
+//                  }
+//
+//                  return '<span style="display: block;width: 16px;height: 16px;border-radius: 50%;background: ' . $color . ';"></span>';
+//              } ),
             TD::make( 'id', 'ID' )
               ->sort()
               ->cantHide()
@@ -37,13 +57,19 @@ class GirlListLayout extends Table {
               ->render( function ( Profile $profile ) {
                   return '<strong>' . $profile->id . '</strong>';
               } )->width( '100px' ),
-
             TD::make( 'name', 'Имя' )
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
               ->render( function ( Profile $profile ) {
-                  return '<strong><a href=' . route( 'platform.girls.edit', $profile->id ) . '>' .$profile->name . '</a></strong>';
+                  $imagePath = $profile->attachment()->first()->toArray();
+
+                  return view( 'platform.avatar', [
+                      'id'    => $profile->id,
+                      'name'  => $profile->name,
+                      'image' => '/storage/' . $imagePath['path'] . $imagePath['name'] . '.' . $imagePath['extension']
+
+                  ] );
               } ),
             TD::make( 'phone', 'Телефон' )
               ->sort()
@@ -72,7 +98,7 @@ class GirlListLayout extends Table {
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )
-                                           ->icon( 'trash' )->style('color: #df0031;')
+                                           ->icon( 'trash' )->style( 'color: #df0031;' )
                                            ->confirm( __( 'Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' ) )
                                            ->method( 'remove', [
                                                'id' => $profile->id,

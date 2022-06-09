@@ -49,7 +49,6 @@ class GirlListScreen extends Screen {
 
     public function layout(): iterable {
         return [
-            //UserFiltersLayout::class,
             GirlListLayout::class,
 
 //            Layout::modal('asyncEditUserModal', UserEditLayout::class)

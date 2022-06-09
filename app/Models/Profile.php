@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Orchid\Presenters\GirlPresenter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Filters\Filterable;
@@ -43,8 +44,8 @@ class Profile extends Model {
 
     public $timestamps = false;
 
-    protected $allowedFilters = [ 'id', 'name', 'phone' ];
-    protected $allowedSorts = [ 'id' ];
+    protected $allowedFilters = [ 'id', 'private', 'name', 'phone' ];
+    protected $allowedSorts = [ 'id', 'private', 'active' ];
 
 
     // RELATIONS

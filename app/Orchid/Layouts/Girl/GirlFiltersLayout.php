@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Orchid\Layouts\User;
+namespace App\Orchid\Layouts\Girl;
 
 use App\Models\Field;
 use App\Models\Price;
@@ -10,9 +10,7 @@ use Orchid\Screen\Layouts\Selection;
 
 class GirlFiltersLayout extends Selection
 {
-    /**
-     * @return string[]|Filter[]
-     */
+
     public function filters(): array
     {
         return [

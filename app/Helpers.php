@@ -77,7 +77,7 @@ class Helpers {
 
     public static function getGirlAppearance() {
         return [
-            0 => 'Выберите тип',
+            0 => 'Не выбрано',
             1 => 'Славянская',
             2 => 'Азиатская',
             3 => 'Кавказская',
@@ -87,7 +87,7 @@ class Helpers {
 
     public static function getGirlHaircut() {
         return [
-            0 => 'Выберите тип',
+            0 => 'Не выбрано',
             1 => 'Частичная депиляция',
             2 => 'Полная депиляция',
         ];
@@ -95,7 +95,7 @@ class Helpers {
 
     public static function getGirlHaircolor() {
         return [
-            0 => 'Выберите вет',
+            0 => 'Не выбрано',
             1 => 'Блондинка',
             2 => 'Шатенка',
             3 => 'Брюнетка',
@@ -106,7 +106,7 @@ class Helpers {
 
     public static function getGirlSection() {
         return [
-            0 => 'Выберите раздел',
+            0 => 'Не выбрано',
             1 => 'Элитные',
             2 => 'Индивидуалки',
             3 => 'Дешевые',
