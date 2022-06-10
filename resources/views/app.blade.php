@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
     <script src="{{ asset('assets/js/app.js') }}" defer></script>
 </head>
@@ -88,15 +88,7 @@
         </div>
     </div>
 </footer>
-<div class="modal" data-modal="login">
-    <svg class="modal__close js-modal-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path
-            d="M23.954 21.03l-9.184-9.095 9.092-9.174-1.832-1.807-9.09 9.179-9.176-9.088-1.81 1.81 9.186 9.105-9.095 9.184 1.81 1.81 9.112-9.192 9.18 9.1z"
-            fill="#D1D1D1"></path>
-    </svg>
-    <p class="modal__title">Войти</p>
-    <p class="modal__subtitle">Авторизируйтесь в системе заполнив необходимые поля для входа</p>
-</div>
+
 <div class="modal" data-modal="register">
     <svg class="modal__close js-modal-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path
@@ -105,6 +97,7 @@
     </svg>
     <p class="modal__title">Зарегистрироваться</p>
 </div>
+@include('auth.login')
 <div class="overlay" id="overlay-modal"></div>
 </body>
 </html>

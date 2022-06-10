@@ -530,3 +530,57 @@ body {
 .copyright-links a:hover {
   color: #BE0C0C;
 }
+
+/*  FORM LOGIN  ========================================================================================================= */
+.form-login {
+  margin: 1rem 2rem;
+}
+.form-login label {
+  display: block;
+  position: relative;
+  margin: 0 0 1rem;
+}
+.form-login__input {
+  border: 1px Solid #efefef;
+  background: #fff;
+  border-radius: 6px;
+  padding: 1.35rem 1rem 1.35rem 3rem;
+  width: 100%;
+}
+.form-login__button {
+  border: 1px Solid #BE0C0C;
+  background: #BE0C0C;
+  padding: 1.35rem 1rem 1.35rem 1rem;
+  color: #fff;
+  margin: 0 0 1rem;
+  width: 100%;
+  border-radius: 6px;
+  font-family: "Core Sans C 65";
+}
+.form-login .icon {
+  background-repeat: no-repeat;
+  background-size: 20px;
+}
+.form-login .icon--email {
+  background-image: url("/images/email_icon.png");
+  background-position: 1rem center;
+}
+.form-login .icon--password {
+  background-image: url("/images/password_icon.png");
+  background-position: 1rem center;
+}
+.form-login .show-password {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  width: 1.5rem;
+  height: 100%;
+  background-image: url("/images/show_password_icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+}
+.form-login .show-password.active {
+  background-image: url("/images/hide-password_icon.png");
+}

@@ -43,3 +43,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+// SHOW PASSWORD
+let showPassIcons = document.querySelectorAll('.show-password');
+
+showPassIcons.forEach(function (item) {
+    item.addEventListener('click', function (e) {
+        if (item.previousElementSibling.getAttribute('type') == 'password') {
+            item.previousElementSibling.setAttribute('type', 'text');
+        } else {
+            item.previousElementSibling.setAttribute('type', 'password');
+        }
+    });
+});
+
+
+

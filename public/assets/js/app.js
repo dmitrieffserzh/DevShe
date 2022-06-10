@@ -2202,6 +2202,17 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('.modal.active').classList.remove('active');
     this.classList.remove('active');
   });
+}); // SHOW PASSWORD
+
+var showPassIcons = document.querySelectorAll('.show-password');
+showPassIcons.forEach(function (item) {
+  item.addEventListener('click', function (e) {
+    if (item.previousElementSibling.getAttribute('type') == 'password') {
+      item.previousElementSibling.setAttribute('type', 'text');
+    } else {
+      item.previousElementSibling.setAttribute('type', 'password');
+    }
+  });
 });
 
 /***/ }),
