@@ -10,21 +10,81 @@
     <script src="{{ asset('assets/js/app.js') }}"></script>
 </head>
 <body>
-    <header class="header">
-        HEADRE
-    </header>
-    <main class="main">
-        MAIN
-    </main>
-    <footer class="footer">
-        <div class="footer__container">
-            footer
-        </div>
-        <div class="copyright">
-            <div class="footer__container">
-                2022 &copy; Все права защищены
+<header class="header">
+    <div class="header__container">
+        <div class="header-top">
+            <div class="header-top__menu">
+                <a href="#">Элитные</a>
+                <a href="#">Индивидуалки</a>
+                <a href="#">Дешевые</a>
+                <a href="#">БДСМ</a>
+                <a href="#">Массажистки</a>
+            </div>
+            <div class="header-top__social">
+                <a href="" class="ws"></a>
+                <a href="" class="tg"></a>
             </div>
         </div>
-    </footer>
+    </div>
+    <div class="header__container">
+        <div class="header-main">
+            <a href="" class="header-main__logo">
+                <img src="/images/logo_dark.png" alt="">
+            </a>
+            <div class="header-main__search">
+                <div class="header-search">
+                    <input type="text" name="" placeholder="Введите имя или id  девушки" class="header-search__input">
+                    <button class="header-search__button"></button>
+                </div>
+                <a href="" class="header-search__link">Поиск по <span></span></a>
+            </div>
+            <div class="header-main__buttons">
+                <a href="" class="button button--add"><span>Добавить анкету</span></a>
+                <a href="" class="button button--login"><span>Войти в кабинет</span></a>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="main">
+    <div class="main__container">
+
+    </div>
+</main>
+<footer class="footer">
+    <div class="footer__container">
+        <div class="footer-links">
+            <a href="/" class="footer-links__logo">
+                <img src="/images/logo_dark.png" alt="">
+            </a>
+            <div class="footer-links__menu">
+                <a href="#">Элитные</a>
+                <a href="#">Индивидуалки</a>
+                <a href="#">Дешевые</a>
+                <a href="#">БДСМ</a>
+                <a href="#">Массажистки</a>
+            </div>
+            <div class="footer-links__social">
+                <a href="" class="ws"></a>
+                <a href="" class="tg"></a>
+            </div>
+        </div>
+        <div class="footer-offer">
+            Вся представленная информация, касающаяся анкет и объявлений проституток, носит информационный характер и ни
+            при каких условиях не является публичной офертой, определяемой положениями Статьи 437(2) Гражданского
+            кодекса РФ.<br>
+            Услуги в сфере знакомств. Строго от 18 лет. Все объявления размещены с согласия владельца и являются частной
+            информацией.
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="copyright__container">
+            <div class="copyright-text">2022 &copy; Все права защищены</div>
+            <div class="copyright-links">
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Пользовательское соглашение</a>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
