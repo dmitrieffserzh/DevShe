@@ -300,20 +300,24 @@ class GirlEditScreen extends Screen {
                              ->placeholder( '₽' ),
                     ] ),
                 ] )->title( 'Тариф "Ночь"' ),
-                Layout::columns( [
-                    Layout::rows( [
-                        Group::make( [
-                            Input::make( 'profile.prices.night_all_in' )
-                                ->title( 'Ночь у меня:' )
-                                //->mask( '₽ 9999999' )
-                                ->placeholder( '₽' ),
-                            Input::make( 'profile.prices.night_all_out' )
-                                ->title( 'Ночь у тебя:' )
-                                //->mask( '₽ 9999999' )
-                                ->placeholder( '₽' ),
-                        ] ),
-                    ] )->title( 'Тариф "Полная ночь"' ),
             ] ),
+
+
+            Layout::columns( [
+                Layout::rows( [
+                    Group::make( [
+                        Input::make( 'profile.prices.night_all_in' )
+                            ->title( 'Ночь у меня:' )
+                            //->mask( '₽ 9999999' )
+                            ->placeholder( '₽' ),
+                        Input::make( 'profile.prices.night_all_out' )
+                            ->title( 'Ночь у тебя:' )
+                            //->mask( '₽ 9999999' )
+                            ->placeholder( '₽' ),
+                    ] ),
+                ] )->title( 'Тариф "Полная ночь"' ),
+            ] ),
+
 
             // SERVICES
             $this->getServices(),
