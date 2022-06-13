@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->string( 'night_two_hours_in' )->nullable();
             $table->string( 'night_one_hour_out' )->nullable();
             $table->string( 'night_two_hours_out' )->nullable();
+            $table->string( 'night_all_in' )->nullable();
+            $table->string( 'night_all_out' )->nullable();
 
             $table->foreign( 'profile_id' )->references( 'id' )->on( 'profiles' )->onDelete( 'cascade' );
         } );

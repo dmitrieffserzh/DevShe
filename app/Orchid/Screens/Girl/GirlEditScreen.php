@@ -263,23 +263,19 @@ class GirlEditScreen extends Screen {
                         Input::make( 'profile.prices.day_one_hour_in' )
                              ->title( 'У меня 1 час:' )
                             //->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
                         Input::make( 'profile.prices.day_two_hours_in' )
                              ->title( 'У меня 2 часа:' )
                             //->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
                         Input::make( 'profile.prices.day_one_hour_out' )
                              ->title( 'У тебя 1 час:' )
                             //->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
                         Input::make( 'profile.prices.day_two_hours_out' )
                              ->title( 'У тебя 2 часа:' )
                             //->mask( '₽ 9999999' )
-                             ->placeholder( '₽' )
-                             ->required(),
+                             ->placeholder( '₽' ),
                     ] ),
                 ] )->title( 'Тариф "День"' ),
 
@@ -304,6 +300,19 @@ class GirlEditScreen extends Screen {
                              ->placeholder( '₽' ),
                     ] ),
                 ] )->title( 'Тариф "Ночь"' ),
+                Layout::columns( [
+                    Layout::rows( [
+                        Group::make( [
+                            Input::make( 'profile.prices.night_all_in' )
+                                ->title( 'Ночь у меня:' )
+                                //->mask( '₽ 9999999' )
+                                ->placeholder( '₽' ),
+                            Input::make( 'profile.prices.night_all_out' )
+                                ->title( 'Ночь у тебя:' )
+                                //->mask( '₽ 9999999' )
+                                ->placeholder( '₽' ),
+                        ] ),
+                    ] )->title( 'Тариф "Полная ночь"' ),
             ] ),
 
             // SERVICES
