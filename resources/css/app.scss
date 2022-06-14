@@ -384,6 +384,10 @@ body {
 .form-login {
     margin: 1rem 2rem;
 
+    &__alert {
+        padding: 0 0 1rem;
+    }
+
     & label {
         display: block;
         position: relative;
@@ -407,6 +411,74 @@ body {
         width: 100%;
         border-radius: 6px;
         font-family: 'Core Sans C 65';
+        cursor: pointer;
+    }
+
+    & .icon {
+        background-repeat: no-repeat;
+        background-size: 20px;
+
+        &--email {
+            background-image: url("/images/email_icon.png");
+            background-position: 1rem center;
+        }
+
+        &--password {
+            background-image: url("/images/password_icon.png");
+            background-position: 1rem center;
+        }
+    }
+
+    .show-password {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 1rem;
+        width: 1.5rem;
+        height: 100%;
+        background-image: url('/images/show_password_icon.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 20px;
+
+        &.active {
+            background-image: url("/images/hide-password_icon.png");
+        }
+    }
+}
+
+/*  FORM REGISTER  ========================================================================================================= */
+.form-register {
+    margin: 1rem 2rem;
+
+    &__alert {
+        padding: 0 0 1rem;
+    }
+
+    & label {
+        display: block;
+        position: relative;
+        margin: 0 0 1rem;
+    }
+
+    &__input {
+        border: 1px Solid #efefef;
+        background: #fff;
+        border-radius: 6px;
+        padding: 1.35rem 1rem 1.35rem 3rem;
+        width: 100%;
+    }
+
+    &__button {
+        border: 1px Solid #BE0C0C;
+        background: #BE0C0C;
+        padding: 1.35rem 1rem 1.35rem 1rem;
+        color: #fff;
+        margin: 0 0 1rem;
+        width: 100%;
+        border-radius: 6px;
+        font-family: 'Core Sans C 65';
+        cursor: pointer;
     }
 
     & .icon {

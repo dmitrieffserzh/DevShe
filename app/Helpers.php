@@ -114,4 +114,9 @@ class Helpers {
             5 => 'Массажистки'
         ];
     }
+
+    public static function getGirlSectionValue($key) {
+        $values = self::getGirlSection();
+        return $values[$key];
+    }
 }

@@ -2166,6 +2166,9 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
  // MODAL WINDOW
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -2207,11 +2210,55 @@ document.addEventListener('DOMContentLoaded', function () {
 var showPassIcons = document.querySelectorAll('.show-password');
 showPassIcons.forEach(function (item) {
   item.addEventListener('click', function (e) {
-    if (item.previousElementSibling.getAttribute('type') == 'password') {
+    if (item.previousElementSibling.getAttribute('type') === 'password') {
       item.previousElementSibling.setAttribute('type', 'text');
     } else {
       item.previousElementSibling.setAttribute('type', 'password');
     }
+  });
+}); // LOGIN
+
+var logonForm = document.querySelector('.form-login');
+logonForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  axios({
+    method: 'POST',
+    url: 'login',
+    data: new FormData(logonForm)
+  }).then(function (response) {
+    document.querySelector('.form-login__alert').innerText = '';
+    document.querySelector('.form-login__alert').innerText = response.data.message;
+    document.querySelector('.form-login__alert').style.color = '#22b21b';
+    setTimeout(function () {
+      location.reload();
+    }, 3000);
+  })["catch"](function (error) {
+    console.log(error.response.data.message);
+    document.querySelector('.form-login__alert').innerText = '';
+    document.querySelector('.form-login__alert').innerText = error.response.data.message;
+    document.querySelector('.form-login__alert').style.color = '#ea1c1c';
+  });
+}); // REGISTER
+
+var registerForm = document.querySelector('.form-register');
+registerForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  axios({
+    method: 'POST',
+    url: 'register',
+    data: new FormData(registerForm)
+  }).then(function (response) {
+    document.querySelector('.form-register__alert').innerText = '';
+    document.querySelector('.form-register__alert').innerText = response.data.message;
+    document.querySelector('.form-register__alert').style.color = '#22b21b';
+    setTimeout(function () {
+      location.reload();
+    }, 3000);
+  })["catch"](function (error) {
+    console.log(error.response.data.message);
+    document.querySelector('.form-register__alert').innerText = '';
+    document.querySelector('.form-register__alert').innerText = error.response.data.message;
+    document.querySelector('.form-register__alert').style.color = '#ea1c1c';
   });
 });
 
