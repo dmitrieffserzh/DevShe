@@ -95,7 +95,7 @@ registerForm.addEventListener('submit', function (event) {
         document.querySelector('.form-register__alert').innerText = response.data.message;
         document.querySelector('.form-register__alert').style.color = '#22b21b';
         setTimeout(() => {
-            location.reload();
+            location.href = '/profile';
         }, 3000);
 
     }).catch((error) => {
