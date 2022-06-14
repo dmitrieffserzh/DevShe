@@ -105,4 +105,3 @@ registerForm.addEventListener('submit', function (event) {
         document.querySelector('.form-register__alert').style.color = '#ea1c1c';
     });
 });
-

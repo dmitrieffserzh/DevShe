@@ -42,7 +42,7 @@
                 <a href="" class="button button--add js-open-modal"
                    data-modal="register"><span>Добавить анкету</span></a>
                 @if (Auth::check())
-                    <a href="" class="button button--login"><span>Личный кабинет</span></a>
+                    <a href="{{ route('profile.index') }}" class="button button--login"><span>Личный кабинет</span></a>
                 @else
                     <a href="" class="button button--login js-open-modal"
                        data-modal="login"><span>Войти в кабинет</span></a>
@@ -53,7 +53,7 @@
 </header>
 <main class="main">
     <div class="main__container">
-
+        @yield('content')
     </div>
 </main>
 <footer class="footer">

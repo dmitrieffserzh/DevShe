@@ -2252,7 +2252,7 @@ registerForm.addEventListener('submit', function (event) {
     document.querySelector('.form-register__alert').innerText = response.data.message;
     document.querySelector('.form-register__alert').style.color = '#22b21b';
     setTimeout(function () {
-      location.reload();
+      location.href = '/profile';
     }, 3000);
   })["catch"](function (error) {
     console.log(error.response.data.message);
