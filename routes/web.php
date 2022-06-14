@@ -15,7 +15,7 @@ use App\Http\Controllers\ProfilesController;
 
 Route::get('/', function () {
     return view('app');
-});
+})->name( 'main' );
 
 
 Route::get( 'profile', [ ProfilesController::class, 'index' ] )->name( 'profile.index' );

@@ -28,7 +28,7 @@
     </div>
     <div class="header__container">
         <div class="header-main">
-            <a href="" class="header-main__logo">
+            <a href="{{ route('main') }}" class="header-main__logo">
                 <img src="/images/logo_dark.png" alt="">
             </a>
             <div class="header-main__search">
