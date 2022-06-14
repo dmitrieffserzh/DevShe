@@ -52,7 +52,7 @@
     </div>
 </header>
 <main class="main">
-    <div class="main__container">
+    <div class="main__container {{ Request::segment(1) == 'profile' ? 'main__container--with-aside' : ''}}">
         @yield('content')
     </div>
 </main>

@@ -1,4 +1,7 @@
 @extends('app')
 @section('content')
-PROFILE
+    @include('profiles.aside')
+    <div class="content">
+        CONTENT
+    </div>
 @endsection
