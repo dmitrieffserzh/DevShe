@@ -88,7 +88,7 @@ class GirlEditScreen extends Screen {
                   } )
                   ->select( 'services.name as block_title', 'services_field.name', 'services_field.id as service_id', 'fields.id', 'fields.description' )
                   ->orderBy( 'services.id' )
-                  ->orderBy( 'services_field.sort')
+                  ->orderBy( 'services_field.sort' )
                   ->get();
 
         $arr = [];
@@ -307,13 +307,13 @@ class GirlEditScreen extends Screen {
                 Layout::rows( [
                     Group::make( [
                         Input::make( 'profile.prices.night_all_in' )
-                            ->title( 'Ночь у меня:' )
+                             ->title( 'Ночь у меня:' )
                             //->mask( '₽ 9999999' )
-                            ->placeholder( '₽' ),
+                             ->placeholder( '₽' ),
                         Input::make( 'profile.prices.night_all_out' )
-                            ->title( 'Ночь у тебя:' )
+                             ->title( 'Ночь у тебя:' )
                             //->mask( '₽ 9999999' )
-                            ->placeholder( '₽' ),
+                             ->placeholder( '₽' ),
                     ] ),
                 ] )->title( 'Тариф "Полная ночь"' ),
             ] ),
@@ -369,9 +369,15 @@ class GirlEditScreen extends Screen {
         $profile->save();
 
         $profile->places()->sync( $request->profile['places'] );
-        $profile->stations()->sync( $request->profile['stations'] );
-        $profile->prices()->create( $request->profile['prices'] );
-        $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
+        if ( isset( $request->profile['stations'] ) ) {
+            $profile->stations()->sync( $request->profile['stations'] );
+        }
+        if ( isset( $request->profile['prices'] ) ) {
+            $profile->prices()->create( $request->profile['prices'] );
+        }
+        if ( isset( $request->profile['attachment'] ) ) {
+            $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
+        }
 
         $collection       = collect( $request->profile['services'] );
         $filteredServices = $collection->filter( function ( $value ) {
@@ -399,9 +405,15 @@ class GirlEditScreen extends Screen {
         $profile->update( $request->profile );
 
         $profile->places()->sync( $request->profile['places'] );
-        $profile->stations()->sync( $request->profile['stations'] );
-        $profile->prices()->update( $request->profile['prices'] );
-        $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
+        if ( isset( $request->profile['stations'] ) ) {
+            $profile->stations()->sync( $request->profile['stations'] );
+        }
+        if ( isset( $request->profile['prices'] ) ) {
+            $profile->prices()->update( $request->profile['prices'] );
+        }
+        if ( isset( $request->profile['attachment'] ) ) {
+            $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
+        }
 
         $collection       = collect( $request->profile['services'] );
         $filteredServices = $collection->filter( function ( $value ) {
