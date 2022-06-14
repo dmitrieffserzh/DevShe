@@ -6,8 +6,6 @@
     </svg>
     <p class="modal__title">Войти</p>
     <p class="modal__subtitle">Авторизируйтесь в системе заполнив необходимые поля для входа</p>
-
-
     <form class="form-login" method="POST" action="">
         <div class="form-login__alert"></div>
         @csrf

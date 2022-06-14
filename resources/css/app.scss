@@ -264,26 +264,32 @@ body {
         @extend .container;
         height: 68.5vh;
     }
+
     &__container--with-aside {
         display: flex;
         flex-direction: row;
     }
+
     & .aside {
         width: 100%;
         max-width: 300px;
     }
+
     & .content {
 
     }
 }
+
 .aside {
     &-menu {
         &__list {
 
         }
+
         &__item {
-        display: block;
+            display: block;
             padding: 1rem;
+
             & a {
 
             }
@@ -472,6 +478,11 @@ body {
         }
     }
 }
+@media screen and (max-width: 767px) {
+    .form-login {
+        margin: 1rem;
+    }
+}
 
 /*  FORM REGISTER  ================================================================================================== */
 .form-register {
@@ -537,5 +548,11 @@ body {
         &.active {
             background-image: url("/images/hide-password_icon.png");
         }
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .form-register {
+        margin: 1rem;
     }
 }
