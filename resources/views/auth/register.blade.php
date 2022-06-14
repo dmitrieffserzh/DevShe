@@ -5,7 +5,7 @@
             fill="#D1D1D1"></path>
     </svg>
     <p class="modal__title">Регистрация</p>
-    <p class="modal__subtitle">Зарегистрируйтесь в системе заполнив необходимые поля для входа</p>
+    <p class="modal__subtitle">Зарегистрируйтесь в системе заполнив необходимые поля</p>
     <form class="form-register" method="POST" action="">
         <div class="form-register__alert"></div>
         @csrf
