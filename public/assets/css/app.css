@@ -450,6 +450,10 @@ body {
   width: 100%;
   max-width: 300px;
 }
+.aside-menu__item {
+  display: block;
+  position: 1rem;
+}
 /*  FOOTER  ========================================================================================================= */
 .footer {
   background: #f8f8f8;
