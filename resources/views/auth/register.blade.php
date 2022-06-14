@@ -4,13 +4,13 @@
             d="M23.954 21.03l-9.184-9.095 9.092-9.174-1.832-1.807-9.09 9.179-9.176-9.088-1.81 1.81 9.186 9.105-9.095 9.184 1.81 1.81 9.112-9.192 9.18 9.1z"
             fill="#D1D1D1"></path>
     </svg>
-    <p class="modal__title">Зарегистрироваться</p>
+    <p class="modal__title">Регистрация</p>
     <p class="modal__subtitle">Зарегистрируйтесь в системе заполнив необходимые поля для входа</p>
     <form class="form-register" method="POST" action="">
         <div class="form-register__alert"></div>
         @csrf
         <label for="">
-            <input class="form-register__input icon icon--name" type="text" name="name" placeholder="Имя" required
+            <input class="form-register__input icon icon--user" type="text" name="name" placeholder="Имя" required
                    autofocus>
         </label>
         <label for="">

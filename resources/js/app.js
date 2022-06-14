@@ -1,4 +1,3 @@
-import './bootstrap';
 import 'axios';
 
 
@@ -52,8 +51,10 @@ showPassIcons.forEach(function (item) {
     item.addEventListener('click', function (e) {
         if (item.previousElementSibling.getAttribute('type') === 'password') {
             item.previousElementSibling.setAttribute('type', 'text');
+            item.classList.add('active');
         } else {
             item.previousElementSibling.setAttribute('type', 'password');
+            item.classList.remove('active');
         }
     });
 });

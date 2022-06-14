@@ -10,7 +10,8 @@
         <div class="form-login__alert"></div>
         @csrf
         <label for="">
-            <input class="form-login__input icon icon--email" type="text" name="email" placeholder="E-mail" required autofocus>
+            <input class="form-login__input icon icon--email" type="text" name="email" placeholder="E-mail" required
+                   autofocus>
         </label>
         <label for="">
             <input class="form-login__input icon icon--password" type="password" name="password" required
