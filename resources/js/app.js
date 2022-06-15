@@ -1,5 +1,5 @@
+import './bootstrap';
 import 'axios';
-
 
 // MODAL WINDOW
 document.addEventListener('DOMContentLoaded', function () {
@@ -61,48 +61,52 @@ showPassIcons.forEach(function (item) {
 
 // LOGIN
 let logonForm = document.querySelector('.form-login');
-logonForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    axios({
-        method: 'POST',
-        url: 'login',
-        data: new FormData(logonForm)
-    }).then((response) => {
-        document.querySelector('.form-login__alert').innerText = '';
-        document.querySelector('.form-login__alert').innerText = response.data.message;
-        document.querySelector('.form-login__alert').style.color = '#22b21b';
-        setTimeout(() => {
-            location.reload();
-        }, 3000);
+if (logonForm) {
+    logonForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        axios({
+            method: 'POST',
+            url: 'login',
+            data: new FormData(logonForm)
+        }).then((response) => {
+            document.querySelector('.form-login__alert').innerText = '';
+            document.querySelector('.form-login__alert').innerText = response.data.message;
+            document.querySelector('.form-login__alert').style.color = '#22b21b';
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
 
-    }).catch((error) => {
-        console.log(error.response.data.message);
-        document.querySelector('.form-login__alert').innerText = '';
-        document.querySelector('.form-login__alert').innerText = error.response.data.message;
-        document.querySelector('.form-login__alert').style.color = '#ea1c1c';
+        }).catch((error) => {
+            console.log(error.response.data.message);
+            document.querySelector('.form-login__alert').innerText = '';
+            document.querySelector('.form-login__alert').innerText = error.response.data.message;
+            document.querySelector('.form-login__alert').style.color = '#ea1c1c';
+        });
     });
-});
+}
 
 // REGISTER
 let registerForm = document.querySelector('.form-register');
-registerForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-    axios({
-        method: 'POST',
-        url: 'register',
-        data: new FormData(registerForm)
-    }).then((response) => {
-        document.querySelector('.form-register__alert').innerText = '';
-        document.querySelector('.form-register__alert').innerText = response.data.message;
-        document.querySelector('.form-register__alert').style.color = '#22b21b';
-        setTimeout(() => {
-            location.href = '/profile';
-        }, 3000);
+if (registerForm) {
+    registerForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        axios({
+            method: 'POST',
+            url: 'register',
+            data: new FormData(registerForm)
+        }).then((response) => {
+            document.querySelector('.form-register__alert').innerText = '';
+            document.querySelector('.form-register__alert').innerText = response.data.message;
+            document.querySelector('.form-register__alert').style.color = '#22b21b';
+            setTimeout(() => {
+                location.href = '/profile';
+            }, 3000);
 
-    }).catch((error) => {
-        console.log(error.response.data.message);
-        document.querySelector('.form-register__alert').innerText = '';
-        document.querySelector('.form-register__alert').innerText = error.response.data.message;
-        document.querySelector('.form-register__alert').style.color = '#ea1c1c';
+        }).catch((error) => {
+            console.log(error.response.data.message);
+            document.querySelector('.form-register__alert').innerText = '';
+            document.querySelector('.form-register__alert').innerText = error.response.data.message;
+            document.querySelector('.form-register__alert').style.color = '#ea1c1c';
+        });
     });
-});
+}

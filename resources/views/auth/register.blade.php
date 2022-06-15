@@ -29,7 +29,14 @@
                    autocomplete="current-password"
                    placeholder="Подтвердите пароль">
             <span class="show-password"></span>
+
         </label>
+        <label for="user_type_girl">Девушка</label>
+        <input type="radio" id="user_type_girl" name="user_type" value="1">
+
+        <label for="user_type_man">Мужчина</label>
+        <input type="radio" id="user_type_man" name="user_type" value="0">
+
         <button class="form-register__button" type="submit">Зарегистрироваться</button>
 
         <a class="js-open-modal" data-modal="login" href="#">
