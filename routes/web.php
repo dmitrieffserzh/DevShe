@@ -18,7 +18,11 @@ Route::get('/', function () {
 })->name( 'main' );
 
 
+
+// PROFILE
 Route::get( 'profile', [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
+Route::get( 'profile/rates', [ ProfilesController::class, 'rates' ] )->name( 'profile.rates' );
+Route::get( 'profile/payments', [ ProfilesController::class, 'payments' ] )->name( 'profile.payments' );
 
 
 //Route::get('/dashboard', function () {

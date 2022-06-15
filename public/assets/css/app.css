@@ -494,7 +494,7 @@ body {
 }
 .aside-menu__link {
   display: block;
-  border-bottom: 2px Solid #D9D9D9;
+  border-bottom: 1px Solid #D9D9D9;
   padding: 1.5rem 0 1.5rem 3rem;
   font-size: 1rem;
   font-family: "Core Sans C 65";
@@ -503,7 +503,7 @@ body {
   transition: color 0.3s Linear;
 }
 .aside-menu__link--active {
-  color: #fff;
+  color: #fff !important;
   background: #2AABEE;
   border-bottom: none;
 }
