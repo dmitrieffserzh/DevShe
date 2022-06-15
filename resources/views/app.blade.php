@@ -52,6 +52,11 @@
     </div>
 </header>
 <main class="main">
+    <div class="main__container">
+        @hasSection('h1')
+            <h1 class="main__h1">@yield('h1')</h1>
+        @endif
+    </div>
     <div class="main__container {{ Request::segment(1) == 'profile' ? 'main__container--with-aside' : ''}}">
         @yield('content')
     </div>

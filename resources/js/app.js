@@ -1,5 +1,4 @@
 import './bootstrap';
-import 'axios';
 
 // MODAL WINDOW
 document.addEventListener('DOMContentLoaded', function () {
@@ -33,8 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (key == 27) {
             document.querySelector('.modal.active').classList.remove('active');
             document.querySelector('.overlay.active').classList.remove('active');
-        }
-        ;
+        };
     }, false);
 
     overlay.addEventListener('click', function () {
