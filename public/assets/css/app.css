@@ -495,20 +495,53 @@ body {
 .aside-menu__link {
   display: block;
   border-bottom: 1px Solid #D9D9D9;
-  padding: 1.5rem 0 1.5rem 3rem;
-  font-size: 1rem;
+  padding: 1.5rem 0 1.5rem 3.5rem;
+  font-size: 1.1rem;
   font-family: "Core Sans C 65";
   color: #666666;
   text-decoration: none;
   transition: color 0.3s Linear;
 }
-.aside-menu__link--active {
-  color: #fff !important;
-  background: #2AABEE;
-  border-bottom: none;
-}
 .aside-menu__link:hover {
   color: #2AABEE;
+}
+.aside-menu__link--icon-profile {
+  background-image: url("/images/user_gray_icon.png");
+  background-repeat: no-repeat;
+  background-position: 25px center;
+  background-size: 20px;
+}
+.aside-menu__link--icon-rate {
+  background-image: url("/images/rate_icon.png");
+  background-repeat: no-repeat;
+  background-position: 25px center;
+  background-size: 20px;
+}
+.aside-menu__link--icon-payment {
+  background-image: url("/images/payment_icon.png");
+  background-repeat: no-repeat;
+  background-position: 25px center;
+  background-size: 20px;
+}
+.aside-menu__link--icon-logout {
+  background-image: url("/images/logout_icon.png");
+  background-repeat: no-repeat;
+  background-position: 25px center;
+  background-size: 20px;
+}
+.aside-menu__link--active {
+  color: #fff !important;
+  background-color: #2AABEE;
+  border-bottom: none;
+}
+.aside-menu__link--active.aside-menu__link--icon-profile {
+  background-image: url("/images/user_white_icon.png");
+}
+.aside-menu__link--active.aside-menu__link--icon-rate {
+  background-image: url("/images/rate_white_icon.png");
+}
+.aside-menu__link--active.aside-menu__link--icon-payment {
+  background-image: url("/images/payment_white_icon.png");
 }
 
 /*  FOOTER  ========================================================================================================= */

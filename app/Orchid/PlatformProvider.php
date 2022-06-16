@@ -41,6 +41,11 @@ class PlatformProvider extends OrchidServiceProvider
 //                ->permission('platform.systems.users')
 //                ->divider(),
 
+            Menu::make('Тарифы')
+                ->icon('money')
+                ->route('platform.rates')
+                ->title('Тарифы'),
+
             Menu::make('Роли пользователей')
                 ->icon('lock')
                 ->route('platform.systems.roles')
