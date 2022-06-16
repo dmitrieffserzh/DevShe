@@ -333,11 +333,6 @@ class GirlEditScreen extends Screen {
                           ->icon( 'check' )
                           ->canSee( $this->profile->exists )
                           ->class( 'float-end btn btn-' . Color::PRIMARY() ),
-                    Button::make( 'Сохранить' )
-                          ->method( 'create' )
-                          ->icon( 'check' )
-                          ->canSee( ! $this->profile->exists )
-                          ->class( 'float-end btn btn-' . Color::PRIMARY() ),
                 ] )
             ] )
         ];

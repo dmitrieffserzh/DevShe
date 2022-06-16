@@ -15,9 +15,9 @@
             </div>
             <div class="w-75 p-3">
                 <strong class="d-block mb-3">Описание</strong>
-                <div class="mb-3 small">{{ $rate['description'] ?? '---' }}</div>
+                <div class="mb-3 small">{!! $rate['description'] ?? '---' !!}</div>
                 <strong class="d-block mb-3">Информация</strong>
-                <div class="small">{{ $rate['information'] ?? '---' }}</div>
+                <div class="small">{!! $rate['information'] ?? '---' !!}</div>
             </div>
         </div>
     </div>

@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string( 'plan_three_name' )->nullable();
             $table->integer( 'plan_three_price' )->nullable();
             $table->text( 'information' )->nullable();
+            $table->string( 'image' )->nullable();
         } );
     }
 
