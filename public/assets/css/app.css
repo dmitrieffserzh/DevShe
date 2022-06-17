@@ -820,13 +820,14 @@ body {
   margin: 0 2rem 0 0;
   font-family: "Core Sans C 75";
   font-size: 18px;
+  width: 100%;
 }
 
 .button {
   border: 1px Solid #BE0C0C;
   border-radius: 6px;
   background: #BE0C0C;
-  padding: 1rem 2.5rem;
+  padding: 1rem 3rem;
   font-family: "Core Sans C 65";
   font-size: 0.85rem;
   color: #fff;

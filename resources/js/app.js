@@ -110,7 +110,6 @@ if (registerForm) {
 }
 
 // RATE CALCULATOR
-let buffer = [];
 let amount = 0;
 let result = document.getElementById('amount');
 let rates = document.querySelector('.rates');
@@ -126,17 +125,23 @@ function calculate() {
     result.innerText = amount;
 }
 
-for (let i = 0; inputs.length > i; i++) {
-    inputs[i].addEventListener('click', (event) => {
-        if (buffer[inputs[i].name]) {
-            inputs[i].checked = false;
-            delete (buffer[inputs[i].name]);
-        } else {
-            buffer[inputs[i].name] = true;
+for (let i = 0; i < inputs.length; i++) {
+    inputs[i].setAttribute("data-prev", inputs[i].checked);
+    inputs[i].addEventListener('click', function (e) {
+        let inputsCopy = rates.querySelectorAll('input');
+        for (let j = 0; j < inputsCopy.length; j++) {
+            if (inputsCopy[j].checked === false) {
+                inputsCopy[j].setAttribute("data-prev", false);
+            }
         }
-
+        let prev = e.target.getAttribute("data-prev") === 'true' ? true : false;
+        if (prev && e.target.checked) {
+            e.target.checked = false;
+            e.target.setAttribute("data-prev", false);
+        } else {
+            e.target.checked = true;
+            e.target.setAttribute("data-prev", true);
+        }
         calculate();
-
-        console.log(buffer);
-    });
+    })
 }

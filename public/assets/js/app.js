@@ -2267,7 +2267,6 @@ if (registerForm) {
 } // RATE CALCULATOR
 
 
-var buffer = [];
 var amount = 0;
 var result = document.getElementById('amount');
 var rates = document.querySelector('.rates');
@@ -2285,22 +2284,29 @@ function calculate() {
   result.innerText = amount;
 }
 
-var _loop = function _loop(i) {
-  inputs[i].addEventListener('click', function (event) {
-    if (buffer[inputs[i].name]) {
-      inputs[i].checked = false;
-      delete buffer[inputs[i].name];
+for (var i = 0; i < inputs.length; i++) {
+  inputs[i].setAttribute("data-prev", inputs[i].checked);
+  inputs[i].addEventListener('click', function (e) {
+    var inputsCopy = rates.querySelectorAll('input');
+
+    for (var j = 0; j < inputsCopy.length; j++) {
+      if (inputsCopy[j].checked === false) {
+        inputsCopy[j].setAttribute("data-prev", false);
+      }
+    }
+
+    var prev = e.target.getAttribute("data-prev") === 'true' ? true : false;
+
+    if (prev && e.target.checked) {
+      e.target.checked = false;
+      e.target.setAttribute("data-prev", false);
     } else {
-      buffer[inputs[i].name] = true;
+      e.target.checked = true;
+      e.target.setAttribute("data-prev", true);
     }
 
     calculate();
-    console.log(buffer);
   });
-};
-
-for (var i = 0; inputs.length > i; i++) {
-  _loop(i);
 }
 
 /***/ }),
