@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rate;
 use Illuminate\Http\Request;
 
 class ProfilesController extends Controller {
@@ -16,7 +17,7 @@ class ProfilesController extends Controller {
     }
 
     public function rates() {
-        return view( 'profiles.index', [ 'heading' => 'Тарифы и реклама' ] );
+        return view( 'profiles.rates', [ 'heading' => 'Тарифы и реклама', 'rates' => Rate::all()] );
     }
 
     public function payments() {

@@ -279,7 +279,7 @@ body {
     & .content {
         flex: auto;
         width: 100%;
-        padding: 0 0 0 1rem;
+        padding: 0 0 0 1.5rem;
     }
 
     //
@@ -322,7 +322,7 @@ body {
             display: block;
             border-bottom: 1px Solid #D9D9D9;
             padding: 1.5rem 0 1.5rem 3.5rem;
-            font-size: 1.1rem;
+            font-size: .9rem;
             font-family: 'Core Sans C 65';
             color: #666666;
             text-decoration: none;
@@ -644,5 +644,113 @@ body {
 @media screen and (max-width: 767px) {
     .form-register {
         margin: 1rem;
+    }
+}
+
+
+/*  RATES  ========================================================================================================== */
+.rates {
+    &__item {
+        margin: 0 0 1rem;
+        border-radius: .5rem;
+        background: #F8F8F8;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    & .rate {
+
+        &__content,
+        &__image {
+            padding: 1.5rem;
+        }
+
+        &__title {
+            font-family: 'Core Sans C 75';
+            font-size: 1.5rem;
+            margin: 0 0 1rem;
+        }
+
+        &__description {
+            margin: 0 0 1.5rem;
+            font-family: 'Core Sans C 45';
+            font-size: 12px;
+            color: #666666;
+            line-height: 22px;
+
+            & b,
+            & strong {
+                font-family: 'Core Sans C 75';
+                color: #2AABEE;
+            }
+        }
+
+        &__offers {
+
+        }
+
+        &__information {
+            margin: 1.5rem 0 0;
+            font-family: 'Core Sans C 65';
+            font-size: 12px;
+            color: #000;
+            line-height: 22px;
+
+            & b,
+            & strong {
+                color: #BE0C0C;
+            }
+        }
+    }
+
+    & .offers {
+        &__title {
+            margin: 0 0 1rem;
+            font-family: 'Core Sans C 75';
+            font-size: 18px;
+        }
+
+        & label {
+            font-family: 'Core Sans C 45';
+            font-size: 10px;
+            color: #000;
+        }
+    }
+}
+
+
+/*  FORM ELEMENTS =================================================================================================== */
+.input_radio {
+    position: relative;
+
+    & > label {
+        display: inline-block;
+        padding: 0.2rem 1.5rem 0.2rem 1.3rem;
+        cursor: pointer;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 15px;
+            height: 15px;
+            background-image: url("/images/radio_icon.png");
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-size: cover;
+        }
+    }
+
+
+    //user-select: none;
+
+    & > input[type=radio] {
+        display: none;
+    }
+
+    & > input[type=radio]:checked~label:before {
+        background-position: 0 -15px !important;
     }
 }

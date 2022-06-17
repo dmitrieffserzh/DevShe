@@ -463,7 +463,7 @@ body {
 .main .content {
   flex: auto;
   width: 100%;
-  padding: 0 0 0 1rem;
+  padding: 0 0 0 1.5rem;
 }
 .main__h1 {
   padding: 2rem 0 1.5rem;
@@ -496,7 +496,7 @@ body {
   display: block;
   border-bottom: 1px Solid #D9D9D9;
   padding: 1.5rem 0 1.5rem 3.5rem;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-family: "Core Sans C 65";
   color: #666666;
   text-decoration: none;
@@ -761,4 +761,80 @@ body {
   .form-register {
     margin: 1rem;
   }
+}
+/*  RATES  ========================================================================================================== */
+.rates__item {
+  margin: 0 0 1rem;
+  border-radius: 0.5rem;
+  background: #F8F8F8;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.rates .rate__content, .rates .rate__image {
+  padding: 1.5rem;
+}
+.rates .rate__title {
+  font-family: "Core Sans C 75";
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
+}
+.rates .rate__description {
+  margin: 0 0 1.5rem;
+  font-family: "Core Sans C 45";
+  font-size: 12px;
+  color: #666666;
+  line-height: 22px;
+}
+.rates .rate__description b, .rates .rate__description strong {
+  font-family: "Core Sans C 75";
+  color: #2AABEE;
+}
+.rates .rate__information {
+  margin: 1.5rem 0 0;
+  font-family: "Core Sans C 65";
+  font-size: 12px;
+  color: #000;
+  line-height: 22px;
+}
+.rates .rate__information b, .rates .rate__information strong {
+  color: #BE0C0C;
+}
+.rates .offers__title {
+  margin: 0 0 1rem;
+  font-family: "Core Sans C 75";
+  font-size: 18px;
+}
+.rates .offers label {
+  font-family: "Core Sans C 45";
+  font-size: 10px;
+  color: #000;
+}
+
+/*  FORM ELEMENTS =================================================================================================== */
+.input_radio {
+  position: relative;
+}
+.input_radio > label {
+  display: inline-block;
+  padding: 0.2rem 1.5rem 0.2rem 1.3rem;
+  cursor: pointer;
+}
+.input_radio > label:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  background-image: url("/images/radio_icon.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+}
+.input_radio > input[type=radio] {
+  display: none;
+}
+.input_radio > input[type=radio]:checked ~ label:before {
+  background-position: 0 -15px !important;
 }
