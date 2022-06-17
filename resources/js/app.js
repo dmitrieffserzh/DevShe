@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (key == 27) {
             document.querySelector('.modal.active').classList.remove('active');
             document.querySelector('.overlay.active').classList.remove('active');
-        };
+        }
     }, false);
 
     overlay.addEventListener('click', function () {
@@ -106,5 +106,37 @@ if (registerForm) {
             document.querySelector('.form-register__alert').innerText = error.response.data.message;
             document.querySelector('.form-register__alert').style.color = '#ea1c1c';
         });
+    });
+}
+
+// RATE CALCULATOR
+let buffer = [];
+let amount = 0;
+let result = document.getElementById('amount');
+let rates = document.querySelector('.rates');
+let inputs = rates.querySelectorAll('input');
+
+function calculate() {
+    amount = 0;
+    for (let i = 0; inputs.length > i; i++) {
+        if (inputs[i].checked) {
+            amount += parseInt(inputs[i].value);
+        }
+    }
+    result.innerText = amount;
+}
+
+for (let i = 0; inputs.length > i; i++) {
+    inputs[i].addEventListener('click', (event) => {
+        if (buffer[inputs[i].name]) {
+            inputs[i].checked = false;
+            delete (buffer[inputs[i].name]);
+        } else {
+            buffer[inputs[i].name] = true;
+        }
+
+        calculate();
+
+        console.log(buffer);
     });
 }

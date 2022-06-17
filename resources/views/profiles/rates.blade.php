@@ -14,15 +14,15 @@
                         <div class="rate__offers offers">
                             <h2 class="offers__title">Выберите тарифный план:</h2>
                             <div class="input_radio" @if($item->information)style="display: inline-block;"@endif>
-                                <input type="radio" name="rate_{{ $item->id }}" value="plan_one_price" id="rate_{{ $item->id }}_{{ $item->plan_one_price }}">
+                                <input type="radio" name="rate_{{ $item->id }}" value="{{ $item->plan_one_price }}" id="rate_{{ $item->id }}_{{ $item->plan_one_price }}">
                                 <label for="rate_{{ $item->id }}_{{ $item->plan_one_price }}">{{ $item->plan_one_name }}</label>
                             </div>
                             <div class="input_radio" @if($item->information)style="display: inline-block;"@endif>
-                                <input type="radio" name="rate_{{ $item->id }}" value="plan_one_price" id="rate_{{ $item->id }}_{{ $item->plan_two_price }}">
+                                <input type="radio" name="rate_{{ $item->id }}" value="{{ $item->plan_two_price }}" id="rate_{{ $item->id }}_{{ $item->plan_two_price }}">
                                 <label for="rate_{{ $item->id }}_{{ $item->plan_two_price }}">{{ $item->plan_two_name }}</label>
                             </div>
                             <div class="input_radio" @if($item->information)style="display: inline-block;"@endif>
-                                <input type="radio" name="rate_{{ $item->id }}" value="plan_one_price" id="rate_{{ $item->id }}_{{ $item->plan_three_price }}">
+                                <input type="radio" name="rate_{{ $item->id }}" value="{{ $item->plan_three_price }}" id="rate_{{ $item->id }}_{{ $item->plan_three_price }}">
                                 <label for="rate_{{ $item->id }}_{{ $item->plan_three_price }}">{{ $item->plan_three_name }}</label>
                             </div>
                         </div>
@@ -31,10 +31,16 @@
                         @endif
                     </div>
                     <div class="rate__image">
-                        <img src="{{ $item->image ?? '' }}" alt="{{ $item->name }}" width="150px">
+{{--                        <img src="{{ $item->image ?? '' }}" alt="{{ $item->name }}" width="150px">--}}
                     </div>
                 </div>
             @endforeach
+        </div>
+        <div class="rates-calculator">
+            <div class="rates-calculator__amount">
+                Итого к оплате: <span id="amount">0</span> рублей
+            </div>
+            <a href="" class="button">Оплатить</a>
         </div>
     </div>
 @endsection

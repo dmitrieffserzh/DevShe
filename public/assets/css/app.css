@@ -791,7 +791,7 @@ body {
   color: #2AABEE;
 }
 .rates .rate__information {
-  margin: 1.5rem 0 0;
+  margin: 0.5rem 0 0;
   font-family: "Core Sans C 65";
   font-size: 12px;
   color: #000;
@@ -801,7 +801,7 @@ body {
   color: #BE0C0C;
 }
 .rates .offers__title {
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
   font-family: "Core Sans C 75";
   font-size: 18px;
 }
@@ -810,14 +810,38 @@ body {
   font-size: 10px;
   color: #000;
 }
+.rates-calculator {
+  margin: 3rem 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.rates-calculator__amount {
+  margin: 0 2rem 0 0;
+  font-family: "Core Sans C 75";
+  font-size: 18px;
+}
+
+.button {
+  border: 1px Solid #BE0C0C;
+  border-radius: 6px;
+  background: #BE0C0C;
+  padding: 1rem 2.5rem;
+  font-family: "Core Sans C 65";
+  font-size: 0.85rem;
+  color: #fff;
+  text-decoration: none;
+}
 
 /*  FORM ELEMENTS =================================================================================================== */
 .input_radio {
   position: relative;
+  padding: 0 1.5rem 0 1.3rem;
+  line-height: 0.85rem;
+  margin: 0 0 0.6rem;
 }
 .input_radio > label {
   display: inline-block;
-  padding: 0.2rem 1.5rem 0.2rem 1.3rem;
   cursor: pointer;
 }
 .input_radio > label:before {
