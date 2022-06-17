@@ -31,7 +31,7 @@
                         @endif
                     </div>
                     <div class="rate__image">
-{{--                        <img src="{{ $item->image ?? '' }}" alt="{{ $item->name }}" width="150px">--}}
+                        <img src="{{ $item->image ?? '' }}" alt="{{ $item->name }}" width="150px">
                     </div>
                 </div>
             @endforeach
