@@ -60,7 +60,7 @@ class RateEditScreen extends Screen {
             ] ),
             Layout::rows( [
                 Picture::make( 'rate.image' )
-                       ->title( 'Изображение' ),
+                       ->title( 'Изображение' )->targetUrl(),
             ] ),
             Layout::rows( [
                 Group::make( [

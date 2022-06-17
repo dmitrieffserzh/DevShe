@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Orchid\Attachment\Attachable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Screen\AsSource;
 
 class Rate extends Model {
     use HasFactory;
-    use Attachable;
     use AsSource;
 
     protected $fillable = [
@@ -22,6 +20,7 @@ class Rate extends Model {
         'plan_three_name',
         'plan_three_price',
         'information',
+        'image'
     ];
 
     public $timestamps = false;
