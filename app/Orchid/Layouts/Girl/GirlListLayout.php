@@ -4,6 +4,7 @@ declare( strict_types=1 );
 
 namespace App\Orchid\Layouts\Girl;
 
+use App\Helpers;
 use App\Models\Profile;
 use App\Orchid\Layouts\Girl\GirlListAvatarLayout;
 use Orchid\Screen\Actions\Button;
@@ -62,15 +63,24 @@ class GirlListLayout extends Table {
               ->cantHide()
               ->filter( Input::make() )
               ->render( function ( Profile $profile ) {
-                  $imagePath = $profile->attachment()->first()->toArray();
-
+                  $imagePath = $profile->attachment()->first();
                   return view( 'platform.avatar', [
                       'id'    => $profile->id,
                       'name'  => $profile->name,
-                      'image' => '/storage/' . $imagePath['path'] . $imagePath['name'] . '.' . $imagePath['extension']
+                      'image' => $imagePath['relativeUrl'] ?? '/'
+                      //'image' => '/storage/' . $imagePath['path'] . $imagePath['name'] . '.' . $imagePath['extension']
 
                   ] );
               } ),
+            TD::make( 'section', 'Раздел' )
+                ->sort()
+                ->cantHide()
+                ->filter( Select::make()->options(
+                    Helpers::getGirlSection()
+                ) )
+                ->render( function ( Profile $profile ) {
+                    return Helpers::getGirlSectionValue($profile->section);
+                } ),
             TD::make( 'phone', 'Телефон' )
               ->sort()
               ->cantHide()
@@ -78,7 +88,13 @@ class GirlListLayout extends Table {
               ->render( function ( Profile $profile ) {
                   return $profile->phone;
               } ),
-
+            TD::make( '', 'Ночь у нее/него' )
+                ->sort()
+                ->cantHide()
+                ->filter( Input::make() )
+                ->render( function ( Profile $profile ) {
+                    return ($profile->prices->night_all_in ?? '0') .' / '. ($profile->prices->night_all_out ?? '0');
+                } ),
             TD::make( __( 'Actions' ) )
               ->align( TD::ALIGN_CENTER )
               ->width( '100px' )
