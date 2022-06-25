@@ -19,6 +19,8 @@ class Price extends Model {
         'night_two_hours_in',
         'night_one_hour_out',
         'night_two_hours_out',
+        'night_all_in',
+        'night_all_out'
     ];
 
     // RELATIONS

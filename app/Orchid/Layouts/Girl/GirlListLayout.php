@@ -4,8 +4,8 @@ declare( strict_types=1 );
 
 namespace App\Orchid\Layouts\Girl;
 
-use App\Helpers;
 use App\Models\Profile;
+use App\Orchid\Layouts\Girl\GirlListAvatarLayout;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -62,26 +62,15 @@ class GirlListLayout extends Table {
               ->cantHide()
               ->filter( Input::make() )
               ->render( function ( Profile $profile ) {
-                  $imagePath = $profile->attachment()->first();
+                  $imagePath = $profile->attachment()->first()->toArray();
 
                   return view( 'platform.avatar', [
                       'id'    => $profile->id,
                       'name'  => $profile->name,
-                      'image' =>  $imagePath ? '/storage/' . $imagePath['path'] . $imagePath['name'] . '.' . $imagePath['extension'] : 'https://www.gravatar.com/avatar/64e1b8d34f425d19e1ee2ea7236d3028?d=mp'
+                      'image' => '/storage/' . $imagePath['path'] . $imagePath['name'] . '.' . $imagePath['extension']
 
                   ] );
               } ),
-
-            TD::make( 'section', 'Раздел' )
-              ->sort()
-              ->cantHide()
-                ->filter( Select::make()->options(
-                    Helpers::getGirlSection()
-                ) )
-              ->render( function ( Profile $profile ) {
-                  return Helpers::getGirlSectionValue($profile->section);
-              } ),
-
             TD::make( 'phone', 'Телефон' )
               ->sort()
               ->cantHide()

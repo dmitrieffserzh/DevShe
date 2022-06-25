@@ -44,7 +44,7 @@ class Profile extends Model {
 
     public $timestamps = false;
 
-    protected $allowedFilters = [ 'id', 'private', 'name', 'phone' ];
+    protected $allowedFilters = [ 'id', 'private', 'name', 'phone', 'section' ];
     protected $allowedSorts = [ 'id', 'private', 'active' ];
 
 
