@@ -114,6 +114,15 @@ class Helpers {
             5 => 'Массажистки'
         ];
     }
+    public static function getGirlAgeValue($key) {
+        $values = self::getGirlAge();
+        return $values[$key];
+    }
+
+    public static function getGirlBreastValue($key) {
+        $values = self::getGirlBreast();
+        return $values[$key];
+    }
 
     public static function getGirlSectionValue($key) {
         $values = self::getGirlSection();

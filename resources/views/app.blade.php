@@ -11,7 +11,7 @@
 </head>
 <body>
 <header class="header">
-    <!--<div class="header__container">
+    <div class="header__container">
         <div class="header-top">
             <div class="header-top__menu">
                 <a href="#">Элитные</a>
@@ -25,7 +25,7 @@
                 <a href="" class="tg"></a>
             </div>
         </div>
-    </div>-->
+    </div>
     <div class="header__container">
         <div class="header-main">
             <a href="{{ route('main') }}" class="header-main__logo">
@@ -53,17 +53,45 @@
 </header>
 <main class="main">
     <div class="main__container">
+        @if (Request::path() == '/')
+            @include('components.main-slider')
+        @endif
         @hasSection('h1')
             <h1 class="main__h1">@yield('h1')</h1>
         @endif
     </div>
+
+    @if(isset($eliteGirls))
+        @include('components.main.list_profiles', ['title'=> 'Элитные девушки', 'items' => $eliteGirls])
+    @endif
+
+    @if(isset($newGirls))
+        @include('components.main.slider_profiles', ['id'=> 'new-girls', 'title'=> 'Новые девушки', 'items' => $newGirls])
+    @endif
+
+    @if(isset($individualGirls))
+        @include('components.main.list_profiles', ['title'=> 'Индивидуалки', 'items' => $individualGirls])
+    @endif
+
+    @if(isset($topGirls))
+        @include('components.main.slider_profiles', ['id'=> 'top-girls', 'title'=> 'Девушки ТОП-100', 'items' => $topGirls])
+    @endif
+
+    @if(isset($cheapGirls))
+        @include('components.main.list_profiles', ['title'=> 'Дешевые девушки', 'items' => $cheapGirls])
+    @endif
+
+    @if(isset($masseusesGirls))
+        @include('components.main.list_profiles', ['title'=> 'Массажистки', 'items' => $masseusesGirls])
+    @endif
+
     <div class="main__container {{ Request::segment(1) == 'profile' ? 'main__container--with-aside' : ''}}">
         @yield('content')
     </div>
 </main>
 <footer class="footer">
     <div class="footer__container">
-        <!--<div class="footer-links">
+        <div class="footer-links">
             <a href="/" class="footer-links__logo">
                 <img src="/images/logo_dark.png" alt="">
             </a>
@@ -78,7 +106,7 @@
                 <a href="" class="ws"></a>
                 <a href="" class="tg"></a>
             </div>
-        </div>-->
+        </div>
         <div class="footer-offer">
             Вся представленная информация, касающаяся анкет и объявлений проституток, носит информационный характер и ни
             при каких условиях не является публичной офертой, определяемой положениями Статьи 437(2) Гражданского

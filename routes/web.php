@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfilesController;
 /*
 |--------------------------------------------------------------------------
@@ -12,10 +13,7 @@ use App\Http\Controllers\ProfilesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('app');
-})->name( 'main' );
+Route::get( '/', [ MainController::class, 'index' ] )->name( 'main' );
 
 
 

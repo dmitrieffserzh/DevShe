@@ -1,15 +1,47 @@
-import './bootstrap';
+//import './bootstrap';
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+import Swiper, {Autoplay} from 'swiper';
+import 'swiper/css';
 
-// MODAL WINDOW
+
+
+window.onload = function () {
+    const main_slider = new Swiper('.main-slider', {
+        modules: [Autoplay],
+        autoplay: {
+            delay: 10000,
+        },
+    });
+
+    const new_girls = new Swiper('#new-girls', {
+        slidesPerView: 4,
+        loop: true,
+        modules: [Autoplay],
+        autoplay: {
+            delay: 10000,
+        },
+    });
+
+    const top_girls = new Swiper('#top-girls', {
+        slidesPerView: 4,
+        loop: true,
+        modules: [Autoplay],
+        autoplay: {
+            delay: 10000,
+        },
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-    var modalButtons = document.querySelectorAll('.js-open-modal'),
+    let modalButtons = document.querySelectorAll('.js-open-modal'),
         overlay = document.querySelector('#overlay-modal'),
         closeButtons = document.querySelectorAll('.js-modal-close');
 
     modalButtons.forEach(function (item) {
         item.addEventListener('click', function (e) {
             e.preventDefault();
-            var modalId = this.getAttribute('data-modal'),
+            let modalId = this.getAttribute('data-modal'),
                 modalElem = document.querySelector('.modal[data-modal="' + modalId + '"]');
 
             modalElem.classList.add('active');
@@ -20,14 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     closeButtons.forEach(function (item) {
         item.addEventListener('click', function (e) {
-            var parentModal = this.closest('.modal');
+            let parentModal = this.closest('.modal');
             parentModal.classList.remove('active');
             overlay.classList.remove('active');
         });
     });
 
     document.body.addEventListener('keyup', function (e) {
-        var key = e.keyCode;
+        let key = e.keyCode;
 
         if (key == 27) {
             document.querySelector('.modal.active').classList.remove('active');
@@ -113,35 +145,40 @@ if (registerForm) {
 let amount = 0;
 let result = document.getElementById('amount');
 let rates = document.querySelector('.rates');
-let inputs = rates.querySelectorAll('input');
 
-function calculate() {
-    amount = 0;
-    for (let i = 0; inputs.length > i; i++) {
-        if (inputs[i].checked) {
-            amount += parseInt(inputs[i].value);
-        }
-    }
-    result.innerText = amount;
-}
+if(rates) {
+    let inputs = rates.querySelectorAll('input');
 
-for (let i = 0; i < inputs.length; i++) {
-    inputs[i].setAttribute("data-prev", inputs[i].checked);
-    inputs[i].addEventListener('click', function (e) {
-        let inputsCopy = rates.querySelectorAll('input');
-        for (let j = 0; j < inputsCopy.length; j++) {
-            if (inputsCopy[j].checked === false) {
-                inputsCopy[j].setAttribute("data-prev", false);
+    function calculate() {
+        amount = 0;
+        for (let i = 0; inputs.length > i; i++) {
+            if (inputs[i].checked) {
+                amount += parseInt(inputs[i].value);
             }
         }
-        let prev = e.target.getAttribute("data-prev") === 'true' ? true : false;
-        if (prev && e.target.checked) {
-            e.target.checked = false;
-            e.target.setAttribute("data-prev", false);
-        } else {
-            e.target.checked = true;
-            e.target.setAttribute("data-prev", true);
-        }
-        calculate();
-    })
+        result.innerText = amount;
+    }
+
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].setAttribute("data-prev", inputs[i].checked);
+        inputs[i].addEventListener('click', function (e) {
+            let inputsCopy = rates.querySelectorAll('input');
+            for (let j = 0; j < inputsCopy.length; j++) {
+                if (inputsCopy[j].checked === false) {
+                    inputsCopy[j].setAttribute("data-prev", false);
+                }
+            }
+            let prev = e.target.getAttribute("data-prev") === 'true' ? true : false;
+            if (prev && e.target.checked) {
+                e.target.checked = false;
+                e.target.setAttribute("data-prev", false);
+            } else {
+                e.target.checked = true;
+                e.target.setAttribute("data-prev", true);
+            }
+            calculate();
+        })
+    }
 }
+
+
