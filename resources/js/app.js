@@ -1,7 +1,7 @@
 //import './bootstrap';
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-import Swiper, {Autoplay} from 'swiper';
+import Swiper, {Autoplay, Thumbs} from 'swiper';
 import 'swiper/css';
 
 
@@ -29,6 +29,25 @@ window.onload = function () {
         modules: [Autoplay],
         autoplay: {
             delay: 10000,
+        },
+    });
+
+    const profile_thumbs = new Swiper(".thumbs", {
+        spaceBetween: 10,
+        slidesPerView: 5,
+        freeMode: true,
+        watchSlidesProgress: true,
+        modules: [Thumbs],
+    });
+    const profile_images = new Swiper(".images", {
+        spaceBetween: 1,
+        modules: [Thumbs],
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        thumbs: {
+            swiper: profile_thumbs,
         },
     });
 }
@@ -181,4 +200,27 @@ if(rates) {
     }
 }
 
+// AJAX SEARCH
+let searchInput = document.querySelector('.header-search__input');
+let searchResult = document.querySelector('.header-search__result');
+if (searchInput) {
+    searchInput.addEventListener('keyup', function (event) {
+        searchResult.innerHTML = '';
+        axios({
+            method: 'POST',
+            url: 'search',
+            data: {
+                search: searchInput.value
+            }
+        }).then((response) => {
+            if(response.data !== '') {
+                for (let i = 0;i <= response.data.length; i++) {
+                    searchResult.insertAdjacentHTML('afterbegin', '<div class="item"><span>'+ response.data[i].name +'</span><span>id: '+ response.data[i].id +'</span></div>');
+                }
+            }
+        }).catch((error) => {
+            console.log(error.response.data.message);
+        });
+    });
+}
 

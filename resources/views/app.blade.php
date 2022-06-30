@@ -14,11 +14,11 @@
     <div class="header__container">
         <div class="header-top">
             <div class="header-top__menu">
-                <a href="#">Элитные</a>
-                <a href="#">Индивидуалки</a>
-                <a href="#">Дешевые</a>
-                <a href="#">БДСМ</a>
-                <a href="#">Массажистки</a>
+                <a href="{{ route('catalog.elite') }}"{{ (request()->is('elite')) ? 'class=active' : '' }}>Элитные</a>
+                <a href="{{ route('catalog.individuals') }}"{{ (request()->is('individuals')) ? 'class=active' : '' }}>Индивидуалки</a>
+                <a href="{{ route('catalog.cheap') }}"{{ (request()->is('cheap')) ? 'class=active' : '' }}>Дешевые</a>
+                <a href="{{ route('catalog.bdsm') }}"{{ (request()->is('bdsm')) ? 'class=active' : '' }}>БДСМ</a>
+                <a href="{{ route('catalog.masseuses') }}"{{ (request()->is('masseuses')) ? 'class=active' : '' }}>Массажистки</a>
             </div>
             <div class="header-top__social">
                 <a href="" class="ws"></a>
@@ -33,8 +33,9 @@
             </a>
             <div class="header-main__search">
                 <div class="header-search">
-                    <input type="text" name="" placeholder="Введите имя или id  девушки" class="header-search__input">
+                    <input type="text" name="search" placeholder="Введите имя или id девушки" class="header-search__input" autocomplete="off">
                     <button class="header-search__button"></button>
+                    <div class="header-search__result"></div>
                 </div>
                 <a href="" class="header-search__link">Поиск по <span></span></a>
             </div>
@@ -96,11 +97,11 @@
                 <img src="/images/logo_dark.png" alt="">
             </a>
             <div class="footer-links__menu">
-                <a href="#">Элитные</a>
-                <a href="#">Индивидуалки</a>
-                <a href="#">Дешевые</a>
-                <a href="#">БДСМ</a>
-                <a href="#">Массажистки</a>
+                <a href="{{ route('catalog.elite') }}"{{ (request()->is('elite')) ? 'class=active' : '' }}>Элитные</a>
+                <a href="{{ route('catalog.individuals') }}"{{ (request()->is('individuals')) ? 'class=active' : '' }}>Индивидуалки</a>
+                <a href="{{ route('catalog.cheap') }}"{{ (request()->is('cheap')) ? 'class=active' : '' }}>Дешевые</a>
+                <a href="{{ route('catalog.bdsm') }}"{{ (request()->is('bdsm')) ? 'class=active' : '' }}>БДСМ</a>
+                <a href="{{ route('catalog.masseuses') }}"{{ (request()->is('masseuses')) ? 'class=active' : '' }}>Массажистки</a>
             </div>
             <div class="footer-links__social">
                 <a href="" class="ws"></a>

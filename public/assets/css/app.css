@@ -310,6 +310,9 @@ body {
 .header-top__menu a:hover {
   color: #BE0C0C;
 }
+.header-top__menu a.active {
+  color: #BE0C0C;
+}
 .header-top__social a {
   display: inline-block;
   width: 2rem;
@@ -406,6 +409,33 @@ body {
   border-radius: 6px;
   padding: 0.9rem 1rem;
   width: 100%;
+}
+.header-search__result {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 90%;
+  z-index: 1;
+  background: #fff;
+  box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+.header-search__result .item {
+  padding: 0.9rem 1rem 0.8rem;
+  font-family: "Core Sans C 35";
+  font-size: 13px;
+  color: #2fa2df;
+  border-bottom: 1px Solid #f5f5f8;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+.header-search__result .item span:last-child {
+  color: #000;
+}
+.header-search__result .item:last-child {
+  border-bottom: none;
 }
 .header-search__button {
   position: absolute;
@@ -572,6 +602,9 @@ body {
   transition: color 0.3s Linear;
 }
 .footer-links__menu a:hover {
+  color: #BE0C0C;
+}
+.footer-links__menu a.active {
   color: #BE0C0C;
 }
 .footer-links__social a {
@@ -1016,4 +1049,251 @@ body {
 .profile-item:hover .profile-item__information {
   bottom: 0;
   opacity: 1;
+}
+
+/*  PROFILES ======================================================================================================== */
+.profile {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0 -1rem;
+}
+.profile__column {
+  padding: 0 1rem;
+  width: 50%;
+}
+.profile__column:last-child {
+  width: 100%;
+}
+.profile .images {
+  margin: 0 0 1rem;
+  width: 100%;
+  height: 550px;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+.profile .images__item img {
+  width: 100%;
+}
+.profile .thumbs {
+  margin: 0 0 1rem;
+  width: 100%;
+  height: 100px;
+}
+.profile .thumbs__item {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.profile .thumbs__item img {
+  width: 100%;
+}
+.profile .rates__title {
+  margin: 0 0 2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.profile .rates__title h2 {
+  font-family: "Core Sans C 75";
+  font-size: 24px;
+}
+.profile .rates__title span {
+  font-family: "Core Sans C 45";
+  font-size: 12px;
+  color: #666666;
+}
+.profile .rates__list {
+  display: flex;
+  flex-direction: column;
+}
+.profile .rates__list .rate {
+  margin: 0 0 1rem;
+  padding: 1rem 1rem 1rem 8rem;
+  display: flex;
+  border-radius: 1rem;
+}
+.profile .rates__list .rate--day {
+  background-color: #F4FBFE;
+  background-image: url("/images/sun.png");
+  background-repeat: no-repeat;
+  background-size: 56px;
+  background-position: 2rem center;
+  color: #000;
+}
+.profile .rates__list .rate--night {
+  background: #114259;
+  background-image: url("/images/moon.png");
+  background-repeat: no-repeat;
+  background-size: 56px;
+  background-position: 2rem center;
+  color: #fff;
+}
+.profile .rates__list .rate__item:first-child {
+  margin: 0 3rem 0 0;
+}
+.profile .rates__list .rate__title {
+  margin: 0;
+  font-family: "Core Sans C 65";
+  font-size: 14px;
+}
+.profile .rates__list .rate__block {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.profile .rates__list .rate__name {
+  min-width: 75px;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
+  font-family: "Core Sans C 35";
+  font-size: 12px;
+  background-image: url("/images/clock_icon.png");
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-position: left 2px;
+}
+.profile .rates__list .rate__value {
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
+  font-family: "Core Sans C 35";
+  font-size: 12px;
+  background-image: url("/images/currency_icon.png");
+  background-repeat: no-repeat;
+  background-size: 12px;
+  background-position: left 2px;
+}
+.profile .information__list {
+  columns: 2;
+  -webkit-columns: 2;
+  -moz-columns: 2;
+}
+.profile .information__item {
+  padding: 0.25rem 0;
+  font-family: "Core Sans C 35";
+  font-size: 12px;
+  color: #666666;
+}
+.profile .information__item span {
+  font-family: "Core Sans C 65";
+  color: #000;
+}
+.profile .information .description {
+  padding: 1rem 0;
+  font-family: "Core Sans C 35";
+  font-size: 12px;
+  line-height: 1.4rem;
+  letter-spacing: 0.3px;
+}
+.profile .contacts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.profile .contacts__phone {
+  display: inline-block;
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+  font-family: "Core Sans C 75";
+  font-size: 27px;
+  color: #000;
+  background-image: url("/images/phone_blue_icon.png");
+  background-repeat: no-repeat;
+  background-size: 27px;
+  background-position: left center;
+  text-decoration: none;
+}
+.profile .contacts__social {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.profile .contacts__social span {
+  display: inline-block;
+  padding: 0 0.5rem;
+  font-family: "Core Sans C 35";
+  font-size: 14px;
+}
+.profile .contacts__social a {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  opacity: 1;
+  transition: opacity 0.3s Linear;
+}
+.profile .contacts__social a:last-child {
+  margin: 0 0 0 5px;
+}
+.profile .contacts__social a:hover {
+  opacity: 0.7;
+}
+.profile .contacts__social a.ws {
+  background-image: url("/images/messangers_icons.png");
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  background-size: cover;
+}
+.profile .contacts__social a.tg {
+  background-image: url("/images/messangers_icons.png");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: cover;
+}
+.profile .services {
+  margin: 2rem 0;
+}
+.profile .services__title {
+  font-family: "Core Sans C 75";
+  font-size: 24px;
+}
+.profile .services__block {
+  margin: 1rem 0;
+  border-radius: 1rem;
+}
+.profile .services .block__title {
+  padding: 0.8rem 1rem;
+  background: #2AABEE;
+  font-family: "Core Sans C 65";
+  font-size: 14px;
+  color: #fff;
+  border-radius: 1rem 1rem 0 0;
+}
+.profile .services .block__content {
+  padding: 1rem;
+  background: #F8F8F8;
+  border-radius: 0 0 1rem 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.profile .services .service {
+  padding: 0.5rem;
+  margin: 0 0 0.5rem;
+  width: 16.666%;
+}
+.profile .services .service__title {
+  padding: 0.4rem 0 0.2rem 1.3rem;
+  font-family: "Core Sans C 45";
+  font-size: 12px;
+  color: #666666;
+  background-image: url("/images/check_icon_false.png");
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: left center;
+}
+.profile .services .service__title.active {
+  background-image: url("/images/check_icon.png");
+  color: #000;
+}
+.profile .services .service__description {
+  margin: 0.25rem 0 0;
+  font-family: "Core Sans C 45";
+  font-size: 10px;
+  color: #a8a5a5;
+  line-height: 13px;
+}
+.profile .add-testimonial {
+  margin: 2rem;
+  text-align: center;
 }

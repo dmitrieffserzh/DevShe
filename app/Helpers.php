@@ -114,6 +114,18 @@ class Helpers {
             5 => 'Массажистки'
         ];
     }
+
+    public static function getGirlSectionPrefix() {
+        return [
+            0 => '',
+            1 => 'Элитная девушка ',
+            2 => 'Девушка индивидуалка ',
+            3 => 'Дешевая девушка ',
+            4 => 'БДСМ девушка ',
+            5 => 'Массажистка '
+        ];
+    }
+
     public static function getGirlAgeValue($key) {
         $values = self::getGirlAge();
         return $values[$key];
@@ -124,8 +136,32 @@ class Helpers {
         return $values[$key];
     }
 
+    public static function getGirlAppearanceValue($key) {
+        $values = self::getGirlAppearance();
+        return $values[$key];
+    }
+
+    public static function getGirlHaircutValue($key) {
+        $values = self::getGirlHaircut();
+        return $values[$key];
+    }
+
+    public static function getGirlHaircolorValue($key) {
+        $values = self::getGirlHaircolor();
+        return $values[$key];
+    }
+
     public static function getGirlSectionValue($key) {
         $values = self::getGirlSection();
         return $values[$key];
+    }
+
+    public static function getGirlSectionPrefixValue($key) {
+        $values = self::getGirlSectionPrefix();
+        return $values[$key];
+    }
+
+    public static function getPhoneFormatLink ($number) {
+        return preg_replace('/[\s()-]/', '', $number);
     }
 }
