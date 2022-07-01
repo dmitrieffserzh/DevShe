@@ -10,14 +10,12 @@ import './coords';
 import './main';
 
 
-
-
 window.onload = function () {
 
     var marks = $('.marks'),
         createMark = _.template($('#mark-template').text());
 
-    _.forEach(window.stations, function(station) {
+    _.forEach(window.stations, function (station) {
 
         marks.append(
             $(createMark({
@@ -27,8 +25,8 @@ window.onload = function () {
                 .css({
                     // width: +station.w,
                     // height: +station.h,
-                    left: +station.x+'%',
-                    top: +station.y+'%',
+                    left: +station.x + '%',
+                    top: +station.y + '%',
                 })
         );
 
@@ -194,7 +192,7 @@ let amount = 0;
 let result = document.getElementById('amount');
 let rates = document.querySelector('.rates');
 
-if(rates) {
+if (rates) {
     let inputs = rates.querySelectorAll('input');
 
     function calculate() {
@@ -236,27 +234,32 @@ if (searchInput) {
     let timeout;
     searchInput.addEventListener('keyup', function (event) {
 
-        if(timeout) {
+        if (timeout) {
             clearTimeout(timeout);
         }
         searchResult.innerHTML = '';
 
-        timeout = setTimeout(() => {axios({
-            method: 'POST',
-            url: 'search',
-            data: {
-                search: searchInput.value
-            }
-        }).then((response) => {
-            if(response.data !== '') {
-                for (let i = 0;i <= response.data.length; i++) {
-                    searchResult.insertAdjacentHTML('afterbegin', '<div class="item"><span>'+ response.data[i].name +'</span><span>id: '+ response.data[i].id +'</span></div>');
+        timeout = setTimeout(() => {
+            axios({
+                method: 'POST',
+                url: '/search',
+                data: {
+                    search: searchInput.value
                 }
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
-        }, 3000);
+            }).then((response) => {
+                if (response.data !== '') {
+                    for (let i = 0; i <= response.data.length; i++) {
+                        searchResult.insertAdjacentHTML('afterbegin', '' +
+                            '<a href="/' + sections[response.data[i].section] + '/id' + response.data[i].id + '" class="item">' +
+                            '<span>' + response.data[i].name + '</span>' +
+                            '<span>id: ' + response.data[i].id + '</span>' +
+                            '</a>');
+                    }
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+        }, 1500);
     });
 }
 

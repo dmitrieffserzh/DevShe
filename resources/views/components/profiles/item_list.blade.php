@@ -41,4 +41,5 @@
             </div>
         </div>
     </div>
+    <a href="{{ route('catalog.profile', ['section' => \App\Helpers::getGirlSectionUrlValue($item->section), 'id' => $item->id] ) }}" class="profile-item__link"></a>
 </div>

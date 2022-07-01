@@ -126,42 +126,66 @@ class Helpers {
         ];
     }
 
-    public static function getGirlAgeValue($key) {
+    public static function getGirlSectionUrl() {
+        return [
+            //0 => '',
+            1 => 'elite',
+            2 => 'individuals',
+            3 => 'cheap',
+            4 => 'bdsm',
+            5 => 'masseuses'
+        ];
+    }
+
+    public static function getGirlSectionUrlValue( $key ) {
+        $values = self::getGirlSectionUrl();
+
+        return $values[ $key ];
+    }
+
+    public static function getGirlAgeValue( $key ) {
         $values = self::getGirlAge();
-        return $values[$key];
+
+        return $values[ $key ];
     }
 
-    public static function getGirlBreastValue($key) {
+    public static function getGirlBreastValue( $key ) {
         $values = self::getGirlBreast();
-        return $values[$key];
+
+        return $values[ $key ];
     }
 
-    public static function getGirlAppearanceValue($key) {
+    public static function getGirlAppearanceValue( $key ) {
         $values = self::getGirlAppearance();
-        return $values[$key];
+
+        return $values[ $key ];
     }
 
-    public static function getGirlHaircutValue($key) {
+    public static function getGirlHaircutValue( $key ) {
         $values = self::getGirlHaircut();
-        return $values[$key];
+
+        return $values[ $key ];
     }
 
-    public static function getGirlHaircolorValue($key) {
+    public static function getGirlHaircolorValue( $key ) {
         $values = self::getGirlHaircolor();
-        return $values[$key];
+
+        return $values[ $key ];
     }
 
-    public static function getGirlSectionValue($key) {
+    public static function getGirlSectionValue( $key ) {
         $values = self::getGirlSection();
-        return $values[$key];
+
+        return $values[ $key ];
     }
 
-    public static function getGirlSectionPrefixValue($key) {
+    public static function getGirlSectionPrefixValue( $key ) {
         $values = self::getGirlSectionPrefix();
-        return $values[$key];
+
+        return $values[ $key ];
     }
 
-    public static function getPhoneFormatLink ($number) {
-        return preg_replace('/[\s()-]/', '', $number);
+    public static function getPhoneFormatLink( $number ) {
+        return preg_replace( '/[\s()-]/', '', $number );
     }
 }

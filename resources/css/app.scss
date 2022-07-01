@@ -248,6 +248,7 @@ body {
                 justify-content: space-between;
                 flex-direction: row;
                 align-items: center;
+                text-decoration: none;
 
                 & span {
                     &:last-child {
@@ -1005,6 +1006,15 @@ body {
         }
     }
 
+    &__link {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
     &:hover {
         .profile-item__information {
             bottom: 0;
@@ -1387,6 +1397,7 @@ body {
 
 .metro {
     width: 100%;
+
     &-wrapper {
         position: relative;
     }
@@ -1405,6 +1416,7 @@ body {
     color: #000;
     transition: color .3s Linear;
     cursor: pointer;
+
     &:hover {
         color: #df0031;
     }

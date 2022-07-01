@@ -55,7 +55,7 @@
 <main class="main">
     <div class="main__container">
         @if (Request::path() == '/')
-            @include('components.main-slider')
+{{--            @include('components.main-slider')--}}
         @endif
         @hasSection('h1')
             <h1 class="main__h1">@yield('h1')</h1>
@@ -132,5 +132,8 @@
     @include('auth.login')
 @endif
 <div class="overlay" id="overlay-modal"></div>
+<script>
+    const sections = {!! json_encode(\App\Helpers::getGirlSectionUrl()) !!};
+</script>
 </body>
 </html>

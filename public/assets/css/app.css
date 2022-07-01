@@ -259,6 +259,7 @@ table {
   display: block;
   height: 28px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -285,6 +286,7 @@ table {
   display: block;
   min-height: 32px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -342,6 +344,7 @@ table {
 .select2-results__option {
   padding: 6px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -899,6 +902,11 @@ table {
   opacity: 1;
 }
 
+:-ms-input-placeholder {
+  font-family: "Core Sans C 35" !important;
+  color: #D1D1D1;
+}
+
 ::placeholder {
   font-family: "Core Sans C 35" !important;
   color: #D1D1D1;
@@ -1081,6 +1089,7 @@ body {
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
+  text-decoration: none;
 }
 .header-search__result .item span:last-child {
   color: #000;
@@ -1697,6 +1706,14 @@ body {
   min-width: 45px;
   text-align: center;
 }
+.profile-item__link {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 .profile-item:hover .profile-item__information {
   bottom: 0;
   opacity: 1;
@@ -2000,6 +2017,9 @@ body {
   font-size: 12px;
 }
 .filter__block .block__input input:focus::-moz-placeholder {
+  visibility: hidden;
+}
+.filter__block .block__input input:focus:-ms-input-placeholder {
   visibility: hidden;
 }
 .filter__block .block__input input:focus::placeholder {

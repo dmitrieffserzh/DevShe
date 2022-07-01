@@ -19,7 +19,6 @@ use App\Http\Controllers\SearchController;
 Route::get( '/', [ MainController::class, 'index' ] )->name( 'main' );
 
 
-
 // PROFILE
 Route::get( 'profile', [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
 Route::get( 'profile/rates', [ ProfilesController::class, 'rates' ] )->name( 'profile.rates' );
@@ -33,22 +32,11 @@ Route::get( '/cheap', [ CatalogController::class, 'showCheapCatalog' ] )->name( 
 Route::get( '/bdsm', [ CatalogController::class, 'showBdsmCatalog' ] )->name( 'catalog.bdsm' );
 Route::get( '/masseuses', [ CatalogController::class, 'showMasseusesCatalog' ] )->name( 'catalog.masseuses' );
 
-Route::get( '/{id}', [ CatalogController::class, 'showProfileCatalog' ] )->name( 'catalog.profile' );
-
-
+Route::get( '/{section}/id{id}', [ CatalogController::class, 'showProfileCatalog' ] )->name( 'catalog.profile' );
 
 
 // AJAX SEARCH
 Route::post( '/search', [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
 Route::get( '/search/metro', [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
-
-
-
-
-
-
-//Route::get('/dashboard', function () {
-//    return view('dashboard');
-//})->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
