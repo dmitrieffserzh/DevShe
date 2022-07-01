@@ -5,28 +5,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import Swiper, {Autoplay, Thumbs} from 'swiper';
 import 'swiper/css';
 import 'select2/dist/js/select2.min'
-import './loadash';
 import './coords';
 import './main';
 
 
 window.onload = function () {
-
-    var marks = $('.marks'), createMark = _.template($('#mark-template').text());
-
-    _.forEach(window.stations, function (station) {
-
-        marks.append($(createMark({
-            name: station.name, //value: '$' + values[station.name] + ' 000'
-        }))
-            .css({
-                // width: +station.w,
-                // height: +station.h,
-                left: +station.x + '%', top: +station.y + '%',
-            }));
-
-    });
-
     $('.js-select').select2({width: '100%'});
 
     const main_slider = new Swiper('.main-slider', {
@@ -231,6 +214,29 @@ if (searchInput) {
         }, 1500);
     });
 }
+// SEARCH GIRL ON METRO STATIONS
+// let stations = document.getElementsByClassName('metro-station');
+// if (stations) {
+//     for (let i = 0; stations.length > i; i++) {
+//         stations[i].addEventListener('click', () => {
+//             let station_name = stations[i].getAttribute('metro-station-name');
+//             console.log(station_name);
+//             axios({
+//                 method: 'POST',
+//                 url: '/search/metro/result',
+//                 data: {station:station_name}
+//             }).then((response) => {
+//                 console.log(response);
+//                 buttonLoadMore.setAttribute('data-current-page', currentPage);
+//                 if (response.data !== '') {
+//                     resultContainer.insertAdjacentHTML("beforeend", response.data);
+//                 }
+//             }).catch((error) => {
+//                 console.log(error);
+//             });
+//         })
+//     }
+// }
 
 // AJAX LOAD MORE
 let buttonLoadMore = document.getElementById('load-more');
@@ -256,3 +262,31 @@ if (buttonLoadMore) {
         }
     });
 }
+
+let map = document.getElementById('map');
+
+for (let i = 0; stationsLines.length > i; i++) {
+    for (let j = 0; stationsLines[i].stations.length > j; j++) {
+
+        let g = document.createElement('g');
+
+        let text = document.createElement('text');
+
+        text.append(stationsLines[i].stations[j].name)
+
+        let rect = document.createElement('rect');
+        rect.setAttribute('x', stationsLines[i].stations[j].top);
+        rect.setAttribute('y', stationsLines[i].stations[j].left);
+        rect.setAttribute('width', 100);
+        rect.setAttribute('height', 100);
+        rect.setAttribute('fill', '#df0031');
+        g.appendChild(rect);
+        g.appendChild(text);
+        map.appendChild(g);
+    }
+}
+
+
+
+
+

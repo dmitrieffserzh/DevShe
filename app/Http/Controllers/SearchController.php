@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\Station;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -10,11 +11,18 @@ class SearchController extends Controller {
 
 
     public function searchMetro () {
-
-
         return view('search.metro', [
             'heading' => 'Поиск девушек на карте Московского метро'
             ]);
+    }
+
+    public function searchMetroResult (Request $request) {
+        $stations = Station::where('name', '=', $request->station )->get();
+        dd($stations);
+
+        return view('search.metro', [
+            'heading' => 'Поиск девушек на карте Московского метро'
+        ]);
     }
 
     public function ajaxSearch (Request $request) {
