@@ -20,23 +20,23 @@ Route::get( '/', [ MainController::class, 'index' ] )->name( 'main' );
 
 
 // PROFILE
-Route::get( 'profile', [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
-Route::get( 'profile/rates', [ ProfilesController::class, 'rates' ] )->name( 'profile.rates' );
+Route::get( 'profile',          [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
+Route::get( 'profile/rates',    [ ProfilesController::class, 'rates' ] )->name( 'profile.rates' );
 Route::get( 'profile/payments', [ ProfilesController::class, 'payments' ] )->name( 'profile.payments' );
 
 
 // CATALOG GIRLS
-Route::get( '/elite', [ CatalogController::class, 'showEliteCatalog' ] )->name( 'catalog.elite' );
-Route::get( '/individuals', [ CatalogController::class, 'showIndividualsCatalog' ] )->name( 'catalog.individuals' );
-Route::get( '/cheap', [ CatalogController::class, 'showCheapCatalog' ] )->name( 'catalog.cheap' );
-Route::get( '/bdsm', [ CatalogController::class, 'showBdsmCatalog' ] )->name( 'catalog.bdsm' );
-Route::get( '/masseuses', [ CatalogController::class, 'showMasseusesCatalog' ] )->name( 'catalog.masseuses' );
+Route::match(['get', 'post'], '/elite',         [ CatalogController::class, 'showEliteCatalog' ] )->name( 'catalog.elite' );
+Route::match(['get', 'post'], '/individuals',   [ CatalogController::class, 'showIndividualsCatalog' ] )->name( 'catalog.individuals' );
+Route::match(['get', 'post'], '/cheap',         [ CatalogController::class, 'showCheapCatalog' ] )->name( 'catalog.cheap' );
+Route::match(['get', 'post'], '/bdsm',          [ CatalogController::class, 'showBdsmCatalog' ] )->name( 'catalog.bdsm' );
+Route::match(['get', 'post'], '/masseuses',     [ CatalogController::class, 'showMasseusesCatalog' ] )->name( 'catalog.masseuses' );
 
 Route::get( '/{section}/id{id}', [ CatalogController::class, 'showProfileCatalog' ] )->name( 'catalog.profile' );
 
 
 // AJAX SEARCH
-Route::post( '/search', [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
+Route::post( '/search',      [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
 Route::get( '/search/metro', [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
 
 require __DIR__.'/auth.php';

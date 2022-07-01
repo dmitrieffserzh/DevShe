@@ -64,8 +64,12 @@ class CatalogController extends Controller {
         ] );
     }
 
-    function showEliteCatalog() {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 1 )->limit( 16 )->get();
+    function showEliteCatalog( Request $request ) {
+        $profiles = Profile::where( 'active', 1 )->where( 'section', 1 )->paginate( 16 );
+
+        if ( $request->ajax() ) {
+            return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
+        }
 
         return view( 'catalog.profile_list', [
             'profiles' => $profiles,
@@ -73,8 +77,12 @@ class CatalogController extends Controller {
         ] );
     }
 
-    function showIndividualsCatalog() {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 2 )->limit( 16 )->get();
+    function showIndividualsCatalog( Request $request ) {
+        $profiles = Profile::where( 'active', 1 )->where( 'section', 2 )->paginate( 16 );
+
+        if ( $request->ajax() ) {
+            return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
+        }
 
         return view( 'catalog.profile_list', [
             'profiles' => $profiles,
@@ -83,8 +91,12 @@ class CatalogController extends Controller {
     }
 
 
-    function showCheapCatalog() {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 3 )->limit( 16 )->get();
+    function showCheapCatalog( Request $request ) {
+        $profiles = Profile::where( 'active', 1 )->where( 'section', 3 )->paginate( 16 );
+
+        if ( $request->ajax() ) {
+            return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
+        }
 
         return view( 'catalog.profile_list', [
             'profiles' => $profiles,
@@ -93,8 +105,12 @@ class CatalogController extends Controller {
     }
 
 
-    function showBdsmCatalog() {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 4 )->limit( 16 )->get();
+    function showBdsmCatalog( Request $request ) {
+        $profiles = Profile::where( 'active', 1 )->where( 'section', 4 )->paginate( 16 );
+
+        if ( $request->ajax() ) {
+            return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
+        }
 
         return view( 'catalog.profile_list', [
             'profiles' => $profiles,
@@ -103,8 +119,12 @@ class CatalogController extends Controller {
     }
 
 
-    function showMasseusesCatalog() {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 5 )->limit( 16 )->get();
+    function showMasseusesCatalog( Request $request ) {
+        $profiles = Profile::where( 'active', 1 )->where( 'section', 5 )->paginate( 16 );
+
+        if ( $request->ajax() ) {
+            return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
+        }
 
         return view( 'catalog.profile_list', [
             'profiles' => $profiles,

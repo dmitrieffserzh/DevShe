@@ -9,4 +9,5 @@
         @include('components.profiles.item_list', ['item' => $item])
     @endforeach
     </div>
+    {{ $profiles->links('components.button-more') }}
 @endsection

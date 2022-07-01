@@ -2422,6 +2422,33 @@ if (searchInput) {
       });
     }, 1500);
   });
+} // AJAX LOAD MORE
+
+
+var buttonLoadMore = document.getElementById('load-more');
+var resultContainer = document.querySelector('.profiles-list');
+
+if (buttonLoadMore) {
+  buttonLoadMore.addEventListener('click', function (event) {
+    event.preventDefault();
+    var currentPage = parseInt(buttonLoadMore.getAttribute('data-current-page'));
+    var totalPage = parseInt(buttonLoadMore.getAttribute('data-total-page'));
+
+    if (currentPage < totalPage) {
+      axios({
+        method: 'POST',
+        url: window.location.href + '?page=' + ++currentPage
+      }).then(function (response) {
+        buttonLoadMore.setAttribute('data-current-page', currentPage);
+
+        if (response.data !== '') {
+          resultContainer.insertAdjacentHTML("beforeend", response.data);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  });
 }
 
 /***/ }),

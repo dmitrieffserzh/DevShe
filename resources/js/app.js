@@ -12,76 +12,55 @@ import './main';
 
 window.onload = function () {
 
-    var marks = $('.marks'),
-        createMark = _.template($('#mark-template').text());
+    var marks = $('.marks'), createMark = _.template($('#mark-template').text());
 
     _.forEach(window.stations, function (station) {
 
-        marks.append(
-            $(createMark({
-                name: station.name,
-                //value: '$' + values[station.name] + ' 000'
-            }))
-                .css({
-                    // width: +station.w,
-                    // height: +station.h,
-                    left: +station.x + '%',
-                    top: +station.y + '%',
-                })
-        );
+        marks.append($(createMark({
+            name: station.name, //value: '$' + values[station.name] + ' 000'
+        }))
+            .css({
+                // width: +station.w,
+                // height: +station.h,
+                left: +station.x + '%', top: +station.y + '%',
+            }));
 
     });
 
     $('.js-select').select2({width: '100%'});
 
     const main_slider = new Swiper('.main-slider', {
-        modules: [Autoplay],
-        autoplay: {
+        modules: [Autoplay], autoplay: {
             delay: 10000,
         },
     });
 
     const new_girls = new Swiper('#new-girls', {
-        slidesPerView: 4,
-        loop: true,
-        modules: [Autoplay],
-        autoplay: {
+        slidesPerView: 4, loop: true, modules: [Autoplay], autoplay: {
             delay: 10000,
         },
     });
 
     const top_girls = new Swiper('#top-girls', {
-        slidesPerView: 4,
-        loop: true,
-        modules: [Autoplay],
-        autoplay: {
+        slidesPerView: 4, loop: true, modules: [Autoplay], autoplay: {
             delay: 10000,
         },
     });
 
     const profile_thumbs = new Swiper(".thumbs", {
-        spaceBetween: 10,
-        slidesPerView: 5,
-        freeMode: true,
-        watchSlidesProgress: true,
-        modules: [Thumbs],
+        spaceBetween: 10, slidesPerView: 5, freeMode: true, watchSlidesProgress: true, modules: [Thumbs],
     });
     const profile_images = new Swiper(".images", {
-        spaceBetween: 1,
-        modules: [Thumbs],
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        thumbs: {
+        spaceBetween: 1, modules: [Thumbs], navigation: {
+            nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev",
+        }, thumbs: {
             swiper: profile_thumbs,
         },
     });
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    let modalButtons = document.querySelectorAll('.js-open-modal'),
-        overlay = document.querySelector('#overlay-modal'),
+    let modalButtons = document.querySelectorAll('.js-open-modal'), overlay = document.querySelector('#overlay-modal'),
         closeButtons = document.querySelectorAll('.js-modal-close');
 
     modalButtons.forEach(function (item) {
@@ -141,9 +120,7 @@ if (logonForm) {
     logonForm.addEventListener('submit', function (event) {
         event.preventDefault();
         axios({
-            method: 'POST',
-            url: 'login',
-            data: new FormData(logonForm)
+            method: 'POST', url: 'login', data: new FormData(logonForm)
         }).then((response) => {
             document.querySelector('.form-login__alert').innerText = '';
             document.querySelector('.form-login__alert').innerText = response.data.message;
@@ -167,9 +144,7 @@ if (registerForm) {
     registerForm.addEventListener('submit', function (event) {
         event.preventDefault();
         axios({
-            method: 'POST',
-            url: 'register',
-            data: new FormData(registerForm)
+            method: 'POST', url: 'register', data: new FormData(registerForm)
         }).then((response) => {
             document.querySelector('.form-register__alert').innerText = '';
             document.querySelector('.form-register__alert').innerText = response.data.message;
@@ -241,19 +216,13 @@ if (searchInput) {
 
         timeout = setTimeout(() => {
             axios({
-                method: 'POST',
-                url: '/search',
-                data: {
+                method: 'POST', url: '/search', data: {
                     search: searchInput.value
                 }
             }).then((response) => {
                 if (response.data !== '') {
                     for (let i = 0; i <= response.data.length; i++) {
-                        searchResult.insertAdjacentHTML('afterbegin', '' +
-                            '<a href="/' + sections[response.data[i].section] + '/id' + response.data[i].id + '" class="item">' +
-                            '<span>' + response.data[i].name + '</span>' +
-                            '<span>id: ' + response.data[i].id + '</span>' +
-                            '</a>');
+                        searchResult.insertAdjacentHTML('afterbegin', '' + '<a href="/' + sections[response.data[i].section] + '/id' + response.data[i].id + '" class="item">' + '<span>' + response.data[i].name + '</span>' + '<span>id: ' + response.data[i].id + '</span>' + '</a>');
                     }
                 }
             }).catch((error) => {
@@ -263,4 +232,27 @@ if (searchInput) {
     });
 }
 
+// AJAX LOAD MORE
+let buttonLoadMore = document.getElementById('load-more');
+let resultContainer = document.querySelector('.profiles-list');
+if (buttonLoadMore) {
+    buttonLoadMore.addEventListener('click', (event) => {
+        event.preventDefault();
 
+        let currentPage = parseInt(buttonLoadMore.getAttribute('data-current-page'));
+        let totalPage = parseInt(buttonLoadMore.getAttribute('data-total-page'));
+
+        if (currentPage < totalPage) {
+            axios({
+                method: 'POST', url: window.location.href + '?page=' + ++currentPage,
+            }).then((response) => {
+                buttonLoadMore.setAttribute('data-current-page', currentPage);
+                if (response.data !== '') {
+                    resultContainer.insertAdjacentHTML("beforeend", response.data);
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+    });
+}
