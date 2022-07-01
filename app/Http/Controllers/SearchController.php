@@ -8,8 +8,14 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller {
 
-    private $request = '';
 
+    public function searchMetro () {
+
+
+        return view('search.metro', [
+            'heading' => 'Поиск девушек на карте Московского метро'
+            ]);
+    }
 
     public function ajaxSearch (Request $request) {
 

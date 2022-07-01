@@ -1,0 +1,55 @@
+@import "~select2/src/scss/core";
+
+.select2-search--dropdown {
+    display: none;
+}
+
+.select2-container .select2-selection--single {
+    height: auto;
+    border: 1px Solid #F8F8F8;
+    border-radius: .25rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-family: "Core Sans C 35";
+    font-size: 12px;
+    color: #D1D1D1;
+    line-height: 1rem;
+    padding: .75rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #2AABEE transparent transparent transparent;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35px;
+}
+
+.select2-dropdown {
+    border: none;
+    background: #fff;
+    box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, .1);
+    border-radius: .5rem;
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    left: -100000px;
+    width: 100%;
+    z-index: 1051;
+    overflow: hidden;
+}
+
+.select2-results__option {
+    padding: 0.75rem;
+    font-family: 'Core Sans C 35';
+    font-size: 12px;
+}
+
+.select2-container--default .select2-results > .select2-results__options {
+    max-height: 400px;
+}

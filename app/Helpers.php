@@ -77,7 +77,7 @@ class Helpers {
 
     public static function getGirlAppearance() {
         return [
-            0 => 'Не выбрано',
+            0 => '-Выберите типаж-',
             1 => 'Славянская',
             2 => 'Азиатская',
             3 => 'Кавказская',

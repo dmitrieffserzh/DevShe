@@ -1,12 +1,41 @@
 //import './bootstrap';
 window.axios = require('axios');
+window.$ = require('jquery');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import Swiper, {Autoplay, Thumbs} from 'swiper';
 import 'swiper/css';
+import 'select2/dist/js/select2.min'
+import './loadash';
+import './coords';
+import './main';
+
 
 
 
 window.onload = function () {
+
+    var marks = $('.marks'),
+        createMark = _.template($('#mark-template').text());
+
+    _.forEach(window.stations, function(station) {
+
+        marks.append(
+            $(createMark({
+                name: station.name,
+                //value: '$' + values[station.name] + ' 000'
+            }))
+                .css({
+                    // width: +station.w,
+                    // height: +station.h,
+                    left: +station.x+'%',
+                    top: +station.y+'%',
+                })
+        );
+
+    });
+
+    $('.js-select').select2({width: '100%'});
+
     const main_slider = new Swiper('.main-slider', {
         modules: [Autoplay],
         autoplay: {
@@ -204,9 +233,15 @@ if(rates) {
 let searchInput = document.querySelector('.header-search__input');
 let searchResult = document.querySelector('.header-search__result');
 if (searchInput) {
+    let timeout;
     searchInput.addEventListener('keyup', function (event) {
+
+        if(timeout) {
+            clearTimeout(timeout);
+        }
         searchResult.innerHTML = '';
-        axios({
+
+        timeout = setTimeout(() => {axios({
             method: 'POST',
             url: 'search',
             data: {
@@ -219,8 +254,10 @@ if (searchInput) {
                 }
             }
         }).catch((error) => {
-            console.log(error.response.data.message);
+            console.log(error);
         });
+        }, 3000);
     });
 }
+
 

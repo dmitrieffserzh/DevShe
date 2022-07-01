@@ -40,6 +40,8 @@ Route::get( '/{id}', [ CatalogController::class, 'showProfileCatalog' ] )->name(
 
 // AJAX SEARCH
 Route::post( '/search', [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
+Route::get( '/search/metro', [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
+
 
 
 

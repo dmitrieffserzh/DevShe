@@ -37,7 +37,7 @@
                     <button class="header-search__button"></button>
                     <div class="header-search__result"></div>
                 </div>
-                <a href="" class="header-search__link">Поиск по <span></span></a>
+                <a href="{{ route('search.metro') }}" class="header-search__link">Поиск по <span></span></a>
             </div>
             <div class="header-main__buttons">
                 <a href="" class="button button--add js-open-modal"
