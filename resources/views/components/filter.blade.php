@@ -34,9 +34,9 @@
              ] );
          }
          array_push( $arrServices, [ 'title' => $item->block_title, 'services' => $servicesList ] );
-    //dd($arrServices);
+
 @endphp
-<div class="filter">
+<form class="filter">
     <div class="filter__block">
         <div class="block">
             <div class="block__title">Возраст:</div>
@@ -129,4 +129,4 @@
             <option value="Эскспресс">Эскспресс</option>
         </select>
     </div>
-</div>
+</form>

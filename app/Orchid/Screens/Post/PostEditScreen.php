@@ -3,7 +3,6 @@
 namespace App\Orchid\Screens\Post;
 
 use App\Models\Post;
-use App\Models\Profile;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\CheckBox;
@@ -96,7 +95,7 @@ class PostEditScreen extends Screen {
     }
 
     public function create( Request $request ) {
-        $post = Post::createOrFail( $request->post );
+        $post = Post::create( $request->post );
         if ( $post ) {
 
             Toast::success( 'Статья успешно сохранена' );

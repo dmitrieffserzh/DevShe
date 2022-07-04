@@ -6,8 +6,10 @@
             @include('components.profiles.item_list', ['item' => $item])
         @endforeach
         </div>
+        @if($link)
         <div class="view-all">
-            <a href="#" class="button button--view-all">Смотреть все</a>
+            <a href="{{ $link }}" class="button button--view-all">Смотреть все</a>
         </div>
+        @endif
     </div>
 </section>

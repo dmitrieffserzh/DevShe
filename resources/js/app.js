@@ -5,9 +5,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import Swiper, {Autoplay, Thumbs} from 'swiper';
 import 'swiper/css';
 import 'select2/dist/js/select2.min'
-import './coords';
-import './main';
-
 
 window.onload = function () {
     $('.js-select').select2({width: '100%'});
@@ -84,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // SHOW PASSWORD
 let showPassIcons = document.querySelectorAll('.show-password');
-
 showPassIcons.forEach(function (item) {
     item.addEventListener('click', function (e) {
         if (item.previousElementSibling.getAttribute('type') === 'password') {
@@ -207,6 +203,8 @@ if (searchInput) {
                     for (let i = 0; i <= response.data.length; i++) {
                         searchResult.insertAdjacentHTML('afterbegin', '' + '<a href="/' + sections[response.data[i].section] + '/id' + response.data[i].id + '" class="item">' + '<span>' + response.data[i].name + '</span>' + '<span>id: ' + response.data[i].id + '</span>' + '</a>');
                     }
+                } else {
+                    searchResult.insertAdjacentHTML('afterbegin', '' + '<div class="item">По вашму запросу ничего не найдено</div>');
                 }
             }).catch((error) => {
                 console.log(error);
@@ -214,6 +212,7 @@ if (searchInput) {
         }, 1500);
     });
 }
+
 // SEARCH GIRL ON METRO STATIONS
 let stations = document.getElementsByClassName('label');
 if (stations) {
@@ -226,10 +225,10 @@ if (stations) {
                 url: '/search/metro',
                 data: {station: stations[i].textContent}
             }).then((response) => {
-                console.log(response);
                 if (response.data !== '') {
-                    window.location.href = '/search/metro/result/' + response.data
+                    window.location.href = '/search/metro/' + response.data
                 }
+                console.log(response);
             }).catch((error) => {
                 console.log(error);
             });

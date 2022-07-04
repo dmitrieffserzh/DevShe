@@ -5,11 +5,12 @@ namespace App\Models;
 use Orchid\Filters\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Screen\AsSource;
 
-class Post extends Model
-{
+class Post extends Model {
     use Filterable;
     use HasFactory;
+    use AsSource;
 
     protected $table = 'posts';
 
@@ -19,6 +20,6 @@ class Post extends Model
         'content'
     ];
 
-    protected $allowedFilters = [ 'id', 'title'];
+    protected $allowedFilters = [ 'id', 'title' ];
     protected $allowedSorts = [ 'id', 'active' ];
 }

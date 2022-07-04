@@ -54,37 +54,10 @@
 </header>
 <main class="main">
     <div class="main__container">
-        @if (Request::path() == '/')
-{{--            @include('components.main-slider')--}}
-        @endif
         @hasSection('h1')
             <h1 class="main__h1">@yield('h1')</h1>
         @endif
     </div>
-
-    @if(isset($eliteGirls))
-        @include('components.main.list_profiles', ['title'=> 'Элитные девушки', 'items' => $eliteGirls, 'link' => route('catalog.elite')])
-    @endif
-
-    @if(isset($newGirls))
-        @include('components.main.slider_profiles', ['id'=> 'new-girls', 'title'=> 'Новые девушки', 'items' => $newGirls])
-    @endif
-
-    @if(isset($individualGirls))
-        @include('components.main.list_profiles', ['title'=> 'Индивидуалки', 'items' => $individualGirls, 'link' => route('catalog.individuals')])
-    @endif
-
-    @if(isset($topGirls))
-        @include('components.main.slider_profiles', ['id'=> 'top-girls', 'title'=> 'Девушки ТОП-100', 'items' => $topGirls])
-    @endif
-
-    @if(isset($cheapGirls))
-        @include('components.main.list_profiles', ['title'=> 'Дешевые девушки', 'items' => $cheapGirls, 'link' => route('catalog.cheap')])
-    @endif
-
-    @if(isset($masseusesGirls))
-        @include('components.main.list_profiles', ['title'=> 'Массажистки', 'items' => $masseusesGirls, 'link' => route('catalog.masseuses')])
-    @endif
 
     <div class="main__container {{ Request::segment(1) == 'profile' ? 'main__container--with-aside' : ''}}">
         @yield('content')

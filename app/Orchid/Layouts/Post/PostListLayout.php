@@ -23,7 +23,7 @@ class PostListLayout extends Table {
               ->align( 'left' )
               ->cantHide()
               ->width( '30px' )
-              ->render( function ( $post ) {
+              ->render( function ( Post $post ) {
                   $color = '#eff1f9';
                   if ( $post->active == 1 ) {
                       $color = '#43d040';
@@ -35,21 +35,30 @@ class PostListLayout extends Table {
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Profile $post ) {
+              ->render( function ( Post $post ) {
                   return '<strong>' . $post->id . '</strong>';
               } )->width( '100px' ),
             TD::make( 'title', 'Название' )
               ->sort()
               ->cantHide()
-              ->filter( Input::make() ),
+              ->filter( Input::make() )
+              ->render( function ( Post $post ) {
+                  return '<b><a href"' . route( 'platform.posts.edit', [ 'id' => $post->id ] ) . '">' . $post->title . '</a></b>';
+              } ),
             TD::make( 'created_at', 'Дата создания' )
               ->sort()
               ->cantHide()
-              ->filter( Input::make() ),
+              ->filter( Input::make() )
+              ->render( function ( Post $post ) {
+                  return date( "d.m.Y H:i:s", $post->created_at );
+              } ),
             TD::make( 'updated_at', 'Дата редактирования' )
               ->sort()
               ->cantHide()
-              ->filter( Input::make() ),
+              ->filter( Input::make() )
+              ->render( function ( Post $post ) {
+                  return date( "d.m.Y H:i:s", $post->updated_at );
+              } ),
             TD::make( __( 'Actions' ) )
               ->align( TD::ALIGN_CENTER )
               ->width( '100px' )
@@ -58,14 +67,14 @@ class PostListLayout extends Table {
                                  ->icon( 'options-vertical' )
                                  ->list( [
                                      Button::make( $post->active == 1 ? 'Деактивировать' : 'Активировать' )
-                                           ->route( 'platform.girls' )
+                                           ->route( 'platform.posts' )
                                            ->icon( 'power' )
                                            ->method( 'status', [
                                                'id'     => $post->id,
                                                'status' => $post->active == 1 ? 0 : 1
                                            ] ),
                                      Link::make( __( 'Edit' ) )
-                                         ->route( 'platform.girls.edit', $post->id )
+                                         ->route( 'platform.posts.edit', $post->id )
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )
