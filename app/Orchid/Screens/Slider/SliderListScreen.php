@@ -3,17 +3,16 @@
 namespace App\Orchid\Screens\Slider;
 
 use App\Models\Slider;
-use App\Orchid\Layouts\Post\PostListLayout;
+use App\Orchid\Layouts\Slider\SliderListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
 
-class SliderListScreen extends Screen
-{
+class SliderListScreen extends Screen {
     public function query(): iterable {
         return [
-            'slides' => Slider::filters()->defaultSort( 'id', 'desc' )->paginate(),
+            'slider' => Slider::filters()->defaultSort( 'id', 'desc' )->paginate(),
         ];
     }
 
@@ -31,7 +30,7 @@ class SliderListScreen extends Screen
 
     public function layout(): iterable {
         return [
-            PostListLayout::class,
+            SliderListLayout::class,
         ];
     }
 

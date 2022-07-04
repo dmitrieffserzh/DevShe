@@ -6,6 +6,7 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PageController;
 
 
 /*
@@ -48,5 +49,8 @@ Route::get( '/search/metro/{id?}',                    [ SearchController::class,
 // ARTICLES
 Route::get('articles', [PostController::class, 'post.index'])->name('post.index');
 Route::get('articles/{id}', [PostController::class, 'post.index'])->name('post.index');
+
+// PAGES
+Route::get('/{slug}', [PageController::class, 'showPage'])->name('page');
 
 require __DIR__.'/auth.php';

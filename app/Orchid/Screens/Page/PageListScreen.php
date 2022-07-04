@@ -1,52 +1,51 @@
 <?php
 
-namespace App\Orchid\Screens\Post;
+namespace App\Orchid\Screens\Page;
 
-use App\Models\Post;
-use App\Orchid\Layouts\Post\PostListLayout;
+use App\Models\Page;
+use App\Orchid\Layouts\Page\PageListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
 
-class PostListScreen extends Screen {
-
+class PageListScreen extends Screen {
     public function query(): iterable {
         return [
-            'posts' => Post::filters()->defaultSort( 'id', 'desc' )->paginate(),
+            'pages' => Page::filters()->defaultSort( 'id', 'desc' )->paginate(),
         ];
     }
 
     public function name(): ?string {
-        return 'Статьи';
+        return 'Страницы';
     }
 
     public function commandBar(): iterable {
         return [
             Link::make( __( 'Add' ) )
                 ->icon( 'plus' )
-                ->route( 'platform.posts.create' ),
+                ->route( 'platform.pages.create' ),
         ];
     }
 
     public function layout(): iterable {
         return [
-            PostListLayout::class,
+            PageListLayout::class,
         ];
     }
 
     public function status( Request $request ) {
-        $post        = Post::findOrFail( $request->get( 'id' ) );
-        $post->active = $request->get( 'status' );
-        if ( $post->save() ) {
+        $page         = Page::findOrFail( $request->get( 'id' ) );
+        $page->active = $request->get( 'status' );
+        if ( $profile->save() ) {
             Toast::info( 'Статус статьи успешно изменен!' );
 
-            return redirect()->route( 'platform.posts' );
+            return redirect()->route( 'platform.pages' );
         }
     }
 
     public function remove( Request $request ): void {
-        Post::findOrFail( $request->get( 'id' ) )->delete();
+        Page::findOrFail( $request->get( 'id' ) )->delete();
         Toast::info( 'Статья успешно удалена' );
     }
 }

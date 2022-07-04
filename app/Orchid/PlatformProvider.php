@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare( strict_types=1 );
 
 namespace App\Orchid;
 
@@ -10,14 +10,12 @@ use Orchid\Platform\OrchidServiceProvider;
 use Orchid\Screen\Actions\Menu;
 use Orchid\Support\Color;
 
-class PlatformProvider extends OrchidServiceProvider
-{
+class PlatformProvider extends OrchidServiceProvider {
     /**
      * @param Dashboard $dashboard
      */
-    public function boot(Dashboard $dashboard): void
-    {
-        parent::boot($dashboard);
+    public function boot( Dashboard $dashboard ): void {
+        parent::boot( $dashboard );
 
         // ...
     }
@@ -25,100 +23,102 @@ class PlatformProvider extends OrchidServiceProvider
     /**
      * @return Menu[]
      */
-    public function registerMainMenu(): array
-    {
+    public function registerMainMenu(): array {
         return [
-            Menu::make('Профили девушек ')
-                ->icon('user-female')
-                ->title('Профили')
-                ->route('platform.girls'),
-            Menu::make('Профили мужчин')
-                ->icon('user')
-                ->route('platform.men'),
+            Menu::make( 'Профили девушек ' )
+                ->icon( 'user-female' )
+                ->title( 'Профили' )
+                ->route( 'platform.girls' ),
+            Menu::make( 'Профили мужчин' )
+                ->icon( 'user' )
+                ->route( 'platform.men' ),
 //            Menu::make('Все пользователи')
 //                ->icon('people')
 //                ->route('platform.systems.users')
 //                ->permission('platform.systems.users')
 //                ->divider(),
 
-            Menu::make('Тарифы')
-                ->icon('money')
-                ->route('platform.rates')
-                ->title('Тарифы'),
+            Menu::make( 'Тарифы' )
+                ->icon( 'money' )
+                ->route( 'platform.rates' )
+                ->title( 'Тарифы' ),
 
-            Menu::make('Статьи')
-                ->icon('list')
-                ->route('platform.posts')
-                ->title('Контент'),
-            Menu::make('Слайдер на главной')
-                ->icon('picture')
-                ->route('platform.slides'),
+            Menu::make( 'Cтраницы' )
+                ->icon( 'docs' )
+                ->route( 'platform.pages' )
+                ->title( 'Контент' ),
+            Menu::make( 'Статьи' )
+                ->icon( 'list' )
+                ->route( 'platform.posts' ),
+            Menu::make( 'Слайдер на главной' )
+                ->icon( 'picture' )
+                ->route( 'platform.slides' ),
 
-            Menu::make('Роли пользователей')
-                ->icon('lock')
-                ->route('platform.systems.roles')
-                ->title('Ноастройки')
-                ->permission('platform.systems.roles'),
-            Menu::make('Настройки системы')
-                ->icon('settings')
-                ->route('platform.systems.roles')
-                ->permission('platform.systems.roles'),
+            Menu::make( 'Роли пользователей' )
+                ->icon( 'lock' )
+                ->route( 'platform.systems.roles' )
+                ->title( 'Ноастройки' )
+                ->permission( 'platform.systems.roles' ),
+            Menu::make( 'Настройки системы' )
+                ->icon( 'settings' )
+                ->route( 'platform.systems.roles' )
+                ->permission( 'platform.systems.roles' ),
 
 
-            Menu::make('Example screen')
-                ->icon('picture')
-                ->route('platform.example')
-                ->title('Navigation')
-                ->badge(function () {
+            Menu::make( 'Example screen' )
+                ->icon( 'picture' )
+                ->route( 'platform.example' )
+                ->title( 'Navigation' )
+                ->badge( function () {
                     return 6;
-                }),
+                } ),
 
-            Menu::make('Dropdown menu')
-                ->icon('code')
-                ->list([
-                    Menu::make('Sub element item 1')->icon('bag'),
-                    Menu::make('Sub element item 2')->icon('heart'),
-                ]),
+            Menu::make( 'Dropdown menu' )
+                ->icon( 'code' )
+                ->list( [
+                    Menu::make( 'Sub element item 1' )->icon( 'bag' ),
+                    Menu::make( 'Sub element item 2' )->icon( 'heart' ),
+                ] ),
 
-            Menu::make('Basic Elements')
-                ->title('Form controls')
-                ->icon('note')
-                ->route('platform.example.fields'),
+            Menu::make( 'Basic Elements' )
+                ->title( 'Form controls' )
+                ->icon( 'note' )
+                ->route( 'platform.example.fields' ),
 
-            Menu::make('Advanced Elements')
-                ->icon('briefcase')
-                ->route('platform.example.advanced'),
+            Menu::make( 'Advanced Elements' )
+                ->icon( 'briefcase' )
+                ->route( 'platform.example.advanced' ),
 
-            Menu::make('Text Editors')
-                ->icon('list')
-                ->route('platform.example.editors'),
+            Menu::make( 'Text Editors' )
+                ->icon( 'list' )
+                ->route( 'platform.example.editors' ),
 
-            Menu::make('Overview layouts')
-                ->title('Layouts')
-                ->icon('layers')
-                ->route('platform.example.layouts'),
+            Menu::make( 'Overview layouts' )
+                ->title( 'Layouts' )
+                ->icon( 'layers' )
+                ->route( 'platform.example.layouts' ),
 
-            Menu::make('Chart tools')
-                ->icon('bar-chart')
-                ->route('platform.example.charts'),
+            Menu::make( 'Chart tools' )
+                ->icon( 'bar-chart' )
+                ->route( 'platform.example.charts' ),
 
-            Menu::make('Cards')
-                ->icon('grid')
-                ->route('platform.example.cards')
+            Menu::make( 'Cards' )
+                ->icon( 'grid' )
+                ->route( 'platform.example.cards' )
                 ->divider(),
 
-            Menu::make('Documentation')
-                ->title('Docs')
-                ->icon('docs')
-                ->url('https://orchid.software/en/docs'),
+            Menu::make( 'Documentation' )
+                ->title( 'Docs' )
+                ->icon( 'docs' )
+                ->url( 'https://orchid.software/en/docs' ),
 
-            Menu::make('Changelog')
-                ->icon('shuffle')
-                ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
-                ->target('_blank')
-                ->badge(function () {
+            Menu::make( 'Changelog' )
+                ->icon( 'shuffle' )
+                ->url( 'https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md' )
+                ->target( '_blank' )
+                ->badge( function () {
                     return Dashboard::version();
-                }, Color::DARK()),
+                }, Color::DARK() ),
 
         ];
     }
@@ -126,24 +126,22 @@ class PlatformProvider extends OrchidServiceProvider
     /**
      * @return Menu[]
      */
-    public function registerProfileMenu(): array
-    {
+    public function registerProfileMenu(): array {
         return [
-            Menu::make('Profile')
-                ->route('platform.profile')
-                ->icon('user'),
+            Menu::make( 'Profile' )
+                ->route( 'platform.profile' )
+                ->icon( 'user' ),
         ];
     }
 
     /**
      * @return ItemPermission[]
      */
-    public function registerPermissions(): array
-    {
+    public function registerPermissions(): array {
         return [
-            ItemPermission::group(__('System'))
-                ->addPermission('platform.systems.roles', __('Roles'))
-                ->addPermission('platform.systems.users', __('Users')),
+            ItemPermission::group( __( 'System' ) )
+                          ->addPermission( 'platform.systems.roles', __( 'Roles' ) )
+                          ->addPermission( 'platform.systems.users', __( 'Users' ) ),
         ];
     }
 }

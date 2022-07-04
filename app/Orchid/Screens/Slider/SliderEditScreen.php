@@ -22,13 +22,13 @@ class SliderEditScreen extends Screen {
 
     public function query( Slider $slider ): iterable {
         return [
-            'slider' => $slider
+            'slide' => $slider
         ];
     }
 
 
     public function name(): ?string {
-        return $this->slider->exists ? 'Редактирование слайда' : 'Создание слайда';
+        return $this->slide->exists ? 'Редактирование слайда' : 'Создание слайда';
     }
 
 
@@ -38,7 +38,7 @@ class SliderEditScreen extends Screen {
                   ->icon( 'trash' )
                   ->confirm( __( 'Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' ) )
                   ->method( 'remove' )
-                  ->canSee( $this->slider->exists )
+                  ->canSee( $this->slide->exists )
                   ->style( 'color: #df0031;' ),
             Button::make( 'Отменить' )
                   ->icon( 'close' )
@@ -46,12 +46,12 @@ class SliderEditScreen extends Screen {
             Button::make( 'Сохранить' )
                   ->icon( 'check' )
                   ->method( 'update' )
-                  ->canSee( $this->slider->exists )
+                  ->canSee( $this->slide->exists )
                   ->class( 'float-end btn btn-' . Color::PRIMARY() ),
             Button::make( __( 'Save' ) )
                   ->icon( 'check' )
                   ->method( 'create' )
-                  ->canSee( ! $this->slider->exists )
+                  ->canSee( ! $this->slide->exists )
                   ->class( 'float-end btn btn-' . Color::PRIMARY() ),
         ];
     }
@@ -61,38 +61,36 @@ class SliderEditScreen extends Screen {
         return [
             Layout::columns( [
                 Layout::rows( [
+                    CheckBox::make( 'slide.active' )
+                            ->title( 'Опубликовать' )
+                            ->placeholder( 'Да' )
+                            ->sendTrueOrFalse()
+                            ->checked(),
                     Group::make( [
-                        CheckBox::make( 'slider.active' )
-                                ->title( 'Опубликовать' )
-                                ->placeholder( 'Да' )
-                                ->sendTrueOrFalse()
-                                ->checked(),
-                        Input::make( 'slider.sort' )
+                        Input::make( 'slide.title' )
+                             ->title( 'Заголовок' )
+                             ->placeholder( 'Введите заголовок статьи' )
+                             ->required(),
+                        Input::make( 'slide.sort' )
                              ->title( 'Сортировка' )
                              ->placeholder( '' )
                              ->value( 1 ),
                     ] ),
-                    Input::make( 'slider.title' )
-                         ->title( 'Заголовок' )
-                         ->placeholder( 'Введите заголовок статьи' )
-                         ->style( 'width: 100%;' )
-                         ->required(),
-                    Quill::make( 'slider.description' )
+                    Quill::make( 'slide.description' )
                          ->title( 'Содержимое статьи' )
-                         ->placeholder( 'Введите содержимое статьи' )
-                         ->required(),
-                    Cropper::make( 'image' )
+                         ->placeholder( 'Введите содержимое статьи' ),
+                    Cropper::make( 'slide.image' )
                            ->title( 'Изображение' )
                            ->width( 1140 )
                            ->height( 400 )
-                           ->targetRelativeUrl()
+                           ->targetUrl()
                            ->required(),
                     Group::make( [
-                        Input::make( 'slider.button_text' )
+                        Input::make( 'slide.button_text' )
                              ->title( 'Заголовок' )
                              ->placeholder( 'Введите текст кнопки' )
                              ->style( 'width: 100%;' ),
-                        Input::make( 'slider.button_link' )
+                        Input::make( 'slide.button_link' )
                              ->title( 'Заголовок' )
                              ->placeholder( 'Введите текст ссылки' )
                              ->style( 'width: 100%;' )
@@ -105,12 +103,12 @@ class SliderEditScreen extends Screen {
                         Button::make( 'Сохранить' )
                               ->method( 'update' )
                               ->icon( 'check' )
-                              ->canSee( $this->post->exists )
+                              ->canSee( $this->slide->exists )
                               ->class( 'float-end btn btn-' . Color::PRIMARY() ),
                         Button::make( 'Сохранить' )
                               ->method( 'create' )
                               ->icon( 'check' )
-                              ->canSee( ! $this->post->exists )
+                              ->canSee( ! $this->slide->exists )
                               ->class( 'float-end btn btn-' . Color::PRIMARY() ),
                     ] )
                 ] )
@@ -119,7 +117,7 @@ class SliderEditScreen extends Screen {
     }
 
     public function create( Request $request ) {
-        $slider = Slider::create( $request->slider );
+        $slider = Slider::create( $request->slide );
         if ( $slider ) {
 
             Toast::success( 'Слайд успешно сохранен' );

@@ -56,7 +56,7 @@
 <main class="main">
     <div class="main__container">
         @if (Request::path() == '/' && $slides)
-            {{--            @include('components.main-slider',['slides' => $slides)--}}
+            @include('components.main.main-slider',['slides' => $slides])
         @endif
         @hasSection('h1')
             <h1 class="main__h1">@yield('h1')</h1>
@@ -121,8 +121,8 @@
         <div class="copyright__container">
             <div class="copyright-text">2022 &copy; Все права защищены</div>
             <div class="copyright-links">
-                <a href="#">Политика конфиденциальности</a>
-                <a href="#">Пользовательское соглашение</a>
+                <a href="{{ route('page', ['slug' => 'privacy-policy']) }}">Политика конфиденциальности</a>
+                <a href="{{ route('page', ['slug' => 'user-agreement']) }}">Пользовательское соглашение</a>
             </div>
         </div>
     </div>

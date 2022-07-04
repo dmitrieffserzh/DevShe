@@ -2,9 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace App\Orchid\Layouts\Slider;
+namespace App\Orchid\Layouts\Page;
 
-use App\Models\Slider;
+use App\Models\Page;
+use App\Models\Post;
 use Illuminate\Support\Carbon;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
@@ -13,9 +14,9 @@ use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class SliderListLayout extends Table {
+class PageListLayout extends Table {
 
-    public $target = 'slider';
+    public $target = 'pages';
 
     public function columns(): array {
 
@@ -24,9 +25,9 @@ class SliderListLayout extends Table {
               ->align( 'left' )
               ->cantHide()
               ->width( '30px' )
-              ->render( function ( Slider $slider ) {
+              ->render( function ( Page $page ) {
                   $color = '#eff1f9';
-                  if ( $slider->active == 1 ) {
+                  if ( $page->active == 1 ) {
                       $color = '#43d040';
                   }
 
@@ -36,53 +37,56 @@ class SliderListLayout extends Table {
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Slider $slider ) {
-                  return '<strong>' . $slider->id . '</strong>';
+              ->render( function ( Page $page ) {
+                  return '<strong>' . $page->id . '</strong>';
               } )->width( '100px' ),
             TD::make( 'title', 'Название' )
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Slider $slider ) {
-                  return '<b><a href"' . route( 'platform.slides.edit', [ 'id' => $slider->id ] ) . '">' . $slider->title . '</a></b>';
+              ->render( function ( Page $page ) {
+                  return '<b><a href"' . route( 'platform.pages.edit', [ 'id' => $page->id ] ) . '">' . $page->title . '</a></b>';
               } ),
+            TD::make( 'slug', 'URL' )
+              ->sort()
+              ->cantHide(),
             TD::make( 'created_at', 'Дата создания' )
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Slider $slider ) {
-                  return Carbon::parse( $slider->created_at )->format( "d.m.Y H:i:s" );
+              ->render( function ( Page $page ) {
+                  return Carbon::parse( $page->created_at )->format( "d.m.Y H:i:s" );
               } ),
             TD::make( 'updated_at', 'Дата редактирования' )
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Slider $slider ) {
-                  return Carbon::parse( $slider->updated_at )->format( "d.m.Y H:i:s" );
+              ->render( function ( Page $page ) {
+                  return Carbon::parse( $page->updated_at )->format( "d.m.Y H:i:s" );
               } ),
             TD::make( __( 'Actions' ) )
               ->align( TD::ALIGN_CENTER )
               ->width( '100px' )
-              ->render( function ( Slider $slider ) {
+              ->render( function ( Page $page ) {
                   return DropDown::make()
                                  ->icon( 'options-vertical' )
                                  ->list( [
-                                     Button::make( $slider->active == 1 ? 'Деактивировать' : 'Активировать' )
-                                           ->route( 'platform.slides' )
+                                     Button::make( $page->active == 1 ? 'Деактивировать' : 'Активировать' )
+                                           ->route( 'platform.pages' )
                                            ->icon( 'power' )
                                            ->method( 'status', [
-                                               'id'     => $slider->id,
-                                               'status' => $slider->active == 1 ? 0 : 1
+                                               'id'     => $page->id,
+                                               'status' => $page->active == 1 ? 0 : 1
                                            ] ),
                                      Link::make( __( 'Edit' ) )
-                                         ->route( 'platform.slides.edit', $slider->id )
+                                         ->route( 'platform.pages.edit', $page->id )
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )
                                            ->icon( 'trash' )->style( 'color: #df0031;' )
                                            ->confirm( __( 'Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' ) )
                                            ->method( 'remove', [
-                                               'id' => $slider->id,
+                                               'id' => $page->id,
                                            ] ),
                                  ] );
               } ),

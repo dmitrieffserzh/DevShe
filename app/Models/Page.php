@@ -7,24 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
-class Slider extends Model {
+class Page extends Model {
     use Filterable;
     use HasFactory;
     use AsSource;
 
-    protected $table = 'slides';
+    protected $table = 'pages';
 
     protected $fillable = [
         'active',
-        'sort',
-        'image',
+        'slug',
         'title',
-        'description',
-        'button_link',
-        'button_text'
+        'content',
     ];
 
     protected $allowedFilters = [ 'id', 'title', 'active' ];
-    protected $allowedSorts = [ 'id', 'active', 'sort' ];
-}
+    protected $allowedSorts = [ 'id', 'active' ];
 
+    public function getRouteKeyName() {
+        return 'slug';
+    }
+}

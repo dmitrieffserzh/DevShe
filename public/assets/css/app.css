@@ -259,6 +259,7 @@ table {
   display: block;
   height: 28px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -285,6 +286,7 @@ table {
   display: block;
   min-height: 32px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -342,6 +344,7 @@ table {
 .select2-results__option {
   padding: 6px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -899,6 +902,11 @@ table {
   opacity: 1;
 }
 
+:-ms-input-placeholder {
+  font-family: "Core Sans C 35" !important;
+  color: #D1D1D1;
+}
+
 ::placeholder {
   font-family: "Core Sans C 35" !important;
   color: #D1D1D1;
@@ -936,6 +944,11 @@ body {
   max-width: 1200px;
 }
 
+@media screen and (max-width: 767px) {
+  .container, .copyright__container, .footer__container, .section__container, .main__container, .header__container {
+    padding: 0 15px;
+  }
+}
 /*  HEADER  ========================================================================================================= */
 .header-top {
   display: flex;
@@ -1568,7 +1581,6 @@ body {
 .main-slider__slide {
   width: 100%;
   height: 400px !important;
-  background-image: url("/images/slide-default.png");
   background-size: cover !important;
   background-repeat: no-repeat;
   background-position: center center;
@@ -1712,6 +1724,11 @@ body {
   opacity: 1;
 }
 
+@media screen and (max-width: 767px) {
+  .profile-item {
+    width: calc(100% - 1rem);
+  }
+}
 /*  PROFILES ======================================================================================================== */
 .profile {
   display: flex;
@@ -1959,6 +1976,12 @@ body {
   text-align: center;
 }
 
+@media screen and (max-width: 767px) {
+  .profile__column {
+    padding: 0 1rem;
+    width: 100%;
+  }
+}
 .filter {
   margin: 0 -0.7rem;
   display: flex;
@@ -2010,6 +2033,9 @@ body {
   font-size: 12px;
 }
 .filter__block .block__input input:focus::-moz-placeholder {
+  visibility: hidden;
+}
+.filter__block .block__input input:focus:-ms-input-placeholder {
   visibility: hidden;
 }
 .filter__block .block__input input:focus::placeholder {

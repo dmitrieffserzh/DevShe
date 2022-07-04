@@ -67,7 +67,11 @@ body {
     width: 100%;
     max-width: 1200px;
 }
-
+@media screen and (max-width: 767px){
+    .container {
+        padding: 0 15px;
+    }
+}
 /*  HEADER  ========================================================================================================= */
 .header {
     &__container {
@@ -859,7 +863,7 @@ body {
     &__slide {
         width: 100%;
         height: 400px !important;
-        background-image: url("/images/slide-default.png");
+        //background-image: url("/images/slide-default.png");
         background-size: cover !important;
         background-repeat: no-repeat;
         background-position: center center;
@@ -1023,7 +1027,11 @@ body {
         }
     }
 }
-
+@media screen and (max-width: 767px){
+    .profile-item {
+        width: calc(100% - 1rem);
+    }
+}
 /*  PROFILES ======================================================================================================== */
 .profile {
     display: flex;
@@ -1324,7 +1332,14 @@ body {
         text-align: center;
     }
 }
-
+@media screen and (max-width: 767px) {
+    .profile {
+        &__column {
+            padding: 0 1rem;
+            width: 100%;
+        }
+    }
+}
 .filter {
     margin: 0 -.7rem;
     display: flex;
