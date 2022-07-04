@@ -38,6 +38,6 @@ Route::get( '/{section}/id{id}', [ CatalogController::class, 'showProfileCatalog
 // AJAX SEARCH
 Route::post( '/search',                               [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
 Route::get( '/search/metro',                          [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
-Route::match(['get', 'post'], '/search/metro/result', [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
+Route::match(['get', 'post'], '/search/metro/result/{id}', [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
 
 require __DIR__.'/auth.php';

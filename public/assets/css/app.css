@@ -259,7 +259,6 @@ table {
   display: block;
   height: 28px;
   -moz-user-select: none;
-   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -286,7 +285,6 @@ table {
   display: block;
   min-height: 32px;
   -moz-user-select: none;
-   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -344,7 +342,6 @@ table {
 .select2-results__option {
   padding: 6px;
   -moz-user-select: none;
-   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -900,11 +897,6 @@ table {
   font-family: "Core Sans C 35" !important;
   color: #D1D1D1;
   opacity: 1;
-}
-
-:-ms-input-placeholder {
-  font-family: "Core Sans C 35" !important;
-  color: #D1D1D1;
 }
 
 ::placeholder {
@@ -2018,9 +2010,6 @@ body {
   font-size: 12px;
 }
 .filter__block .block__input input:focus::-moz-placeholder {
-  visibility: hidden;
-}
-.filter__block .block__input input:focus:-ms-input-placeholder {
   visibility: hidden;
 }
 .filter__block .block__input input:focus::placeholder {

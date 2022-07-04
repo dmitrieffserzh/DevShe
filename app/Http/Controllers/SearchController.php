@@ -16,12 +16,23 @@ class SearchController extends Controller {
             ]);
     }
 
-    public function searchMetroResult (Request $request) {
-        $stations = Station::where('name', '=', $request->station )->get();
-        dd($stations);
+    public function searchMetroResult (Request $request, $id) {
+
+        if($request->ajax()) {
+            $stations = Station::where('name', '=', $request->station )->first();
+
+            return json_decode($stations->id);
+        }
+
+        $station = Station::findOrFail($id);
+        $station->load('profiles');
+        if($station){
+            return view('search.search_result', ['profiles' => $station->profiles]);
+        }
 
         return view('search.metro', [
-            'heading' => 'Поиск девушек на карте Московского метро'
+            'heading' => 'Поиск девушек на карте Московского метро',
+            'profiles' => $station->profiles
         ]);
     }
 

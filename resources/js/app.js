@@ -215,28 +215,28 @@ if (searchInput) {
     });
 }
 // SEARCH GIRL ON METRO STATIONS
-// let stations = document.getElementsByClassName('metro-station');
-// if (stations) {
-//     for (let i = 0; stations.length > i; i++) {
-//         stations[i].addEventListener('click', () => {
-//             let station_name = stations[i].getAttribute('metro-station-name');
-//             console.log(station_name);
-//             axios({
-//                 method: 'POST',
-//                 url: '/search/metro/result',
-//                 data: {station:station_name}
-//             }).then((response) => {
-//                 console.log(response);
-//                 buttonLoadMore.setAttribute('data-current-page', currentPage);
-//                 if (response.data !== '') {
-//                     resultContainer.insertAdjacentHTML("beforeend", response.data);
-//                 }
-//             }).catch((error) => {
-//                 console.log(error);
-//             });
-//         })
-//     }
-// }
+let stations = document.getElementsByClassName('label');
+if (stations) {
+    for (let i = 0; stations.length > i; i++) {
+        stations[i].addEventListener('click', () => {
+
+            console.log(stations[i].textContent);
+            axios({
+                method: 'POST',
+                url: '/search/metro/result',
+                data: {station: stations[i].textContent}
+            }).then((response) => {
+                console.log(response);
+                buttonLoadMore.setAttribute('data-current-page', currentPage);
+                if (response.data !== '') {
+                    resultContainer.insertAdjacentHTML("beforeend", response.data);
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+        })
+    }
+}
 
 // AJAX LOAD MORE
 let buttonLoadMore = document.getElementById('load-more');
@@ -256,37 +256,14 @@ if (buttonLoadMore) {
                 if (response.data !== '') {
                     resultContainer.insertAdjacentHTML("beforeend", response.data);
                 }
+                if (currentPage === totalPage) {
+                    buttonLoadMore.style.display = 'none';
+                }
             }).catch((error) => {
                 console.log(error);
             });
         }
     });
 }
-
-let map = document.getElementById('map');
-
-for (let i = 0; stationsLines.length > i; i++) {
-    for (let j = 0; stationsLines[i].stations.length > j; j++) {
-
-        let g = document.createElement('g');
-
-        let text = document.createElement('text');
-
-        text.append(stationsLines[i].stations[j].name)
-
-        let rect = document.createElement('rect');
-        rect.setAttribute('x', stationsLines[i].stations[j].top);
-        rect.setAttribute('y', stationsLines[i].stations[j].left);
-        rect.setAttribute('width', 100);
-        rect.setAttribute('height', 100);
-        rect.setAttribute('fill', '#df0031');
-        g.appendChild(rect);
-        g.appendChild(text);
-        map.appendChild(g);
-    }
-}
-
-
-
 
 
