@@ -46,7 +46,7 @@ class PageListLayout extends Table {
               ->filter( Input::make() )
               ->render( function ( Page $page ) {
                   return '<b>' . Link::make( $page->title )
-                                     ->route( 'platform.pages.edit', $page->id ) . '</b>';
+                                     ->route( 'platform.pages.edit', $page->slug ) . '</b>';
               }),
             TD::make( 'slug', 'URL' )
               ->sort()
@@ -80,14 +80,14 @@ class PageListLayout extends Table {
                                                'status' => $page->active == 1 ? 0 : 1
                                            ] ),
                                      Link::make( __( 'Edit' ) )
-                                         ->route( 'platform.pages.edit', $page->id )
+                                         ->route( 'platform.pages.edit', $page->slug )
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )
                                            ->icon( 'trash' )->style( 'color: #df0031;' )
                                            ->confirm( __( 'Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' ) )
                                            ->method( 'remove', [
-                                               'id' => $page->id,
+                                               'id' => $page->slug,
                                            ] ),
                                  ] );
               } ),

@@ -45,7 +45,7 @@ class PostListLayout extends Table {
               ->filter( Input::make() )
                 ->render( function ( Post $post) {
                     return '<b>' . Link::make( $post->title )
-                                       ->route( 'platform.posts.edit', $post->id ) . '</b>';
+                                       ->route( 'platform.posts.edit', $post->slug ) . '</b>';
                 } ),
             TD::make( 'created_at', 'Дата создания' )
               ->sort()
@@ -76,14 +76,14 @@ class PostListLayout extends Table {
                                                'status' => $post->active == 1 ? 0 : 1
                                            ] ),
                                      Link::make( __( 'Edit' ) )
-                                         ->route( 'platform.posts.edit', $post->id )
+                                         ->route( 'platform.posts.edit', $post->slug )
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )
                                            ->icon( 'trash' )->style( 'color: #df0031;' )
                                            ->confirm( __( 'Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' ) )
                                            ->method( 'remove', [
-                                               'id' => $post->id,
+                                               'id' => $post->slug,
                                            ] ),
                                  ] );
               } ),

@@ -37,7 +37,7 @@ class PageListScreen extends Screen {
     public function status( Request $request ) {
         $page         = Page::findOrFail( $request->get( 'id' ) );
         $page->active = $request->get( 'status' );
-        if ( $profile->save() ) {
+        if ( $page->save() ) {
             Toast::info( 'Статус статьи успешно изменен!' );
 
             return redirect()->route( 'platform.pages' );

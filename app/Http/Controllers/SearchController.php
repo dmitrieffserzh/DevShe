@@ -8,51 +8,51 @@ use Bitrix\Landing\Error;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class SearchController extends Controller {
+class SearchController extends Controller
+{
 
-    public function searchMetro( Request $request ) {
-        if ( $request->ajax() && $request->method( 'post' ) ) {
+    public function searchMetro(Request $request)
+    {
+        if ($request->ajax() && $request->method('post')) {
 
-            $stations = Station::where( 'name', '=', $request->station )->first();
+            $stations = Station::where('name', '=', $request->station)->first();
 
-            return json_decode( $stations->id );
+            return json_decode($stations->id);
         }
 
-        return view( 'search.metro', [
+        return view('search.metro', [
             'heading' => 'Поиск девушек на карте Московского метро'
-        ] );
+        ]);
     }
 
-    public function searchMetroResult( $id ) {
-        if($id == 0)  return view( 'search.search_result');
+    public function searchMetroResult($id)
+    {
+        if ($id == 0) return view('search.search_result');
 
-        $station = Station::find( $id );
-        $station->load( 'profiles' );
-
-
-
-        return view( 'search.search_result', [ 'profiles' => $station->profiles ?? '' ] );
+        $station = Station::find($id);
+        $station->load('profiles');
 
 
-        //Error(404);
-//        return view('search.metro', [
-//            'heading' => 'Поиск девушек на карте Московского метро',
-//            'profiles' => $station->profiles
-//        ]);
+        // TODO
+        return view('search.search_result', [
+            'heading' => $station->name,
+            'profiles' => $station->profiles ?? ''
+        ]);
     }
 
-    public function ajaxSearch( Request $request ) {
+    public function ajaxSearch(Request $request)
+    {
 
-        if ( $request->ajax() && ! empty( $request->search ) ) {
+        if ($request->ajax() && !empty($request->search)) {
 
-            $results = DB::table( 'profiles' )
-                         ->where( 'active', '=', 1 )
-                         ->where( 'id', '=', $request->search )
-                         ->orWhere( 'name', 'LIKE', '%' . $request->search . "%" )
-                         ->limit( 10 )
-                         ->get();
+            $results = DB::table('profiles')
+                ->where('active', '=', 1)
+                ->where('id', '=', $request->search)
+                ->orWhere('name', 'LIKE', '%' . $request->search . "%")
+                ->limit(10)
+                ->get();
 
-            return json_decode( $results );
+            return json_decode($results);
         }
     }
 

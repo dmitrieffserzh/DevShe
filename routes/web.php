@@ -48,7 +48,7 @@ Route::get( '/search/metro/{id?}',                    [ SearchController::class,
 
 // ARTICLES
 Route::get('articles', [PostController::class, 'post.index'])->name('post.index');
-Route::get('articles/{id}', [PostController::class, 'post.index'])->name('post.index');
+Route::get('articles/{slug}', [PostController::class, 'post.show'])->name('post.show');
 
 // PAGES
 Route::get('/{slug}', [PageController::class, 'showPage'])->name('page');

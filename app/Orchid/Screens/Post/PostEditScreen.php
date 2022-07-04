@@ -69,6 +69,11 @@ class PostEditScreen extends Screen {
                          ->placeholder( 'Введите заголовок статьи' )
                          ->style( 'width: 100%;' )
                          ->required(),
+                    Input::make( 'page.slug' )
+                        ->title( 'URL' )
+                        ->placeholder( 'Введите URL страницы' )
+                        ->style( 'width: 100%;' )
+                        ->required(),
                     Quill::make( 'post.content' )
                          ->title( 'Содержимое статьи' )
                          ->placeholder( 'Введите содержимое статьи' )

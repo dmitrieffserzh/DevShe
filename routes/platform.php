@@ -102,7 +102,7 @@ Route::screen( 'rates', RateListScreen::class )
 
 // POSTS ============================================================================================================ //
 // MAIN > POSTS > EDIT
-Route::screen( 'posts/{id}/edit', PostEditScreen::class )
+Route::screen( 'posts/{slug}/edit', PostEditScreen::class )
      ->name( 'platform.posts.edit' )
      ->breadcrumbs( function ( Trail $trail, $post ) {
          return $trail
@@ -127,15 +127,15 @@ Route::screen( 'posts', PostListScreen::class )
      } );
 
 // PAGES ============================================================================================================ //
-// MAIN > SLIDER > EDIT
-Route::screen( 'pages/{id}/edit', PageEditScreen::class )
+// MAIN > PAGES > EDIT
+Route::screen( 'pages/{slug}/edit', PageEditScreen::class )
      ->name( 'platform.pages.edit' )
      ->breadcrumbs( function ( Trail $trail, $page ) {
          return $trail
              ->parent( 'platform.pages' )
              ->push( __( 'Edit' ), route( 'platform.pages.edit', $page ) );
      } );
-// MAIN > SLIDER > CREATE
+// MAIN > PAGES > CREATE
 Route::screen( 'pages/create', PageEditScreen::class )
      ->name( 'platform.pages.create' )
      ->breadcrumbs( function ( Trail $trail ) {
@@ -143,13 +143,13 @@ Route::screen( 'pages/create', PageEditScreen::class )
              ->parent( 'platform.pages' )
              ->push( __( 'Create' ), route( 'platform.pages.create' ) );
      } );
-// MAIN > SLIDER
+// MAIN > PAGES
 Route::screen( 'pages', PageListScreen::class )
      ->name( 'platform.pages' )
      ->breadcrumbs( function ( Trail $trail ) {
          return $trail
              ->parent( 'platform.index' )
-             ->push( 'Слайды' );
+             ->push( 'Страницы' );
      } );
 
 // SLIDER =========================================================================================================== //

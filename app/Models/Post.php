@@ -16,10 +16,15 @@ class Post extends Model {
 
     protected $fillable = [
         'active',
+        'slug',
         'title',
         'content'
     ];
 
     protected $allowedFilters = [ 'id', 'title' ];
     protected $allowedSorts = [ 'id', 'active' ];
+
+    public function getRouteKeyName() {
+        return 'slug';
+    }
 }
