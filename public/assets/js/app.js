@@ -2183,7 +2183,18 @@ window.onload = function () {
   var main_slider = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"]('.main-slider', {
     modules: [swiper__WEBPACK_IMPORTED_MODULE_0__.Autoplay],
     autoplay: {
-      delay: 10000
+      delay: 3000
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1
+      },
+      480: {
+        slidesPerView: 1
+      },
+      640: {
+        slidesPerView: 1
+      }
     }
   });
   var new_girls = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"]('#new-girls', {
@@ -2191,7 +2202,21 @@ window.onload = function () {
     loop: true,
     modules: [swiper__WEBPACK_IMPORTED_MODULE_0__.Autoplay],
     autoplay: {
-      delay: 10000
+      delay: 3000
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1
+      },
+      480: {
+        slidesPerView: 1
+      },
+      640: {
+        slidesPerView: 2
+      },
+      991: {
+        slidesPerView: 4
+      }
     }
   });
   var top_girls = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"]('#top-girls', {
@@ -2199,7 +2224,21 @@ window.onload = function () {
     loop: true,
     modules: [swiper__WEBPACK_IMPORTED_MODULE_0__.Autoplay],
     autoplay: {
-      delay: 10000
+      delay: 3000
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1
+      },
+      480: {
+        slidesPerView: 1
+      },
+      640: {
+        slidesPerView: 2
+      },
+      991: {
+        slidesPerView: 4
+      }
     }
   });
   var profile_thumbs = new swiper__WEBPACK_IMPORTED_MODULE_0__["default"](".thumbs", {

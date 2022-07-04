@@ -11,20 +11,59 @@ window.onload = function () {
 
     const main_slider = new Swiper('.main-slider', {
         modules: [Autoplay], autoplay: {
-            delay: 10000,
+            delay: 3000,
         },
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+            },
+            480: {
+                slidesPerView: 1,
+            },
+            640: {
+                slidesPerView: 1,
+            }
+        }
     });
 
     const new_girls = new Swiper('#new-girls', {
         slidesPerView: 4, loop: true, modules: [Autoplay], autoplay: {
-            delay: 10000,
+            delay: 3000,
         },
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+            },
+            480: {
+                slidesPerView: 1,
+            },
+            640: {
+                slidesPerView: 2,
+            },
+            991: {
+                slidesPerView: 4,
+            }
+        }
     });
 
     const top_girls = new Swiper('#top-girls', {
         slidesPerView: 4, loop: true, modules: [Autoplay], autoplay: {
-            delay: 10000,
+            delay: 3000,
         },
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+            },
+            480: {
+                slidesPerView: 1,
+            },
+            640: {
+                slidesPerView: 2,
+            },
+            991: {
+                slidesPerView: 4,
+            }
+        }
     });
 
     const profile_thumbs = new Swiper(".thumbs", {
