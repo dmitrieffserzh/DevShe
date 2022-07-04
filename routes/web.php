@@ -5,6 +5,9 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\ProfilesController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\PostController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +41,12 @@ Route::get( '/{section}/id{id}', [ CatalogController::class, 'showProfileCatalog
 // AJAX SEARCH
 Route::post( '/search',                               [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
 Route::get( '/search/metro',                          [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
-Route::match(['get', 'post'], '/search/metro/result/{id}', [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
+Route::post( '/search/metro',                         [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
+Route::get( '/search/metro/{id?}',                    [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
+
+
+// ARTICLES
+Route::get('articles', [PostController::class, 'post.index'])->name('post.index');
+Route::get('articles/{id}', [PostController::class, 'post.index'])->name('post.index');
 
 require __DIR__.'/auth.php';

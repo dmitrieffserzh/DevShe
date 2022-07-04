@@ -46,6 +46,12 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.rates')
                 ->title('Тарифы'),
 
+            Menu::make('Статьи')
+                ->icon('list')
+                ->route('platform.posts')
+                ->title('Контент'),
+
+
             Menu::make('Роли пользователей')
                 ->icon('lock')
                 ->route('platform.systems.roles')

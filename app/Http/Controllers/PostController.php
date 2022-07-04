@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 
-class ArticleController extends Controller {
+class PostController extends Controller {
     public function __construct() {
         // $this->middleware('auth');
     }

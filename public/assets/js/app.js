@@ -2415,16 +2415,15 @@ if (stations) {
       console.log(stations[i].textContent);
       axios({
         method: 'POST',
-        url: '/search/metro/result',
+        url: '/search/metro',
         data: {
           station: stations[i].textContent
         }
       }).then(function (response) {
         console.log(response);
-        buttonLoadMore.setAttribute('data-current-page', currentPage);
 
         if (response.data !== '') {
-          resultContainer.insertAdjacentHTML("beforeend", response.data);
+          window.location.href = '/search/metro/result/' + response.data;
         }
       })["catch"](function (error) {
         console.log(error);
