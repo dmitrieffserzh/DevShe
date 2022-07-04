@@ -43,9 +43,10 @@ class PostListLayout extends Table {
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Post $post ) {
-                  return '<b><a href"' . route( 'platform.posts.edit', [ 'id' => $post->id ] ) . '">' . $post->title . '</a></b>';
-              } ),
+                ->render( function ( Post $post) {
+                    return '<b>' . Link::make( $post->name )
+                                       ->route( 'platform.posts.edit', $post->id ) . '</b>';
+                } ),
             TD::make( 'created_at', 'Дата создания' )
               ->sort()
               ->cantHide()

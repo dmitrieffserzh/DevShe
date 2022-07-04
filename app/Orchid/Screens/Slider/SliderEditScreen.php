@@ -83,7 +83,7 @@ class SliderEditScreen extends Screen {
                            ->title( 'Изображение' )
                            ->width( 1140 )
                            ->height( 400 )
-                           ->targetUrl()
+                           ->targetRelativeUrl()
                            ->required(),
                     Group::make( [
                         Input::make( 'slide.button_text' )
@@ -127,7 +127,7 @@ class SliderEditScreen extends Screen {
     }
 
     public function update( Slider $slider, Request $request ) {
-        $slider->updateOrFail( $request->slider );
+        $slider->update( $request->slide );
         Toast::success( 'Слайд успешно обновлен' );
 
         return redirect()->route( 'platform.slides' );

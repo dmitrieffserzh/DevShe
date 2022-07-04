@@ -6,6 +6,7 @@ namespace App\Orchid\Layouts\Slider;
 
 use App\Models\Slider;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Route;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
@@ -44,7 +45,8 @@ class SliderListLayout extends Table {
               ->cantHide()
               ->filter( Input::make() )
               ->render( function ( Slider $slider ) {
-                  return '<b><a href"' . route( 'platform.slides.edit', [ 'id' => $slider->id ] ) . '">' . $slider->title . '</a></b>';
+                  return '<b>' . Link::make( $slider->name )
+                                     ->route( 'platform.slides.edit', $slider->id ) . '</b>';
               } ),
             TD::make( 'created_at', 'Дата создания' )
               ->sort()
