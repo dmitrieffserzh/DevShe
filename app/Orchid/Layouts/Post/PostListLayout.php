@@ -44,7 +44,7 @@ class PostListLayout extends Table {
               ->cantHide()
               ->filter( Input::make() )
                 ->render( function ( Post $post) {
-                    return '<b>' . Link::make( $post->name )
+                    return '<b>' . Link::make( $post->title )
                                        ->route( 'platform.posts.edit', $post->id ) . '</b>';
                 } ),
             TD::make( 'created_at', 'Дата создания' )

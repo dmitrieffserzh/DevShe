@@ -45,7 +45,7 @@ class PageListLayout extends Table {
               ->cantHide()
               ->filter( Input::make() )
               ->render( function ( Page $page ) {
-                  return '<b>' . Link::make( $page->name )
+                  return '<b>' . Link::make( $page->title )
                                      ->route( 'platform.pages.edit', $page->id ) . '</b>';
               }),
             TD::make( 'slug', 'URL' )

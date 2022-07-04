@@ -45,7 +45,7 @@ class SliderListLayout extends Table {
               ->cantHide()
               ->filter( Input::make() )
               ->render( function ( Slider $slider ) {
-                  return '<b>' . Link::make( $slider->name )
+                  return '<b>' . Link::make( $slider->title )
                                      ->route( 'platform.slides.edit', $slider->id ) . '</b>';
               } ),
             TD::make( 'created_at', 'Дата создания' )
