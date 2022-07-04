@@ -24,8 +24,12 @@ class SearchController extends Controller {
     }
 
     public function searchMetroResult( $id ) {
+        if($id == 0)  return view( 'search.search_result');
+
         $station = Station::find( $id );
         $station->load( 'profiles' );
+
+
 
         return view( 'search.search_result', [ 'profiles' => $station->profiles ?? '' ] );
 

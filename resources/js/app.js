@@ -270,6 +270,7 @@ if (stations) {
                 console.log(response);
             }).catch((error) => {
                 console.log(error);
+                window.location.href = '/search/metro/0';
             });
         })
     }

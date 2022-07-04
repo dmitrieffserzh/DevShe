@@ -2462,6 +2462,7 @@ if (stations) {
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
+        window.location.href = '/search/metro/0';
       });
     });
   };

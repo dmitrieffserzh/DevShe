@@ -4,11 +4,13 @@
 
 @section('content')
     <div class="profiles-list">
-        @foreach($profiles as $item)
-            @include('components.profiles.item_list', ['item' => $item])
-        @endforeach
-        @if(!empty($profiles))
-            <h4>По вашему запросу ничего не найдено :(</h4>
+
+        @if(empty($profiles))
+            <h4 style="padding: 0 .5rem;">По вашему запросу ничего не найдено :(</h4>
+        @else
+            @foreach($profiles as $item)
+                @include('components.profiles.item_list', ['item' => $item])
+            @endforeach
         @endif
     </div>
 @endsection

@@ -3,9 +3,12 @@
 @section('h1', $heading ?? 'Личные данные')
 
 @section('content')
-    @include('profiles.aside')
+
 {{--    <div class="content">--}}
         <div class="profile">
+            <div class="profile__column">
+            @include('profiles.aside')
+            </div>
             <div class="profile__column">
                 <!--<div class="profile__images">
                     <div class="images swiper">
@@ -141,8 +144,12 @@
                             <div class="block__content">
                                 @foreach($block['services'] as $service)
                                     <div class="service">
-                                        <div class="service__title{{$service['check'] ? ' active':'' }}">{{ $service['name'] }}</div>
-                                        <div class="service__description">{{ $service['description'] }}</div>
+                                        <label class="service__title">
+                                            <input type="checkbox" {{$service['check'] ? ' checked':'' }}>
+                                            {{ $service['name'] }}</label>
+                                        <div class="service__description">
+                                            <textarea name="" id="" cols="30" rows="10">{{ $service['description'] }}</textarea>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
