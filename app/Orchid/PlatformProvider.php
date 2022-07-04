@@ -50,7 +50,9 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('list')
                 ->route('platform.posts')
                 ->title('Контент'),
-
+            Menu::make('Слайдер на главной')
+                ->icon('picture')
+                ->route('platform.slides'),
 
             Menu::make('Роли пользователей')
                 ->icon('lock')
@@ -64,7 +66,7 @@ class PlatformProvider extends OrchidServiceProvider
 
 
             Menu::make('Example screen')
-                ->icon('monitor')
+                ->icon('picture')
                 ->route('platform.example')
                 ->title('Navigation')
                 ->badge(function () {

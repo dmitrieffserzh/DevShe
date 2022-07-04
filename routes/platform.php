@@ -20,7 +20,8 @@ use App\Orchid\Screens\Rate\RateListScreen;
 use App\Orchid\Screens\Rate\RateEditScreen;
 use App\Orchid\Screens\Post\PostEditScreen;
 use App\Orchid\Screens\Post\PostListScreen;
-
+use App\Orchid\Screens\Slider\SliderEditScreen;
+use App\Orchid\Screens\Slider\SliderListScreen;
 
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -104,7 +105,7 @@ Route::screen('posts/{id}/edit', PostEditScreen::class)
     ->breadcrumbs(function (Trail $trail, $rate) {
         return $trail
             ->parent('platform.posts')
-            ->push(__('Edit'), route('platform.rates.edit', $rate));
+            ->push(__('Edit'), route('platform.posts.edit', $rate));
     });
 // MAIN > POSTS > CREATE
 Route::screen('posts/create', PostEditScreen::class)
@@ -123,6 +124,32 @@ Route::screen('posts', PostListScreen::class)
             ->push('Статьи');
     });
 
+
+// SLIDER ============================================================================================================ //
+// MAIN > SLIDER > EDIT
+Route::screen('slides/{id}/edit', SliderEditScreen::class)
+     ->name('platform.slides.edit')
+     ->breadcrumbs(function (Trail $trail, $rate) {
+         return $trail
+             ->parent('platform.slides')
+             ->push(__('Edit'), route('platform.slides.edit', $rate));
+     });
+// MAIN > SLIDER > CREATE
+Route::screen('slides/create', SliderEditScreen::class)
+     ->name('platform.slides.create')
+     ->breadcrumbs(function (Trail $trail) {
+         return $trail
+             ->parent('platform.slides')
+             ->push(__('Create'), route('platform.posts.create'));
+     });
+// MAIN > SLIDER
+Route::screen('slides', SliderListScreen::class)
+     ->name('platform.slides')
+     ->breadcrumbs(function (Trail $trail) {
+         return $trail
+             ->parent('platform.index')
+             ->push('Слайды');
+     });
 
 //
 //

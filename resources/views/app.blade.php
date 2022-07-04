@@ -33,7 +33,8 @@
             </a>
             <div class="header-main__search">
                 <div class="header-search">
-                    <input type="text" name="search" placeholder="Введите имя или id девушки" class="header-search__input" autocomplete="off">
+                    <input type="text" name="search" placeholder="Введите имя или id девушки"
+                           class="header-search__input" autocomplete="off">
                     <button class="header-search__button"></button>
                     <div class="header-search__result"></div>
                 </div>
@@ -54,8 +55,8 @@
 </header>
 <main class="main">
     <div class="main__container">
-        @if (Request::path() == '/')
-{{--            @include('components.main-slider')--}}
+        @if (Request::path() == '/' && $slides)
+            {{--            @include('components.main-slider',['slides' => $slides)--}}
         @endif
         @hasSection('h1')
             <h1 class="main__h1">@yield('h1')</h1>

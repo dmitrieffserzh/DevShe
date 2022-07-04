@@ -2,9 +2,9 @@
 
 declare( strict_types=1 );
 
-namespace App\Orchid\Layouts\Post;
+namespace App\Orchid\Layouts\Slider;
 
-use App\Models\Post;
+use App\Models\Slider;
 use Illuminate\Support\Carbon;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
@@ -13,9 +13,9 @@ use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
-class PostListLayout extends Table {
+class SliderListLayout extends Table {
 
-    public $target = 'posts';
+    public $target = 'slider';
 
     public function columns(): array {
 
@@ -24,9 +24,9 @@ class PostListLayout extends Table {
               ->align( 'left' )
               ->cantHide()
               ->width( '30px' )
-              ->render( function ( Post $post ) {
+              ->render( function ( Slider $slider ) {
                   $color = '#eff1f9';
-                  if ( $post->active == 1 ) {
+                  if ( $slider->active == 1 ) {
                       $color = '#43d040';
                   }
 
@@ -36,53 +36,53 @@ class PostListLayout extends Table {
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Post $post ) {
-                  return '<strong>' . $post->id . '</strong>';
+              ->render( function ( Slider $slider ) {
+                  return '<strong>' . $slider->id . '</strong>';
               } )->width( '100px' ),
             TD::make( 'title', 'Название' )
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Post $post ) {
-                  return '<b><a href"' . route( 'platform.posts.edit', [ 'id' => $post->id ] ) . '">' . $post->title . '</a></b>';
+              ->render( function ( Slider $slider ) {
+                  return '<b><a href"' . route( 'platform.slides.edit', [ 'id' => $slider->id ] ) . '">' . $slider->title . '</a></b>';
               } ),
             TD::make( 'created_at', 'Дата создания' )
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Post $post ) {
-                  return Carbon::parse( $post->created_at )->format( "d.m.Y H:i:s" );
+              ->render( function ( Slider $slider ) {
+                  return Carbon::parse( $slider->created_at )->format( "d.m.Y H:i:s" );
               } ),
             TD::make( 'updated_at', 'Дата редактирования' )
               ->sort()
               ->cantHide()
               ->filter( Input::make() )
-              ->render( function ( Post $post ) {
-                  return Carbon::parse( $post->updated_at )->format( "d.m.Y H:i:s" );
+              ->render( function ( Slider $slider ) {
+                  return Carbon::parse( $slider->updated_at )->format( "d.m.Y H:i:s" );
               } ),
             TD::make( __( 'Actions' ) )
               ->align( TD::ALIGN_CENTER )
               ->width( '100px' )
-              ->render( function ( Post $post ) {
+              ->render( function ( Slider $slider ) {
                   return DropDown::make()
                                  ->icon( 'options-vertical' )
                                  ->list( [
-                                     Button::make( $post->active == 1 ? 'Деактивировать' : 'Активировать' )
+                                     Button::make( $slider->active == 1 ? 'Деактивировать' : 'Активировать' )
                                            ->route( 'platform.posts' )
                                            ->icon( 'power' )
                                            ->method( 'status', [
-                                               'id'     => $post->id,
-                                               'status' => $post->active == 1 ? 0 : 1
+                                               'id'     => $slider->id,
+                                               'status' => $slider->active == 1 ? 0 : 1
                                            ] ),
                                      Link::make( __( 'Edit' ) )
-                                         ->route( 'platform.posts.edit', $post->id )
+                                         ->route( 'platform.posts.edit', $slider->id )
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )
                                            ->icon( 'trash' )->style( 'color: #df0031;' )
                                            ->confirm( __( 'Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.' ) )
                                            ->method( 'remove', [
-                                               'id' => $post->id,
+                                               'id' => $slider->id,
                                            ] ),
                                  ] );
               } ),
