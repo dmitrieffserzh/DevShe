@@ -51,7 +51,7 @@ Route::get('articles/{slug}', [PostController::class, 'post.show'])->name('post.
 
 
 // REGENERATE PROFILE URL
-Route::get('/regProfile', [MainController::class, 'regenerateURL'])->name('regProfile');
+//Route::get('/regProfile', [MainController::class, 'regenerateURL'])->name('regProfile');
 //Route::get('/regMetro', [MainController::class, 'regMetroURL'])->name('regMetro');
 
 
