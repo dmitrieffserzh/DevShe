@@ -32,7 +32,7 @@
             <div class="rates">
                 <div class="rates__title">
                     <h2>Тарифы:</h2>
-                    <span/>Дата обновления: {{Carbon::parse( $profile->updated_at )->format( "d.m.Y" )}}</span>
+                    <span/>Дата обновления: {{ \Illuminate\Support\Carbon::parse( $profile->updated_at )->format( "d.m.Y" )}}</span>
                 </div>
                 <div class="rates__list">
                     <div class="rate rate--day">
