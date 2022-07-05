@@ -65,7 +65,7 @@ class GirlListLayout extends Table {
               ->render( function ( Profile $profile ) {
                   $imagePath = $profile->attachment()->first();
                   return view( 'platform.avatar', [
-                      'id'    => $profile->id,
+                      'slug'    => $profile->slug,
                       'name'  => $profile->name,
                       'image' => $imagePath['relativeUrl'] ?? '/'
                       //'image' => '/storage/' . $imagePath['path'] . $imagePath['name'] . '.' . $imagePath['extension']

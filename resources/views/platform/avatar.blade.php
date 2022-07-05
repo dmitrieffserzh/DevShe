@@ -5,7 +5,7 @@
     </span>
     <div class="ml-sm-3 ml-md-0 ml-xl-3 mt-2 mt-sm-0 mt-md-2 mt-xl-0">
         <h6 class="mb-0" style="margin: 0 1rem;">
-            <a href="{{ route( 'platform.girls.edit', $id ) }}" class=",">{{ $name }}</a>
+            <a href="{{ route( 'platform.girls.edit', $slug ) }}" class=",">{{ $name }}</a>
         </h6>
     </div>
 </div>

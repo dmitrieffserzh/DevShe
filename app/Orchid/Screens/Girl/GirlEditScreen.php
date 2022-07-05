@@ -23,6 +23,7 @@ use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 use Orchid\Support\Color;
 use App\Helpers;
+use Illuminate\Support\Carbon;
 
 
 class GirlEditScreen extends Screen {
@@ -363,7 +364,7 @@ class GirlEditScreen extends Screen {
         $profile->haircut     = $request->profile['haircut'];
         $profile->haircolor   = $request->profile['haircolor'];
         $profile->description = $request->profile['description'];
-
+        $profile->created_at  = Carbon::now();
         $profile->save();
 
         $profile->places()->sync( $request->profile['places'] );
@@ -394,6 +395,7 @@ class GirlEditScreen extends Screen {
     }
 
     public function update( Profile $profile, Request $request ) {
+        $profile->updated_at  = Carbon::now();
         $profile->update( $request->profile );
 
         $profile->places()->sync( $request->profile['places'] );
