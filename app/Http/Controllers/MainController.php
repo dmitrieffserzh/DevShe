@@ -46,7 +46,7 @@ class MainController extends Controller
         $allProfiles = Profile::all();
 
         for ($i = 0; count($allProfiles) > $i; $i++) {
-            $allProfiles[$i]->slug = Str::slug($allProfiles[$i]->name . '__id' . $allProfiles[$i]->id);
+            $allProfiles[$i]->slug = Str::slug($allProfiles[$i]->name . '-' . $allProfiles[$i]->id);
             $allProfiles[$i]->update();
         }
 

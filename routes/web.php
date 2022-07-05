@@ -36,7 +36,7 @@ Route::match(['get', 'post'], '/cheap',         [ CatalogController::class, 'sho
 Route::match(['get', 'post'], '/bdsm',          [ CatalogController::class, 'showBdsmCatalog' ] )->name( 'catalog.bdsm' );
 Route::match(['get', 'post'], '/masseuses',     [ CatalogController::class, 'showMasseusesCatalog' ] )->name( 'catalog.masseuses' );
 
-Route::get( '/{section}/id{id}', [ CatalogController::class, 'showProfileCatalog' ] )->name( 'catalog.profile' );
+Route::get( '/{section}/{slug}', [ CatalogController::class, 'showProfileCatalog' ] )->name( 'catalog.profile' );
 
 
 // AJAX SEARCH
@@ -52,7 +52,7 @@ Route::get('articles/{slug}', [PostController::class, 'post.show'])->name('post.
 
 
 // REGENERATE PROFILE URL
-Route::get('/regenerate', [MainController::class, 'regenerateURL'])->name('regenerate');
+Route::get('/regProfile', [MainController::class, 'regenerateURL'])->name('regProfile');
 Route::get('/regMetro', [MainController::class, 'regMetroURL'])->name('regMetro');
 
 

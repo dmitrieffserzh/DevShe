@@ -288,7 +288,7 @@ if (stations) {
                 url: '/search/metro',
                 data: {station: stations[i].textContent}
             }).then((response) => {
-                if (response.data.slug !== '') {
+                if (response.data.slug != '') {
                     modal.querySelector('.modal__title').innerHTML = response.data.name;
                     modal.querySelector('.modal__content').innerHTML = '' +
                         '<p style="padding: 0 0 1rem">Найдено девушек: ' + response.data.count + '</p>' +

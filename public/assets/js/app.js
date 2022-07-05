@@ -3278,7 +3278,7 @@ if (stations) {
           station: stations[i].textContent
         }
       }).then(function (response) {
-        if (response.data.slug !== '') {
+        if (response.data.slug != '') {
           modal.querySelector('.modal__title').innerHTML = response.data.name;
           modal.querySelector('.modal__content').innerHTML = '' + '<p style="padding: 0 0 1rem">Найдено девушек: ' + response.data.count + '</p>' + '<a href="/search/metro/devushki-na-stancii-metro-' + response.data.slug + '" class="button">Показать</a>';
           modal.classList.add('active');

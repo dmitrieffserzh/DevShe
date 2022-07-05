@@ -47,6 +47,9 @@ class Profile extends Model {
     protected $allowedFilters = [ 'id', 'private', 'name', 'phone', 'section' ];
     protected $allowedSorts = [ 'id', 'private', 'active' ];
 
+    public function getRouteKeyName() {
+        return 'slug';
+    }
 
     // RELATIONS
     public function user() {

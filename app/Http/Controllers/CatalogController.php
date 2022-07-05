@@ -11,9 +11,9 @@ class CatalogController extends Controller {
 
     private $profile_id = '';
 
-    function showProfileCatalog( $section, $id ) {
+    function showProfileCatalog( $section, $slug ) {
 
-        $profile = Profile::where( 'active', 1 )->findOrFail( $id );
+        $profile = Profile::where( 'active', 1 )->findOrFail( $slug );
 
         if ( $profile->section != array_search( $section, Helpers::getGirlSectionUrl() ) ) {
             abort( 404 );
