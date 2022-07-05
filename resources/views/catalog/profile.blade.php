@@ -29,6 +29,9 @@
             </div>
         </div>
         <div class="profile__column">
+            {{ $profile->city ?? '' }} =
+            {{ $profile->stations[0]->name ?? '' }} =
+            id: {{ $profile->id }}
             <div class="rates">
                 <div class="rates__title">
                     <h2>Тарифы:</h2>

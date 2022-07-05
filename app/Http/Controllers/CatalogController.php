@@ -58,7 +58,7 @@ class CatalogController extends Controller {
 
         return view( 'catalog.profile', [
             'heading'  => $profile->name,
-            'profile'  => $profile->load( [ 'attachment', 'prices' ] ),
+            'profile'  => $profile->load( [ 'attachment', 'prices', 'stations' ] ),
             'related'  => $related->load( 'attachment' ),
             'services' => $arrServices
         ] );
