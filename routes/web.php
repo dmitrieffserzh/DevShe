@@ -53,4 +53,9 @@ Route::get('articles/{slug}', [PostController::class, 'post.show'])->name('post.
 // PAGES
 Route::get('/{slug}', [PageController::class, 'showPage'])->name('page');
 
+
+
+// REGENERATE PROFILE URL
+Route::get('/regenerate', [MainController::class, 'regenerateURL'])->name('regenerate');
+
 require __DIR__.'/auth.php';

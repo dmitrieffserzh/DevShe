@@ -78,30 +78,42 @@
                             <div class="rate__title">У меня:</div>
                             <div class="rate__block">
                                 <div class="rate__name">1 час</div>
-                                <div class="rate__value">{{$profile->prices->night_one_hour_in ?$profile->prices->night_one_hour_in.' руб' : '---'}}</div>
+                                <div class="rate__value">
+                                    <input type="text" value="{{$profile->prices->night_one_hour_in??''}}">
+                                </div>
                             </div>
                             <div class="rate__block">
                                 <div class="rate__name">2 часа</div>
-                                <div class="rate__value">{{$profile->prices->night_two_hours_in ?$profile->prices->night_two_hours_in.' руб' : '---'}}</div>
+                                <div class="rate__value">
+                                    <input type="text" value="{{$profile->prices->night_two_hours_in ?? ''}}">
+                                </div>
                             </div>
                             <div class="rate__block">
                                 <div class="rate__name">Вся ночь</div>
-                                <div class="rate__value">{{$profile->prices->night_all_in ?$profile->prices->night_all_in.' руб' : '---'}}</div>
+                                <div class="rate__value">
+                                    <input type="text" value="{{$profile->prices->night_all_in ?? ''}}">
+                                </div>
                             </div>
                         </div>
                         <div class="rate__item">
                             <div class="rate__title">У тебя:</div>
                             <div class="rate__block">
                                 <div class="rate__name">1 час</div>
-                                <div class="rate__value">{{$profile->prices->night_one_hour_out ?$profile->prices->night_one_hour_out.' руб' : '---'}}</div>
+                                <div class="rate__value">
+                                    <input type="text" value="{{$profile->prices->night_one_hour_out ?? ''}}">
+                                </div>
                             </div>
                             <div class="rate__block">
                                 <div class="rate__name">2 часа</div>
-                                <div class="rate__value">{{$profile->prices->night_two_hours_out ?$profile->prices->night_two_hours_out.' руб' : '---'}}</div>
+                                <div class="rate__value">
+                                    <input type="text" value="{{$profile->prices->night_two_hours_out ?? ''}}">
+                                </div>
                             </div>
                             <div class="rate__block">
                                 <div class="rate__name">Вся ночь</div>
-                                <div class="rate__value">{{$profile->prices->night_all_out ?$profile->prices->night_all_out.' руб' : '---'}}</div>
+                                <div class="rate__value">
+                                    <input type="text" value="{{$profile->prices->night_all_out ?? ''}}">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -111,59 +123,59 @@
                 <input type="text" value="{{ $profile->height }}">
                 <input type="text" value="{{ $profile->weight }}">
 
-                <select name="" id="">
+                <select name="profile[age]" id="">
                     @foreach(Helpers::getGirlAge() as $key=>$value)
-                        <option value="{{ $key }}">{{ $value }}</option>
+                        <option value="{{ $key }}" @if($key == $profile->age) selected @endif>{{ $value }}</option>
                     @endforeach
                 </select>
 
-                <select name="" id="">
+                <select name="profile[appearance]" id="">
+                    @foreach(Helpers::getGirlAppearance() as $key=>$value)
+                        <option value="{{ $key }}"
+                                @if($key == $profile->appearance) selected @endif>{{ $value }}</option>
+                    @endforeach
+                </select>
+
+                <select name="profile[breast_size]" id="">
                     @foreach(Helpers::getGirlBreast() as $key=>$value)
-                        <option value="{{ $key }}">{{ $value }}</option>
+                        <option value="{{ $key }}"
+                                @if($key == $profile->breast_size) selected @endif>{{ $value }}</option>
                     @endforeach
                 </select>
 
-                <ul class="information__list">
-                    <li class="information__item">Возраст: <span>{{ Helpers::getGirlAgeValue($profile->age) }}</span>
-                    </li>
-                    <li class="information__item">Рост: <span>{{ $profile->height }}</span></li>
-                    <li class="information__item">Вес: <span>{{ $profile->weight }}</span></li>
-                    <li class="information__item">Грудь:
-                        <span>{{ Helpers::getGirlBreastValue($profile->breast_size) }}{{$profile->breast_type ? ', Силикон':', Натуральная' }}</span>
-                    </li>
-                    <li class="information__item">Цвет волос:
-                        <span>{{ Helpers::getGirlHaircolorValue($profile->haircolor) }}</span></li>
-                    <li class="information__item">Внешность:
-                        <span>{{ Helpers::getGirlAppearanceValue($profile->appearance) }}</span></li>
-                    <li class="information__item">Интимная стрижка:
-                        <span>{{ Helpers::getGirlHaircutValue($profile->haircut) }}</span></li>
-                </ul>
+                <select name="profile[haircolor]" id="">
+                    @foreach(Helpers::getGirlHaircolor() as $key=>$value)
+                        <option value="{{ $key }}"
+                                @if($key == $profile->haircolor) selected @endif>{{ $value }}</option>
+                    @endforeach
+                </select>
+
+                <select name="profile[haircut]" id="">
+                    @foreach(Helpers::getGirlHaircut() as $key=>$value)
+                        <option value="{{ $key }}" @if($key == $profile->haircut) selected @endif>{{ $value }}</option>
+                    @endforeach
+                </select>
+                <label for="breast-natural">
+                    Натуральная
+                    <input id="breast-natural" type="radio" name="profile[breast_type]" value="0"
+                           @if($profile->breast_type == 0) checked @endif>
+                </label>
+                <label for="breast-silicon">
+                    Силикон
+                    <input id="breast-silicon" type="radio" name="profile[breast_type]" value="1"
+                           @if($profile->breast_type == 1) checked @endif>
+                </label>
 
                 <div class="description">
-                    <textarea name="" id="" cols="30" rows="10"
+                    <textarea name="profile[description]" id="" cols="30" rows="10"
                               placeholder="Коротко о себе">{{ $profile->description }}</textarea>
                 </div>
 
             </div>
             <div class="contacts">
-                <a href="tel:{{ Helpers::getPhoneFormatLink($profile->phone) }}"
-                   class="contacts__phone">{{ $profile->phone }}</a>
-
-                <input type="text" value="{{ $profile->phone ?? '' }}">
-                <input type="text" value="{{ $profile->whatsapp ?? '' }}">
-                <input type="text" value="{{ $profile->telegram ?? ''}}">
-
-                @if($profile->whatsapp || $profile->telegram)
-                    <div class="contacts__social">
-                        <span>Отвечаю на</span>
-                        @if($profile->whatsapp)
-                            <a href="{{ $profile->whatsapp }}" class="ws"></a>
-                        @endif
-                        @if($profile->telegram)
-                            <a href="{{ $profile->telegram }}" class="tg"></a>
-                        @endif
-                    </div>
-                @endif
+                <input type="text" name="profile[phone]" value="{{ $profile->phone ?? '' }}">
+                <input type="text" name="profile[whatsapp]" value="{{ $profile->whatsapp ?? '' }}">
+                <input type="text" name="profile[telegram]" value="{{ $profile->telegram ?? ''}}">
             </div>
         </div>
         <div class="profile__column">
