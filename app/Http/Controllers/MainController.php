@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use App\Models\Slider;
+use App\Models\Station;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -50,5 +51,17 @@ class MainController extends Controller
         }
 
         return view('pages.page', []);
+    }
+
+    public function regMetroURL()
+    {
+        $allStations = Station::all();
+
+        for ($i = 0; count($allStations) > $i; $i++) {
+            $allStations[$i]->slug = Str::slug($allStations[$i]->name);
+            $allStations[$i]->update();
+        }
+
+        //return view('pages.page', []);
     }
 }

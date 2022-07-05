@@ -12,7 +12,7 @@
 <body>
 <header class="header">
     <div class="header__container">
-        <div class="header-top">
+        <!--<div class="header-top">
             <div class="header-top__menu">
                 <a href="{{ route('catalog.elite') }}"{{ (request()->is('elite')) ? 'class=active' : '' }}>Элитные</a>
                 <a href="{{ route('catalog.individuals') }}"{{ (request()->is('individuals')) ? 'class=active' : '' }}>Индивидуалки</a>
@@ -24,7 +24,7 @@
                 <a href="" class="ws"></a>
                 <a href="" class="tg"></a>
             </div>
-        </div>
+        </div>-->
     </div>
     <div class="header__container">
         <div class="header-main">
@@ -97,13 +97,13 @@
             <a href="/" class="footer-links__logo">
                 <img src="/images/logo_dark.png" alt="">
             </a>
-            <div class="footer-links__menu">
+            <!--<div class="footer-links__menu">
                 <a href="{{ route('catalog.elite') }}"{{ (request()->is('elite')) ? 'class=active' : '' }}>Элитные</a>
                 <a href="{{ route('catalog.individuals') }}"{{ (request()->is('individuals')) ? 'class=active' : '' }}>Индивидуалки</a>
                 <a href="{{ route('catalog.cheap') }}"{{ (request()->is('cheap')) ? 'class=active' : '' }}>Дешевые</a>
                 <a href="{{ route('catalog.bdsm') }}"{{ (request()->is('bdsm')) ? 'class=active' : '' }}>БДСМ</a>
                 <a href="{{ route('catalog.masseuses') }}"{{ (request()->is('masseuses')) ? 'class=active' : '' }}>Массажистки</a>
-            </div>
+            </div>-->
             <div class="footer-links__social">
                 <a href="" class="ws"></a>
                 <a href="" class="tg"></a>

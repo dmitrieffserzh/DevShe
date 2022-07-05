@@ -223,6 +223,9 @@ table {
   color: #646464;
   line-height: 1.2rem;
 }
+.modal__content {
+  margin: 2rem 0 0;
+}
 .modal__close {
   width: 15px;
   height: 15px;
@@ -259,6 +262,7 @@ table {
   display: block;
   height: 28px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -285,6 +289,7 @@ table {
   display: block;
   min-height: 32px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -342,6 +347,7 @@ table {
 .select2-results__option {
   padding: 6px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -897,6 +903,11 @@ table {
   font-family: "Core Sans C 35" !important;
   color: #D1D1D1;
   opacity: 1;
+}
+
+:-ms-input-placeholder {
+  font-family: "Core Sans C 35" !important;
+  color: #D1D1D1;
 }
 
 ::placeholder {
@@ -2023,8 +2034,15 @@ body {
   border-radius: 0.25rem;
   font-family: "Core Sans C 35";
   font-size: 12px;
+  transition: border 0.5s Linear;
+}
+.filter__block .block__input input:focus {
+  border: 1px Solid #2AABEE;
 }
 .filter__block .block__input input:focus::-moz-placeholder {
+  visibility: hidden;
+}
+.filter__block .block__input input:focus:-ms-input-placeholder {
   visibility: hidden;
 }
 .filter__block .block__input input:focus::placeholder {
@@ -2038,25 +2056,18 @@ body {
   width: 100%;
 }
 
-.metro {
-  width: 100%;
-}
-.metro-wrapper {
-  position: relative;
+/* ZOOM MAP ========================================================================================================= */
+#map-container {
+  overflow: hidden;
 }
 
-.mark {
-  position: absolute;
-  display: inline-block;
-  padding: 0.25rem;
-  left: 0;
-  top: 0;
-  font-family: "Core Sans C 65";
-  font-size: 12px;
-  color: #000;
-  transition: color 0.3s Linear;
-  cursor: pointer;
+.zoom-map {
+  margin: 2rem 0 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
-.mark:hover {
-  color: #df0031;
+.zoom-map .button {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
 }

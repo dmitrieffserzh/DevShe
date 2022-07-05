@@ -4,7 +4,9 @@ window.$ = require('jquery');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import Swiper, {Autoplay, Thumbs} from 'swiper';
 import 'swiper/css';
-import 'select2/dist/js/select2.min'
+import 'select2/dist/js/select2.min';
+import Panzoom from '@panzoom/panzoom/dist/panzoom';
+
 
 window.onload = function () {
     $('.js-select').select2({width: '100%'});
@@ -252,26 +254,57 @@ if (searchInput) {
     });
 }
 
+// METRO MAP ZOOM
+const metroMap = document.getElementById('map');
+const buttonZoomIn = document.getElementById('zoomIn');
+const buttonZoomOut = document.getElementById('zoomOut');
+const panzoom = Panzoom(metroMap, {
+    maxScale: 5,
+    minScale: 1
+});
+panzoom.zoom(1, {
+    animate: true
+});
+panzoom.pan(100, 100);
+
+buttonZoomIn.addEventListener('click', panzoom.zoomIn);
+buttonZoomOut.addEventListener('click', panzoom.zoomOut);
+
+metroMap.addEventListener('wheel', function (event) {
+    if (!event.shiftKey) return
+    panzoom.zoomWithWheel(event)
+})
+
+
 // SEARCH GIRL ON METRO STATIONS
 let stations = document.getElementsByClassName('label');
+let modal = document.querySelector('.modal[data-modal="metrosearch"]');
+let overlay = document.querySelector('.overlay');
 if (stations) {
     for (let i = 0; stations.length > i; i++) {
         stations[i].addEventListener('click', () => {
-
-            console.log(stations[i].textContent);
             axios({
                 method: 'POST',
                 url: '/search/metro',
                 data: {station: stations[i].textContent}
             }).then((response) => {
-                if (response.data !== '') {
-                    window.location.href = '/search/metro/' + response.data
+                if (response.data.slug !== '') {
+                    modal.querySelector('.modal__title').innerHTML = response.data.name;
+                    modal.querySelector('.modal__content').innerHTML = '' +
+                        '<p style="padding: 0 0 1rem">Найдено девушек: ' + response.data.count + '</p>' +
+                        '<a href="/search/metro/devushki-na-stancii-metro-' + response.data.slug + '" class="button">Показать</a>';
+                    modal.classList.add('active');
+                    overlay.classList.add('active');
+                } else {
+                    modal.querySelector('.modal__title').innerHTML = 'Дувушки не найдены';
+                    modal.querySelector('.modal__content').innerHTML = '' +
+                        '<p style="padding: 0 0 1rem">Девушки не найдены! Попробуйте выбрать другую станцию метро.</p>';
+                    modal.classList.add('active');
+                    overlay.classList.add('active');
                 }
                 console.log(response);
             }).catch((error) => {
                 console.log(error);
-                document.querySelector('.modal[data-modal="metrosearch"]').classList.add('active');
-                document.querySelector('.overlay').classList.add('active');
             });
         })
     }

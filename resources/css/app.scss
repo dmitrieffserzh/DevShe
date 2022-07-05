@@ -1391,7 +1391,10 @@ body {
                     border-radius: .25rem;
                     font-family: "Core Sans C 35";
                     font-size: 12px;
-
+                    transition: border .5s Linear;
+                    &:focus {
+                        border: 1px Solid #2AABEE;
+                    }
                     &:focus::placeholder {
                         visibility: hidden;
                     }
@@ -1409,31 +1412,19 @@ body {
         }
     }
 }
-
-
-.metro {
-    width: 100%;
-
-    &-wrapper {
-        position: relative;
+/* ZOOM MAP ========================================================================================================= */
+#map {
+    &-container {
+        overflow: hidden;
     }
 }
-
-.mark {
-    position: absolute;
-    display: inline-block;
-    padding: 0.25rem;
-    left: 0;
-    top: 0;
-    //background: #df0031;
-    //border-radius: 0.25rem;
-    font-family: "Core Sans C 65";
-    font-size: 12px;
-    color: #000;
-    transition: color .3s Linear;
-    cursor: pointer;
-
-    &:hover {
-        color: #df0031;
+.zoom-map {
+    margin: 2rem 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    & .button {
+        padding: .5rem 1rem;
+        margin: 0 .5rem;
     }
 }

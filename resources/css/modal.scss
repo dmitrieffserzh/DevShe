@@ -49,7 +49,9 @@
         color: #646464;
         line-height: 1.2rem;
     }
-
+    &__content {
+        margin: 2rem 0 0;
+    }
     &__close {
         width: 15px;
         height: 15px;

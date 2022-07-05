@@ -1,6 +1,807 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@panzoom/panzoom/dist/panzoom.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@panzoom/panzoom/dist/panzoom.js ***!
+  \*******************************************************/
+/***/ (function(module) {
+
+/**
+* Panzoom for panning and zooming elements using CSS transforms
+* Copyright Timmy Willison and other contributors
+* https://github.com/timmywil/panzoom/blob/main/MIT-License.txt
+*/
+(function (global, factory) {
+     true ? module.exports = factory() :
+    0;
+})(this, (function () { 'use strict';
+
+    /******************************************************************************
+    Copyright (c) Microsoft Corporation.
+
+    Permission to use, copy, modify, and/or distribute this software for any
+    purpose with or without fee is hereby granted.
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+    REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+    AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+    INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+    LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+    OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+    PERFORMANCE OF THIS SOFTWARE.
+    ***************************************************************************** */
+
+    var __assign = function() {
+        __assign = Object.assign || function __assign(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign.apply(this, arguments);
+    };
+
+    /* eslint-disable no-var */
+    if (typeof window !== 'undefined') {
+      // Support: IE11 only
+      if (window.NodeList && !NodeList.prototype.forEach) {
+        NodeList.prototype.forEach = Array.prototype.forEach;
+      }
+      // Support: IE11 only
+      // CustomEvent is an object instead of a constructor
+      if (typeof window.CustomEvent !== 'function') {
+        window.CustomEvent = function CustomEvent(event, params) {
+          params = params || { bubbles: false, cancelable: false, detail: null };
+          var evt = document.createEvent('CustomEvent');
+          evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+          return evt
+        };
+      }
+    }
+
+    /**
+     * Utilites for working with multiple pointer events
+     */
+    function findEventIndex(pointers, event) {
+        var i = pointers.length;
+        while (i--) {
+            if (pointers[i].pointerId === event.pointerId) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    function addPointer(pointers, event) {
+        var i;
+        // Add touches if applicable
+        if (event.touches) {
+            i = 0;
+            for (var _i = 0, _a = event.touches; _i < _a.length; _i++) {
+                var touch = _a[_i];
+                touch.pointerId = i++;
+                addPointer(pointers, touch);
+            }
+            return;
+        }
+        i = findEventIndex(pointers, event);
+        // Update if already present
+        if (i > -1) {
+            pointers.splice(i, 1);
+        }
+        pointers.push(event);
+    }
+    function removePointer(pointers, event) {
+        // Add touches if applicable
+        if (event.touches) {
+            // Remove all touches
+            while (pointers.length) {
+                pointers.pop();
+            }
+            return;
+        }
+        var i = findEventIndex(pointers, event);
+        if (i > -1) {
+            pointers.splice(i, 1);
+        }
+    }
+    /**
+     * Calculates a center point between
+     * the given pointer events, for panning
+     * with multiple pointers.
+     */
+    function getMiddle(pointers) {
+        // Copy to avoid changing by reference
+        pointers = pointers.slice(0);
+        var event1 = pointers.pop();
+        var event2;
+        while ((event2 = pointers.pop())) {
+            event1 = {
+                clientX: (event2.clientX - event1.clientX) / 2 + event1.clientX,
+                clientY: (event2.clientY - event1.clientY) / 2 + event1.clientY
+            };
+        }
+        return event1;
+    }
+    /**
+     * Calculates the distance between two points
+     * for pinch zooming.
+     * Limits to the first 2
+     */
+    function getDistance(pointers) {
+        if (pointers.length < 2) {
+            return 0;
+        }
+        var event1 = pointers[0];
+        var event2 = pointers[1];
+        return Math.sqrt(Math.pow(Math.abs(event2.clientX - event1.clientX), 2) +
+            Math.pow(Math.abs(event2.clientY - event1.clientY), 2));
+    }
+
+    var events = {
+        down: 'mousedown',
+        move: 'mousemove',
+        up: 'mouseup mouseleave'
+    };
+    if (typeof window !== 'undefined') {
+        if (typeof window.PointerEvent === 'function') {
+            events = {
+                down: 'pointerdown',
+                move: 'pointermove',
+                up: 'pointerup pointerleave pointercancel'
+            };
+        }
+        else if (typeof window.TouchEvent === 'function') {
+            events = {
+                down: 'touchstart',
+                move: 'touchmove',
+                up: 'touchend touchcancel'
+            };
+        }
+    }
+    function onPointer(event, elem, handler, eventOpts) {
+        events[event].split(' ').forEach(function (name) {
+            elem.addEventListener(name, handler, eventOpts);
+        });
+    }
+    function destroyPointer(event, elem, handler) {
+        events[event].split(' ').forEach(function (name) {
+            elem.removeEventListener(name, handler);
+        });
+    }
+
+    var isIE = typeof document !== 'undefined' && !!document.documentMode;
+    /**
+     * Lazy creation of a CSS style declaration
+     */
+    var divStyle;
+    function createStyle() {
+        if (divStyle) {
+            return divStyle;
+        }
+        return (divStyle = document.createElement('div').style);
+    }
+    /**
+     * Proper prefixing for cross-browser compatibility
+     */
+    var prefixes = ['webkit', 'moz', 'ms'];
+    var prefixCache = {};
+    function getPrefixedName(name) {
+        if (prefixCache[name]) {
+            return prefixCache[name];
+        }
+        var divStyle = createStyle();
+        if (name in divStyle) {
+            return (prefixCache[name] = name);
+        }
+        var capName = name[0].toUpperCase() + name.slice(1);
+        var i = prefixes.length;
+        while (i--) {
+            var prefixedName = "".concat(prefixes[i]).concat(capName);
+            if (prefixedName in divStyle) {
+                return (prefixCache[name] = prefixedName);
+            }
+        }
+    }
+    /**
+     * Gets a style value expected to be a number
+     */
+    function getCSSNum(name, style) {
+        return parseFloat(style[getPrefixedName(name)]) || 0;
+    }
+    function getBoxStyle(elem, name, style) {
+        if (style === void 0) { style = window.getComputedStyle(elem); }
+        // Support: FF 68+
+        // Firefox requires specificity for border
+        var suffix = name === 'border' ? 'Width' : '';
+        return {
+            left: getCSSNum("".concat(name, "Left").concat(suffix), style),
+            right: getCSSNum("".concat(name, "Right").concat(suffix), style),
+            top: getCSSNum("".concat(name, "Top").concat(suffix), style),
+            bottom: getCSSNum("".concat(name, "Bottom").concat(suffix), style)
+        };
+    }
+    /**
+     * Set a style using the properly prefixed name
+     */
+    function setStyle(elem, name, value) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        elem.style[getPrefixedName(name)] = value;
+    }
+    /**
+     * Constructs the transition from panzoom options
+     * and takes care of prefixing the transition and transform
+     */
+    function setTransition(elem, options) {
+        var transform = getPrefixedName('transform');
+        setStyle(elem, 'transition', "".concat(transform, " ").concat(options.duration, "ms ").concat(options.easing));
+    }
+    /**
+     * Set the transform using the proper prefix
+     *
+     * Override the transform setter.
+     * This is exposed mostly so the user could
+     * set other parts of a transform
+     * aside from scale and translate.
+     * Default is defined in src/css.ts.
+     *
+     * ```js
+     * // This example always sets a rotation
+     * // when setting the scale and translation
+     * const panzoom = Panzoom(elem, {
+     *   setTransform: (elem, { scale, x, y }) => {
+     *     panzoom.setStyle('transform', `rotate(0.5turn) scale(${scale}) translate(${x}px, ${y}px)`)
+     *   }
+     * })
+     * ```
+     */
+    function setTransform(elem, _a, _options) {
+        var x = _a.x, y = _a.y, scale = _a.scale, isSVG = _a.isSVG;
+        setStyle(elem, 'transform', "scale(".concat(scale, ") translate(").concat(x, "px, ").concat(y, "px)"));
+        if (isSVG && isIE) {
+            var matrixValue = window.getComputedStyle(elem).getPropertyValue('transform');
+            elem.setAttribute('transform', matrixValue);
+        }
+    }
+    /**
+     * Dimensions used in containment and focal point zooming
+     */
+    function getDimensions(elem) {
+        var parent = elem.parentNode;
+        var style = window.getComputedStyle(elem);
+        var parentStyle = window.getComputedStyle(parent);
+        var rectElem = elem.getBoundingClientRect();
+        var rectParent = parent.getBoundingClientRect();
+        return {
+            elem: {
+                style: style,
+                width: rectElem.width,
+                height: rectElem.height,
+                top: rectElem.top,
+                bottom: rectElem.bottom,
+                left: rectElem.left,
+                right: rectElem.right,
+                margin: getBoxStyle(elem, 'margin', style),
+                border: getBoxStyle(elem, 'border', style)
+            },
+            parent: {
+                style: parentStyle,
+                width: rectParent.width,
+                height: rectParent.height,
+                top: rectParent.top,
+                bottom: rectParent.bottom,
+                left: rectParent.left,
+                right: rectParent.right,
+                padding: getBoxStyle(parent, 'padding', parentStyle),
+                border: getBoxStyle(parent, 'border', parentStyle)
+            }
+        };
+    }
+
+    /**
+     * Determine if an element is attached to the DOM
+     * Panzoom requires this so events work properly
+     */
+    function isAttached(elem) {
+        var doc = elem.ownerDocument;
+        var parent = elem.parentNode;
+        return (doc &&
+            parent &&
+            doc.nodeType === 9 &&
+            parent.nodeType === 1 &&
+            doc.documentElement.contains(parent));
+    }
+
+    function getClass(elem) {
+        return (elem.getAttribute('class') || '').trim();
+    }
+    function hasClass(elem, className) {
+        return elem.nodeType === 1 && " ".concat(getClass(elem), " ").indexOf(" ".concat(className, " ")) > -1;
+    }
+    function isExcluded(elem, options) {
+        for (var cur = elem; cur != null; cur = cur.parentNode) {
+            if (hasClass(cur, options.excludeClass) || options.exclude.indexOf(cur) > -1) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determine if an element is SVG by checking the namespace
+     * Exception: the <svg> element itself should be treated like HTML
+     */
+    var rsvg = /^http:[\w\.\/]+svg$/;
+    function isSVGElement(elem) {
+        return rsvg.test(elem.namespaceURI) && elem.nodeName.toLowerCase() !== 'svg';
+    }
+
+    function shallowClone(obj) {
+        var clone = {};
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                clone[key] = obj[key];
+            }
+        }
+        return clone;
+    }
+
+    var defaultOptions = {
+        animate: false,
+        canvas: false,
+        cursor: 'move',
+        disablePan: false,
+        disableZoom: false,
+        disableXAxis: false,
+        disableYAxis: false,
+        duration: 200,
+        easing: 'ease-in-out',
+        exclude: [],
+        excludeClass: 'panzoom-exclude',
+        handleStartEvent: function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        },
+        maxScale: 4,
+        minScale: 0.125,
+        overflow: 'hidden',
+        panOnlyWhenZoomed: false,
+        pinchAndPan: false,
+        relative: false,
+        setTransform: setTransform,
+        startX: 0,
+        startY: 0,
+        startScale: 1,
+        step: 0.3,
+        touchAction: 'none'
+    };
+    function Panzoom(elem, options) {
+        if (!elem) {
+            throw new Error('Panzoom requires an element as an argument');
+        }
+        if (elem.nodeType !== 1) {
+            throw new Error('Panzoom requires an element with a nodeType of 1');
+        }
+        if (!isAttached(elem)) {
+            throw new Error('Panzoom should be called on elements that have been attached to the DOM');
+        }
+        options = __assign(__assign({}, defaultOptions), options);
+        var isSVG = isSVGElement(elem);
+        var parent = elem.parentNode;
+        // Set parent styles
+        parent.style.overflow = options.overflow;
+        parent.style.userSelect = 'none';
+        // This is important for mobile to
+        // prevent scrolling while panning
+        parent.style.touchAction = options.touchAction;
+        (options.canvas ? parent : elem).style.cursor = options.cursor;
+        // Set element styles
+        elem.style.userSelect = 'none';
+        elem.style.touchAction = options.touchAction;
+        // The default for HTML is '50% 50%'
+        // The default for SVG is '0 0'
+        // SVG can't be changed in IE
+        setStyle(elem, 'transformOrigin', typeof options.origin === 'string' ? options.origin : isSVG ? '0 0' : '50% 50%');
+        function resetStyle() {
+            parent.style.overflow = '';
+            parent.style.userSelect = '';
+            parent.style.touchAction = '';
+            parent.style.cursor = '';
+            elem.style.cursor = '';
+            elem.style.userSelect = '';
+            elem.style.touchAction = '';
+            setStyle(elem, 'transformOrigin', '');
+        }
+        function setOptions(opts) {
+            if (opts === void 0) { opts = {}; }
+            for (var key in opts) {
+                if (opts.hasOwnProperty(key)) {
+                    options[key] = opts[key];
+                }
+            }
+            // Handle option side-effects
+            if (opts.hasOwnProperty('cursor') || opts.hasOwnProperty('canvas')) {
+                parent.style.cursor = elem.style.cursor = '';
+                (options.canvas ? parent : elem).style.cursor = options.cursor;
+            }
+            if (opts.hasOwnProperty('overflow')) {
+                parent.style.overflow = opts.overflow;
+            }
+            if (opts.hasOwnProperty('touchAction')) {
+                parent.style.touchAction = opts.touchAction;
+                elem.style.touchAction = opts.touchAction;
+            }
+        }
+        var x = 0;
+        var y = 0;
+        var scale = 1;
+        var isPanning = false;
+        zoom(options.startScale, { animate: false, force: true });
+        // Wait for scale to update
+        // for accurate dimensions
+        // to constrain initial values
+        setTimeout(function () {
+            pan(options.startX, options.startY, { animate: false, force: true });
+        });
+        function trigger(eventName, detail, opts) {
+            if (opts.silent) {
+                return;
+            }
+            var event = new CustomEvent(eventName, { detail: detail });
+            elem.dispatchEvent(event);
+        }
+        function setTransformWithEvent(eventName, opts, originalEvent) {
+            var value = { x: x, y: y, scale: scale, isSVG: isSVG, originalEvent: originalEvent };
+            requestAnimationFrame(function () {
+                if (typeof opts.animate === 'boolean') {
+                    if (opts.animate) {
+                        setTransition(elem, opts);
+                    }
+                    else {
+                        setStyle(elem, 'transition', 'none');
+                    }
+                }
+                opts.setTransform(elem, value, opts);
+                trigger(eventName, value, opts);
+                trigger('panzoomchange', value, opts);
+            });
+            return value;
+        }
+        function constrainXY(toX, toY, toScale, panOptions) {
+            var opts = __assign(__assign({}, options), panOptions);
+            var result = { x: x, y: y, opts: opts };
+            if (!opts.force && (opts.disablePan || (opts.panOnlyWhenZoomed && scale === opts.startScale))) {
+                return result;
+            }
+            toX = parseFloat(toX);
+            toY = parseFloat(toY);
+            if (!opts.disableXAxis) {
+                result.x = (opts.relative ? x : 0) + toX;
+            }
+            if (!opts.disableYAxis) {
+                result.y = (opts.relative ? y : 0) + toY;
+            }
+            if (opts.contain) {
+                var dims = getDimensions(elem);
+                var realWidth = dims.elem.width / scale;
+                var realHeight = dims.elem.height / scale;
+                var scaledWidth = realWidth * toScale;
+                var scaledHeight = realHeight * toScale;
+                var diffHorizontal = (scaledWidth - realWidth) / 2;
+                var diffVertical = (scaledHeight - realHeight) / 2;
+                if (opts.contain === 'inside') {
+                    var minX = (-dims.elem.margin.left - dims.parent.padding.left + diffHorizontal) / toScale;
+                    var maxX = (dims.parent.width -
+                        scaledWidth -
+                        dims.parent.padding.left -
+                        dims.elem.margin.left -
+                        dims.parent.border.left -
+                        dims.parent.border.right +
+                        diffHorizontal) /
+                        toScale;
+                    result.x = Math.max(Math.min(result.x, maxX), minX);
+                    var minY = (-dims.elem.margin.top - dims.parent.padding.top + diffVertical) / toScale;
+                    var maxY = (dims.parent.height -
+                        scaledHeight -
+                        dims.parent.padding.top -
+                        dims.elem.margin.top -
+                        dims.parent.border.top -
+                        dims.parent.border.bottom +
+                        diffVertical) /
+                        toScale;
+                    result.y = Math.max(Math.min(result.y, maxY), minY);
+                }
+                else if (opts.contain === 'outside') {
+                    var minX = (-(scaledWidth - dims.parent.width) -
+                        dims.parent.padding.left -
+                        dims.parent.border.left -
+                        dims.parent.border.right +
+                        diffHorizontal) /
+                        toScale;
+                    var maxX = (diffHorizontal - dims.parent.padding.left) / toScale;
+                    result.x = Math.max(Math.min(result.x, maxX), minX);
+                    var minY = (-(scaledHeight - dims.parent.height) -
+                        dims.parent.padding.top -
+                        dims.parent.border.top -
+                        dims.parent.border.bottom +
+                        diffVertical) /
+                        toScale;
+                    var maxY = (diffVertical - dims.parent.padding.top) / toScale;
+                    result.y = Math.max(Math.min(result.y, maxY), minY);
+                }
+            }
+            if (opts.roundPixels) {
+                result.x = Math.round(result.x);
+                result.y = Math.round(result.y);
+            }
+            return result;
+        }
+        function constrainScale(toScale, zoomOptions) {
+            var opts = __assign(__assign({}, options), zoomOptions);
+            var result = { scale: scale, opts: opts };
+            if (!opts.force && opts.disableZoom) {
+                return result;
+            }
+            var minScale = options.minScale;
+            var maxScale = options.maxScale;
+            if (opts.contain) {
+                var dims = getDimensions(elem);
+                var elemWidth = dims.elem.width / scale;
+                var elemHeight = dims.elem.height / scale;
+                if (elemWidth > 1 && elemHeight > 1) {
+                    var parentWidth = dims.parent.width - dims.parent.border.left - dims.parent.border.right;
+                    var parentHeight = dims.parent.height - dims.parent.border.top - dims.parent.border.bottom;
+                    var elemScaledWidth = parentWidth / elemWidth;
+                    var elemScaledHeight = parentHeight / elemHeight;
+                    if (options.contain === 'inside') {
+                        maxScale = Math.min(maxScale, elemScaledWidth, elemScaledHeight);
+                    }
+                    else if (options.contain === 'outside') {
+                        minScale = Math.max(minScale, elemScaledWidth, elemScaledHeight);
+                    }
+                }
+            }
+            result.scale = Math.min(Math.max(toScale, minScale), maxScale);
+            return result;
+        }
+        function pan(toX, toY, panOptions, originalEvent) {
+            var result = constrainXY(toX, toY, scale, panOptions);
+            // Only try to set if the result is somehow different
+            if (x !== result.x || y !== result.y) {
+                x = result.x;
+                y = result.y;
+                return setTransformWithEvent('panzoompan', result.opts, originalEvent);
+            }
+            return { x: x, y: y, scale: scale, isSVG: isSVG, originalEvent: originalEvent };
+        }
+        function zoom(toScale, zoomOptions, originalEvent) {
+            var result = constrainScale(toScale, zoomOptions);
+            var opts = result.opts;
+            if (!opts.force && opts.disableZoom) {
+                return;
+            }
+            toScale = result.scale;
+            var toX = x;
+            var toY = y;
+            if (opts.focal) {
+                // The difference between the point after the scale and the point before the scale
+                // plus the current translation after the scale
+                // neutralized to no scale (as the transform scale will apply to the translation)
+                var focal = opts.focal;
+                toX = (focal.x / toScale - focal.x / scale + x * toScale) / toScale;
+                toY = (focal.y / toScale - focal.y / scale + y * toScale) / toScale;
+            }
+            var panResult = constrainXY(toX, toY, toScale, { relative: false, force: true });
+            x = panResult.x;
+            y = panResult.y;
+            scale = toScale;
+            return setTransformWithEvent('panzoomzoom', opts, originalEvent);
+        }
+        function zoomInOut(isIn, zoomOptions) {
+            var opts = __assign(__assign(__assign({}, options), { animate: true }), zoomOptions);
+            return zoom(scale * Math.exp((isIn ? 1 : -1) * opts.step), opts);
+        }
+        function zoomIn(zoomOptions) {
+            return zoomInOut(true, zoomOptions);
+        }
+        function zoomOut(zoomOptions) {
+            return zoomInOut(false, zoomOptions);
+        }
+        function zoomToPoint(toScale, point, zoomOptions, originalEvent) {
+            var dims = getDimensions(elem);
+            // Instead of thinking of operating on the panzoom element,
+            // think of operating on the area inside the panzoom
+            // element's parent
+            // Subtract padding and border
+            var effectiveArea = {
+                width: dims.parent.width -
+                    dims.parent.padding.left -
+                    dims.parent.padding.right -
+                    dims.parent.border.left -
+                    dims.parent.border.right,
+                height: dims.parent.height -
+                    dims.parent.padding.top -
+                    dims.parent.padding.bottom -
+                    dims.parent.border.top -
+                    dims.parent.border.bottom
+            };
+            // Adjust the clientX/clientY to ignore the area
+            // outside the effective area
+            var clientX = point.clientX -
+                dims.parent.left -
+                dims.parent.padding.left -
+                dims.parent.border.left -
+                dims.elem.margin.left;
+            var clientY = point.clientY -
+                dims.parent.top -
+                dims.parent.padding.top -
+                dims.parent.border.top -
+                dims.elem.margin.top;
+            // Adjust the clientX/clientY for HTML elements,
+            // because they have a transform-origin of 50% 50%
+            if (!isSVG) {
+                clientX -= dims.elem.width / scale / 2;
+                clientY -= dims.elem.height / scale / 2;
+            }
+            // Convert the mouse point from it's position over the
+            // effective area before the scale to the position
+            // over the effective area after the scale.
+            var focal = {
+                x: (clientX / effectiveArea.width) * (effectiveArea.width * toScale),
+                y: (clientY / effectiveArea.height) * (effectiveArea.height * toScale)
+            };
+            return zoom(toScale, __assign(__assign({}, zoomOptions), { animate: false, focal: focal }), originalEvent);
+        }
+        function zoomWithWheel(event, zoomOptions) {
+            // Need to prevent the default here
+            // or it conflicts with regular page scroll
+            event.preventDefault();
+            var opts = __assign(__assign(__assign({}, options), zoomOptions), { animate: false });
+            // Normalize to deltaX in case shift modifier is used on Mac
+            var delta = event.deltaY === 0 && event.deltaX ? event.deltaX : event.deltaY;
+            var wheel = delta < 0 ? 1 : -1;
+            var toScale = constrainScale(scale * Math.exp((wheel * opts.step) / 3), opts).scale;
+            return zoomToPoint(toScale, event, opts, event);
+        }
+        function reset(resetOptions) {
+            var opts = __assign(__assign(__assign({}, options), { animate: true, force: true }), resetOptions);
+            scale = constrainScale(opts.startScale, opts).scale;
+            var panResult = constrainXY(opts.startX, opts.startY, scale, opts);
+            x = panResult.x;
+            y = panResult.y;
+            return setTransformWithEvent('panzoomreset', opts);
+        }
+        var origX;
+        var origY;
+        var startClientX;
+        var startClientY;
+        var startScale;
+        var startDistance;
+        var pointers = [];
+        function handleDown(event) {
+            // Don't handle this event if the target is excluded
+            if (isExcluded(event.target, options)) {
+                return;
+            }
+            addPointer(pointers, event);
+            isPanning = true;
+            options.handleStartEvent(event);
+            origX = x;
+            origY = y;
+            trigger('panzoomstart', { x: x, y: y, scale: scale, isSVG: isSVG, originalEvent: event }, options);
+            // This works whether there are multiple
+            // pointers or not
+            var point = getMiddle(pointers);
+            startClientX = point.clientX;
+            startClientY = point.clientY;
+            startScale = scale;
+            startDistance = getDistance(pointers);
+        }
+        function handleMove(event) {
+            if (!isPanning ||
+                origX === undefined ||
+                origY === undefined ||
+                startClientX === undefined ||
+                startClientY === undefined) {
+                return;
+            }
+            addPointer(pointers, event);
+            var current = getMiddle(pointers);
+            var hasMultiple = pointers.length > 1;
+            var toScale = scale;
+            if (hasMultiple) {
+                // A startDistance of 0 means
+                // that there weren't 2 pointers
+                // handled on start
+                if (startDistance === 0) {
+                    startDistance = getDistance(pointers);
+                }
+                // Use the distance between the first 2 pointers
+                // to determine the current scale
+                var diff = getDistance(pointers) - startDistance;
+                toScale = constrainScale((diff * options.step) / 80 + startScale).scale;
+                zoomToPoint(toScale, current, { animate: false }, event);
+            }
+            // Pan during pinch if pinchAndPan is true.
+            // Note: some calculations may be off because the zoom
+            // above has not yet rendered. However, the behavior
+            // was removed before the new scale was used in the following
+            // pan calculation.
+            // See https://github.com/timmywil/panzoom/issues/512
+            // and https://github.com/timmywil/panzoom/issues/606
+            if (!hasMultiple || options.pinchAndPan) {
+                pan(origX + (current.clientX - startClientX) / toScale, origY + (current.clientY - startClientY) / toScale, {
+                    animate: false
+                }, event);
+            }
+        }
+        function handleUp(event) {
+            // Don't call panzoomend when panning with 2 touches
+            // until both touches end
+            if (pointers.length === 1) {
+                trigger('panzoomend', { x: x, y: y, scale: scale, isSVG: isSVG, originalEvent: event }, options);
+            }
+            // Note: don't remove all pointers
+            // Can restart without having to reinitiate all of them
+            // Remove the pointer regardless of the isPanning state
+            removePointer(pointers, event);
+            if (!isPanning) {
+                return;
+            }
+            isPanning = false;
+            origX = origY = startClientX = startClientY = undefined;
+        }
+        var bound = false;
+        function bind() {
+            if (bound) {
+                return;
+            }
+            bound = true;
+            onPointer('down', options.canvas ? parent : elem, handleDown);
+            onPointer('move', document, handleMove, { passive: true });
+            onPointer('up', document, handleUp, { passive: true });
+        }
+        function destroy() {
+            bound = false;
+            destroyPointer('down', options.canvas ? parent : elem, handleDown);
+            destroyPointer('move', document, handleMove);
+            destroyPointer('up', document, handleUp);
+        }
+        if (!options.noBind) {
+            bind();
+        }
+        return {
+            bind: bind,
+            destroy: destroy,
+            eventNames: events,
+            getPan: function () { return ({ x: x, y: y }); },
+            getScale: function () { return scale; },
+            getOptions: function () { return shallowClone(options); },
+            handleDown: handleDown,
+            handleMove: handleMove,
+            handleUp: handleUp,
+            pan: pan,
+            reset: reset,
+            resetStyle: resetStyle,
+            setOptions: setOptions,
+            setStyle: function (name, value) { return setStyle(elem, name, value); },
+            zoom: zoom,
+            zoomIn: zoomIn,
+            zoomOut: zoomOut,
+            zoomToPoint: zoomToPoint,
+            zoomWithWheel: zoomWithWheel
+        };
+    }
+    Panzoom.defaultOptions = defaultOptions;
+
+    return Panzoom;
+
+}));
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -2168,10 +2969,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var swiper_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! swiper/css */ "./node_modules/swiper/swiper.min.css");
 /* harmony import */ var select2_dist_js_select2_min__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! select2/dist/js/select2.min */ "./node_modules/select2/dist/js/select2.min.js");
 /* harmony import */ var select2_dist_js_select2_min__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(select2_dist_js_select2_min__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _panzoom_panzoom_dist_panzoom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @panzoom/panzoom/dist/panzoom */ "./node_modules/@panzoom/panzoom/dist/panzoom.js");
+/* harmony import */ var _panzoom_panzoom_dist_panzoom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_panzoom_panzoom_dist_panzoom__WEBPACK_IMPORTED_MODULE_3__);
 //import './bootstrap';
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.$ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 
 
 
@@ -2439,15 +3243,34 @@ if (searchInput) {
       });
     }, 1500);
   });
-} // SEARCH GIRL ON METRO STATIONS
+} // METRO MAP ZOOM
 
+
+var metroMap = document.getElementById('map');
+var buttonZoomIn = document.getElementById('zoomIn');
+var buttonZoomOut = document.getElementById('zoomOut');
+var panzoom = _panzoom_panzoom_dist_panzoom__WEBPACK_IMPORTED_MODULE_3___default()(metroMap, {
+  maxScale: 5,
+  minScale: 1
+});
+panzoom.zoom(1, {
+  animate: true
+});
+panzoom.pan(100, 100);
+buttonZoomIn.addEventListener('click', panzoom.zoomIn);
+buttonZoomOut.addEventListener('click', panzoom.zoomOut);
+metroMap.addEventListener('wheel', function (event) {
+  if (!event.shiftKey) return;
+  panzoom.zoomWithWheel(event);
+}); // SEARCH GIRL ON METRO STATIONS
 
 var stations = document.getElementsByClassName('label');
+var modal = document.querySelector('.modal[data-modal="metrosearch"]');
+var overlay = document.querySelector('.overlay');
 
 if (stations) {
   var _loop = function _loop(i) {
     stations[i].addEventListener('click', function () {
-      console.log(stations[i].textContent);
       axios({
         method: 'POST',
         url: '/search/metro',
@@ -2455,15 +3278,21 @@ if (stations) {
           station: stations[i].textContent
         }
       }).then(function (response) {
-        if (response.data !== '') {
-          window.location.href = '/search/metro/' + response.data;
+        if (response.data.slug !== '') {
+          modal.querySelector('.modal__title').innerHTML = response.data.name;
+          modal.querySelector('.modal__content').innerHTML = '' + '<p style="padding: 0 0 1rem">Найдено девушек: ' + response.data.count + '</p>' + '<a href="/search/metro/devushki-na-stancii-metro-' + response.data.slug + '" class="button">Показать</a>';
+          modal.classList.add('active');
+          overlay.classList.add('active');
+        } else {
+          modal.querySelector('.modal__title').innerHTML = 'Дувушки не найдены';
+          modal.querySelector('.modal__content').innerHTML = '' + '<p style="padding: 0 0 1rem">Девушки не найдены! Попробуйте выбрать другую станцию метро.</p>';
+          modal.classList.add('active');
+          overlay.classList.add('active');
         }
 
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
-        document.querySelector('.modal[data-modal="metrosearch"]').classList.add('active');
-        document.querySelector('.overlay').classList.add('active');
       });
     });
   };
@@ -2523,7 +3352,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/**\n * Swiper 8.2.4\n * Most modern mobile touch slider and framework with hardware accelerated transitions\n * https://swiperjs.com\n *\n * Copyright 2014-2022 Vladimir Kharlampidi\n *\n * Released under the MIT License\n *\n * Released on: June 13, 2022\n */\n\n@font-face{font-family:swiper-icons;src:url('data:application/font-woff;charset=utf-8;base64, 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');font-weight:400;font-style:normal}:root{--swiper-theme-color:#007aff}.swiper{margin-left:auto;margin-right:auto;position:relative;overflow:hidden;list-style:none;padding:0;z-index:1}.swiper-vertical>.swiper-wrapper{flex-direction:column}.swiper-wrapper{position:relative;width:100%;height:100%;z-index:1;display:flex;transition-property:transform;box-sizing:content-box}.swiper-android .swiper-slide,.swiper-wrapper{transform:translate3d(0px,0,0)}.swiper-pointer-events{touch-action:pan-y}.swiper-pointer-events.swiper-vertical{touch-action:pan-x}.swiper-slide{flex-shrink:0;width:100%;height:100%;position:relative;transition-property:transform}.swiper-slide-invisible-blank{visibility:hidden}.swiper-autoheight,.swiper-autoheight .swiper-slide{height:auto}.swiper-autoheight .swiper-wrapper{align-items:flex-start;transition-property:transform,height}.swiper-backface-hidden .swiper-slide{transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}.swiper-3d,.swiper-3d.swiper-css-mode .swiper-wrapper{perspective:1200px}.swiper-3d .swiper-cube-shadow,.swiper-3d .swiper-slide,.swiper-3d .swiper-slide-shadow,.swiper-3d .swiper-slide-shadow-bottom,.swiper-3d .swiper-slide-shadow-left,.swiper-3d .swiper-slide-shadow-right,.swiper-3d .swiper-slide-shadow-top,.swiper-3d .swiper-wrapper{transform-style:preserve-3d}.swiper-3d .swiper-slide-shadow,.swiper-3d .swiper-slide-shadow-bottom,.swiper-3d .swiper-slide-shadow-left,.swiper-3d .swiper-slide-shadow-right,.swiper-3d .swiper-slide-shadow-top{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:10}.swiper-3d .swiper-slide-shadow{background:rgba(0,0,0,.15)}.swiper-3d .swiper-slide-shadow-left{background-image:linear-gradient(to left,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-3d .swiper-slide-shadow-right{background-image:linear-gradient(to right,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-3d .swiper-slide-shadow-top{background-image:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-3d .swiper-slide-shadow-bottom{background-image:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-css-mode>.swiper-wrapper{overflow:auto;scrollbar-width:none;-ms-overflow-style:none}.swiper-css-mode>.swiper-wrapper::-webkit-scrollbar{display:none}.swiper-css-mode>.swiper-wrapper>.swiper-slide{scroll-snap-align:start start}.swiper-horizontal.swiper-css-mode>.swiper-wrapper{scroll-snap-type:x mandatory}.swiper-vertical.swiper-css-mode>.swiper-wrapper{scroll-snap-type:y mandatory}.swiper-centered>.swiper-wrapper::before{content:'';flex-shrink:0;order:9999}.swiper-centered.swiper-horizontal>.swiper-wrapper>.swiper-slide:first-child{-webkit-margin-start:var(--swiper-centered-offset-before);margin-inline-start:var(--swiper-centered-offset-before)}.swiper-centered.swiper-horizontal>.swiper-wrapper::before{height:100%;min-height:1px;width:var(--swiper-centered-offset-after)}.swiper-centered.swiper-vertical>.swiper-wrapper>.swiper-slide:first-child{-webkit-margin-before:var(--swiper-centered-offset-before);margin-block-start:var(--swiper-centered-offset-before)}.swiper-centered.swiper-vertical>.swiper-wrapper::before{width:100%;min-width:1px;height:var(--swiper-centered-offset-after)}.swiper-centered>.swiper-wrapper>.swiper-slide{scroll-snap-align:center center}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "/**\n * Swiper 8.2.6\n * Most modern mobile touch slider and framework with hardware accelerated transitions\n * https://swiperjs.com\n *\n * Copyright 2014-2022 Vladimir Kharlampidi\n *\n * Released under the MIT License\n *\n * Released on: June 29, 2022\n */\n\n@font-face{font-family:swiper-icons;src:url('data:application/font-woff;charset=utf-8;base64, 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');font-weight:400;font-style:normal}:root{--swiper-theme-color:#007aff}.swiper{margin-left:auto;margin-right:auto;position:relative;overflow:hidden;list-style:none;padding:0;z-index:1}.swiper-vertical>.swiper-wrapper{flex-direction:column}.swiper-wrapper{position:relative;width:100%;height:100%;z-index:1;display:flex;transition-property:transform;box-sizing:content-box}.swiper-android .swiper-slide,.swiper-wrapper{transform:translate3d(0px,0,0)}.swiper-pointer-events{touch-action:pan-y}.swiper-pointer-events.swiper-vertical{touch-action:pan-x}.swiper-slide{flex-shrink:0;width:100%;height:100%;position:relative;transition-property:transform}.swiper-slide-invisible-blank{visibility:hidden}.swiper-autoheight,.swiper-autoheight .swiper-slide{height:auto}.swiper-autoheight .swiper-wrapper{align-items:flex-start;transition-property:transform,height}.swiper-backface-hidden .swiper-slide{transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}.swiper-3d,.swiper-3d.swiper-css-mode .swiper-wrapper{perspective:1200px}.swiper-3d .swiper-cube-shadow,.swiper-3d .swiper-slide,.swiper-3d .swiper-slide-shadow,.swiper-3d .swiper-slide-shadow-bottom,.swiper-3d .swiper-slide-shadow-left,.swiper-3d .swiper-slide-shadow-right,.swiper-3d .swiper-slide-shadow-top,.swiper-3d .swiper-wrapper{transform-style:preserve-3d}.swiper-3d .swiper-slide-shadow,.swiper-3d .swiper-slide-shadow-bottom,.swiper-3d .swiper-slide-shadow-left,.swiper-3d .swiper-slide-shadow-right,.swiper-3d .swiper-slide-shadow-top{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:10}.swiper-3d .swiper-slide-shadow{background:rgba(0,0,0,.15)}.swiper-3d .swiper-slide-shadow-left{background-image:linear-gradient(to left,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-3d .swiper-slide-shadow-right{background-image:linear-gradient(to right,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-3d .swiper-slide-shadow-top{background-image:linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-3d .swiper-slide-shadow-bottom{background-image:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(0,0,0,0))}.swiper-css-mode>.swiper-wrapper{overflow:auto;scrollbar-width:none;-ms-overflow-style:none}.swiper-css-mode>.swiper-wrapper::-webkit-scrollbar{display:none}.swiper-css-mode>.swiper-wrapper>.swiper-slide{scroll-snap-align:start start}.swiper-horizontal.swiper-css-mode>.swiper-wrapper{-ms-scroll-snap-type:x mandatory;scroll-snap-type:x mandatory}.swiper-vertical.swiper-css-mode>.swiper-wrapper{-ms-scroll-snap-type:y mandatory;scroll-snap-type:y mandatory}.swiper-centered>.swiper-wrapper::before{content:'';flex-shrink:0;order:9999}.swiper-centered.swiper-horizontal>.swiper-wrapper>.swiper-slide:first-child{-webkit-margin-start:var(--swiper-centered-offset-before);margin-inline-start:var(--swiper-centered-offset-before)}.swiper-centered.swiper-horizontal>.swiper-wrapper::before{height:100%;min-height:1px;width:var(--swiper-centered-offset-after)}.swiper-centered.swiper-vertical>.swiper-wrapper>.swiper-slide:first-child{-webkit-margin-before:var(--swiper-centered-offset-before);margin-block-start:var(--swiper-centered-offset-before)}.swiper-centered.swiper-vertical>.swiper-wrapper::before{width:100%;min-width:1px;height:var(--swiper-centered-offset-after)}.swiper-centered>.swiper-wrapper>.swiper-slide{scroll-snap-align:center center}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -16584,6 +17413,23 @@ class Swiper {
     return swiper;
   }
 
+  changeLanguageDirection(direction) {
+    const swiper = this;
+    if (swiper.rtl && direction === 'rtl' || !swiper.rtl && direction === 'ltr') return;
+    swiper.rtl = direction === 'rtl';
+    swiper.rtlTranslate = swiper.params.direction === 'horizontal' && swiper.rtl;
+
+    if (swiper.rtl) {
+      swiper.$el.addClass(`${swiper.params.containerModifierClass}rtl`);
+      swiper.el.dir = 'rtl';
+    } else {
+      swiper.$el.removeClass(`${swiper.params.containerModifierClass}rtl`);
+      swiper.el.dir = 'ltr';
+    }
+
+    swiper.update();
+  }
+
   mount(el) {
     const swiper = this;
     if (swiper.mounted) return true; // Find el
@@ -23998,12 +24844,14 @@ function Navigation(_ref) {
     e.preventDefault();
     if (swiper.isBeginning && !swiper.params.loop && !swiper.params.rewind) return;
     swiper.slidePrev();
+    emit('navigationPrev');
   }
 
   function onNextClick(e) {
     e.preventDefault();
     if (swiper.isEnd && !swiper.params.loop && !swiper.params.rewind) return;
     swiper.slideNext();
+    emit('navigationNext');
   }
 
   function init() {
@@ -24549,7 +25397,7 @@ function Pagination(_ref) {
       $el
     } = swiper.pagination;
 
-    if (swiper.params.pagination.el && swiper.params.pagination.hideOnClick && $el.length > 0 && !(0,_shared_dom_js__WEBPACK_IMPORTED_MODULE_0__["default"])(targetEl).hasClass(swiper.params.pagination.bulletClass)) {
+    if (swiper.params.pagination.el && swiper.params.pagination.hideOnClick && $el && $el.length > 0 && !(0,_shared_dom_js__WEBPACK_IMPORTED_MODULE_0__["default"])(targetEl).hasClass(swiper.params.pagination.bulletClass)) {
       if (swiper.navigation && (swiper.navigation.nextEl && targetEl === swiper.navigation.nextEl || swiper.navigation.prevEl && targetEl === swiper.navigation.prevEl)) return;
       const isHidden = $el.hasClass(swiper.params.pagination.hiddenClass);
 
@@ -25258,7 +26106,32 @@ function Thumb(_ref) {
   function update(initial) {
     const thumbsSwiper = swiper.thumbs.swiper;
     if (!thumbsSwiper || thumbsSwiper.destroyed) return;
-    const slidesPerView = thumbsSwiper.params.slidesPerView === 'auto' ? thumbsSwiper.slidesPerViewDynamic() : thumbsSwiper.params.slidesPerView;
+    const slidesPerView = thumbsSwiper.params.slidesPerView === 'auto' ? thumbsSwiper.slidesPerViewDynamic() : thumbsSwiper.params.slidesPerView; // Activate thumbs
+
+    let thumbsToActivate = 1;
+    const thumbActiveClass = swiper.params.thumbs.slideThumbActiveClass;
+
+    if (swiper.params.slidesPerView > 1 && !swiper.params.centeredSlides) {
+      thumbsToActivate = swiper.params.slidesPerView;
+    }
+
+    if (!swiper.params.thumbs.multipleActiveThumbs) {
+      thumbsToActivate = 1;
+    }
+
+    thumbsToActivate = Math.floor(thumbsToActivate);
+    thumbsSwiper.slides.removeClass(thumbActiveClass);
+
+    if (thumbsSwiper.params.loop || thumbsSwiper.params.virtual && thumbsSwiper.params.virtual.enabled) {
+      for (let i = 0; i < thumbsToActivate; i += 1) {
+        thumbsSwiper.$wrapperEl.children(`[data-swiper-slide-index="${swiper.realIndex + i}"]`).addClass(thumbActiveClass);
+      }
+    } else {
+      for (let i = 0; i < thumbsToActivate; i += 1) {
+        thumbsSwiper.slides.eq(swiper.realIndex + i).addClass(thumbActiveClass);
+      }
+    }
+
     const autoScrollOffset = swiper.params.thumbs.autoScrollOffset;
     const useOffset = autoScrollOffset && !thumbsSwiper.params.loop;
 
@@ -25312,31 +26185,6 @@ function Thumb(_ref) {
         }
 
         thumbsSwiper.slideTo(newThumbsIndex, initial ? 0 : undefined);
-      }
-    } // Activate thumbs
-
-
-    let thumbsToActivate = 1;
-    const thumbActiveClass = swiper.params.thumbs.slideThumbActiveClass;
-
-    if (swiper.params.slidesPerView > 1 && !swiper.params.centeredSlides) {
-      thumbsToActivate = swiper.params.slidesPerView;
-    }
-
-    if (!swiper.params.thumbs.multipleActiveThumbs) {
-      thumbsToActivate = 1;
-    }
-
-    thumbsToActivate = Math.floor(thumbsToActivate);
-    thumbsSwiper.slides.removeClass(thumbActiveClass);
-
-    if (thumbsSwiper.params.loop || thumbsSwiper.params.virtual && thumbsSwiper.params.virtual.enabled) {
-      for (let i = 0; i < thumbsToActivate; i += 1) {
-        thumbsSwiper.$wrapperEl.children(`[data-swiper-slide-index="${swiper.realIndex + i}"]`).addClass(thumbActiveClass);
-      }
-    } else {
-      for (let i = 0; i < thumbsToActivate; i += 1) {
-        thumbsSwiper.slides.eq(swiper.realIndex + i).addClass(thumbActiveClass);
       }
     }
   }
@@ -27082,7 +27930,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_effect_creative_effect_creative_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./modules/effect-creative/effect-creative.js */ "./node_modules/swiper/modules/effect-creative/effect-creative.js");
 /* harmony import */ var _modules_effect_cards_effect_cards_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./modules/effect-cards/effect-cards.js */ "./node_modules/swiper/modules/effect-cards/effect-cards.js");
 /**
- * Swiper 8.2.4
+ * Swiper 8.2.6
  * Most modern mobile touch slider and framework with hardware accelerated transitions
  * https://swiperjs.com
  *
@@ -27090,7 +27938,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * Released under the MIT License
  *
- * Released on: June 13, 2022
+ * Released on: June 29, 2022
  */
 
 

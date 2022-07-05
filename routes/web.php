@@ -43,19 +43,19 @@ Route::get( '/{section}/id{id}', [ CatalogController::class, 'showProfileCatalog
 Route::post( '/search',                               [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
 Route::get( '/search/metro',                          [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
 Route::post( '/search/metro',                         [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
-Route::get( '/search/metro/{id?}',                    [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
+Route::get( '/search/metro/devushki-na-stancii-metro-{slug?}',                    [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
 
 
 // ARTICLES
 Route::get('articles', [PostController::class, 'post.index'])->name('post.index');
 Route::get('articles/{slug}', [PostController::class, 'post.show'])->name('post.show');
 
-// PAGES
-Route::get('/{slug}', [PageController::class, 'showPage'])->name('page');
-
-
 
 // REGENERATE PROFILE URL
 Route::get('/regenerate', [MainController::class, 'regenerateURL'])->name('regenerate');
+Route::get('/regMetro', [MainController::class, 'regMetroURL'])->name('regMetro');
 
+
+// PAGES
+Route::get('/{slug}', [PageController::class, 'showPage'])->name('page');
 require __DIR__.'/auth.php';

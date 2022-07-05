@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Station extends Model {
     use HasFactory;
 
+    public $timestamps = false;
+
     // RELATIONS
     public function profiles() {
         return $this->belongsToMany( Profile::class, 'profile_station' );
