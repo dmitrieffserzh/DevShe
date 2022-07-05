@@ -13,15 +13,15 @@ class CatalogController extends Controller {
 
     function showProfileCatalog( $section, $slug ) {
 
-        $profile = Profile::where( 'active', 1 )->findOrFail( $slug );
+        $profile = Profile::where( 'active', 1 )->where('slug', $slug)->first();
 
-        if ( $profile->section != array_search( $section, Helpers::getGirlSectionUrl() ) ) {
+        if ( $profile['section'] != array_search( $section, Helpers::getGirlSectionUrl() ) ) {
             abort( 404 );
         }
 
-        $related = Profile::where( 'active', 1 )->where( 'id', '!=', $profile->id )->where( 'section', $profile->section )->limit( 10 )->get();
+        $related = Profile::where( 'active', 1 )->where( 'id', '!=', $profile['id'] )->where( 'section', $profile['section'] )->limit( 10 )->get();
 
-        $this->profile_id = $profile->id;
+        $this->profile_id = $profile['id'];
 
         $services = DB::table( 'services' )
                       ->join( 'services_field', 'services.id', '=', 'services_field.service_id' )

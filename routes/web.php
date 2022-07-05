@@ -22,6 +22,12 @@ use App\Http\Controllers\PageController;
 
 Route::get( '/', [ MainController::class, 'index' ] )->name( 'main' );
 
+// SEARCH
+Route::post( '/search',                                         [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
+Route::get( '/search/metro',                                    [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
+Route::post( '/search/metro',                                   [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
+Route::get( '/search/metro/devushki-na-stancii-metro-{slug?}',  [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
+
 
 // PROFILE
 Route::get( 'profile',          [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
@@ -39,21 +45,14 @@ Route::match(['get', 'post'], '/masseuses',     [ CatalogController::class, 'sho
 Route::get( '/{section}/{slug}', [ CatalogController::class, 'showProfileCatalog' ] )->name( 'catalog.profile' );
 
 
-// AJAX SEARCH
-Route::post( '/search',                               [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
-Route::get( '/search/metro',                          [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
-Route::post( '/search/metro',                         [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
-Route::get( '/search/metro/devushki-na-stancii-metro-{slug?}',                    [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
-
-
 // ARTICLES
 Route::get('articles', [PostController::class, 'post.index'])->name('post.index');
 Route::get('articles/{slug}', [PostController::class, 'post.show'])->name('post.show');
 
 
 // REGENERATE PROFILE URL
-Route::get('/regProfile', [MainController::class, 'regenerateURL'])->name('regProfile');
-Route::get('/regMetro', [MainController::class, 'regMetroURL'])->name('regMetro');
+//Route::get('/regProfile', [MainController::class, 'regenerateURL'])->name('regProfile');
+//Route::get('/regMetro', [MainController::class, 'regMetroURL'])->name('regMetro');
 
 
 // PAGES
