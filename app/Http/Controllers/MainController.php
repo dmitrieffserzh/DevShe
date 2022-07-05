@@ -41,27 +41,29 @@ class MainController extends Controller
     }
 
 
-    public function regenerateURL()
-    {
-        $allProfiles = Profile::all();
-
-        for ($i = 0; count($allProfiles) > $i; $i++) {
-            $allProfiles[$i]->slug = Str::slug($allProfiles[$i]->name . '-' . $allProfiles[$i]->id);
-            $allProfiles[$i]->update();
-        }
-
-        return view('pages.page', []);
-    }
-
-    public function regMetroURL()
-    {
-        $allStations = Station::all();
-
-        for ($i = 0; count($allStations) > $i; $i++) {
-            $allStations[$i]->slug = Str::slug($allStations[$i]->name);
-            $allStations[$i]->update();
-        }
-
-        //return view('pages.page', []);
-    }
+//    public function regenerateURL()
+//    {
+//        $allProfiles = Profile::all();
+//
+//        for ($i = 0; count($allProfiles) > $i; $i++) {
+//            //$allProfiles[$i]->slug = Str::slug($allProfiles[$i]->name . '-' . $allProfiles[$i]->id);
+//            $allProfiles[$i]->created_at = date('Y-m-d H:i:s');
+//            $allProfiles[$i]->updated_at = date('Y-m-d H:i:s');
+//            $allProfiles[$i]->update();
+//        }
+//
+//       // return view('pages.page', []);
+//    }
+//
+//    public function regMetroURL()
+//    {
+//        $allStations = Station::all();
+//
+//        for ($i = 0; count($allStations) > $i; $i++) {
+//            $allStations[$i]->slug = Str::slug($allStations[$i]->name);
+//            $allStations[$i]->update();
+//        }
+//
+//        //return view('pages.page', []);
+//    }
 }
