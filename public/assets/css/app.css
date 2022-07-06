@@ -1001,7 +1001,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #F8F8F8;
+  background: #f3f3f3;
   border-radius: 10px;
   padding: 0.8rem 1rem;
 }
@@ -1335,6 +1335,27 @@ body {
   color: #BE0C0C;
 }
 
+@media screen and (max-width: 767px) {
+  .footer-links {
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: flex-start;
+  }
+  .copyright__container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .copyright-text {
+    order: 2;
+    width: 100%;
+  }
+  .copyright-links {
+    order: 1;
+  }
+  .copyright-links a {
+    display: block;
+  }
+}
 /*  FORM LOGIN  ===================================================================================================== */
 .form-login {
   margin: 1rem 2rem;
@@ -2193,4 +2214,10 @@ body {
 }
 .article-item__read-more:hover {
   color: #000;
+}
+
+@media screen and (max-width: 767px) {
+  .articles__item {
+    width: calc(100% - 1rem);
+  }
 }
