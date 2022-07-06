@@ -1814,6 +1814,11 @@ body {
   border-radius: 1rem;
   overflow: hidden;
 }
+.profile .images__item {
+  background: #f8f8f8;
+  display: flex;
+  align-items: center;
+}
 .profile .images__item img {
   width: 100%;
 }
@@ -1824,6 +1829,10 @@ body {
 }
 .profile .thumbs__item {
   border-radius: 0.5rem;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   overflow: hidden;
 }
 .profile .thumbs__item img {

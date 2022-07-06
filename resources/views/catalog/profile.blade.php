@@ -28,8 +28,7 @@
                 <div class="thumbs swiper">
                     <div class="swiper-wrapper">
                         @foreach($profile->attachment as $image)
-                            <div class="thumbs__item swiper-slide">
-                                <img src="{{$image->url}}" alt="">
+                            <div class="thumbs__item swiper-slide" style="background-image: url({{$image->url}})">
                             </div>
                         @endforeach
                     </div>

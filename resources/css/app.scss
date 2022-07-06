@@ -1139,7 +1139,9 @@ body {
     overflow: hidden;
 
     &__item {
-
+      background: #f8f8f8;
+      display: flex;
+      align-items: center;
       & img {
         width: 100%;
       }
@@ -1153,6 +1155,10 @@ body {
 
     &__item {
       border-radius: .5rem;
+      height: 100px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
       overflow: hidden;
 
       & img {
