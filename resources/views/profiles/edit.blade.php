@@ -10,6 +10,10 @@
             @include('profiles.aside')
         </div>
         <div class="profile-edit__column">
+            <div class="image-upload">
+
+            </div>
+
             {{--            <div class="profile-edit__images">--}}
             {{--                <div class="images swiper">--}}
             {{--                    <div class="swiper-wrapper">--}}
@@ -35,13 +39,14 @@
             <div class="description">
                 <textarea name="profile[description]" id=""
                           placeholder="Коротко о себе">{{ $profile->description }}</textarea>
+                <span class="label">Напишите немного о себе</span>
             </div>
         </div>
         <div class="profile-edit__column">
             <div class="information">
                 <div class="profile-edit__row">
                     <div class="block__input">
-                        <input type="text" value="{{ $profile->name ?? '' }}" placeholder="Имя">
+                        <input type="text" value="{{ $profile->name ?? '' }}">
                         <span class="label">Имя</span>
                     </div>
                     <div class="block__input">
@@ -53,16 +58,51 @@
                         </select>
                         <span class="label">Возраст</span>
                     </div>
-
-                    <div class="block__input">
-                        <input type="text" value="{{ $profile->height }}" placeholder="Рост">
-                        <span class="label">Рост</span>
-                    </div>
-                    <div class="block__input">
-                        <input type="text" value="{{ $profile->weight }}" placeholder="Вес">
-                        <span class="label">Вес</span>
+                    <div class="block__group">
+                        <div class="block__input">
+                            <input type="text" value="{{ $profile->height }}">
+                            <span class="label">Рост</span>
+                        </div>
+                        <div class="block__input">
+                            <input type="text" value="{{ $profile->weight }}">
+                            <span class="label">Вес</span>
+                        </div>
                     </div>
                 </div>
+
+                <div class="profile-edit__row">
+                    <div class="block__input">
+                        <select name="profile[haircolor]" id="" class="js-select">
+                            @foreach(Helpers::getGirlHaircolor() as $key=>$value)
+                                <option value="{{ $key }}"
+                                        @if($key == $profile->haircolor) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Типаж</span>
+                    </div>
+                    <div class="block__input">
+                        <select name="profile[breast_size]" id="" class="js-select">
+                            @foreach(Helpers::getGirlBreast() as $key=>$value)
+                                <option value="{{ $key }}"
+                                        @if($key == $profile->breast_size) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Грудь</span>
+                    </div>
+                    <div class="block__group block__group--column ">
+                        <div class="input_radio">
+                            <input id="breast-natural" type="radio" name="profile[breast_type]" value="0"
+                                   @if($profile->breast_type == 0) checked @endif>
+                            <label for="breast-natural">Натуральная</label>
+                        </div>
+                        <div class="input_radio">
+                            <input id="breast-silicon" type="radio" name="profile[breast_type]" value="1"
+                                   @if($profile->breast_type == 1) checked @endif>
+                            <label for="breast-silicon">Силикон</label>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="profile-edit__row">
                     <div class="block__input">
@@ -75,28 +115,6 @@
                         <span class="label">Внешность</span>
                     </div>
                     <div class="block__input">
-                        <select name="profile[breast_size]" id="" class="js-select">
-                            @foreach(Helpers::getGirlBreast() as $key=>$value)
-                                <option value="{{ $key }}"
-                                        @if($key == $profile->breast_size) selected @endif>{{ $value }}</option>
-                            @endforeach
-                        </select>
-                        <span class="label">Грудь</span>
-                    </div>
-                    <div class="block__input">
-                        <select name="profile[haircolor]" id="" class="js-select">
-                            @foreach(Helpers::getGirlHaircolor() as $key=>$value)
-                                <option value="{{ $key }}"
-                                        @if($key == $profile->haircolor) selected @endif>{{ $value }}</option>
-                            @endforeach
-                        </select>
-                        <span class="label">Типаж</span>
-                    </div>
-                </div>
-
-
-                <div class="profile-edit__row">
-                    <div class="block__input">
                         <select name="profile[haircut]" id="" class="js-select">
                             @foreach(Helpers::getGirlHaircut() as $key=>$value)
                                 <option value="{{ $key }}"
@@ -105,32 +123,61 @@
                         </select>
                         <span class="label">Интимная стрижка</span>
                     </div>
-
-                    <label for="breast-natural">
-                        Натуральная
-                        <input id="breast-natural" type="radio" name="profile[breast_type]" value="0"
-                               @if($profile->breast_type == 0) checked @endif>
-                    </label>
-                    <label for="breast-silicon">
-                        Силикон
-                        <input id="breast-silicon" type="radio" name="profile[breast_type]" value="1"
-                               @if($profile->breast_type == 1) checked @endif>
-                    </label>
+                    <div class="block__input">
+                        <input type="text" name="profile[phone]" value="{{ $profile->city ?? '' }}">
+                        <span class="label">Город</span>
+                    </div>
                 </div>
+                {{--                {{ dd($profile->stations) }}--}}
                 <div class="profile-edit__row">
                     <div class="block__input">
-                        <input type="text" name="profile[phone]" value="{{ $profile->phone ?? '' }}"
-                               placeholder="Телефон">
+                        <select name="profile[station]" id="" class="js-select" multiple>
+                            <option value="">Не выбрано</option>
+                            @foreach(\App\Models\Station::all() as $item)
+                                <option value="{{ $item['id'] }}"
+                                        @for($i = 0; count($profile->stations) > $i; $i++ )
+                                        @if($item['id'] == $profile->stations[$i]['id']) selected @endif
+                                    @endfor
+                                >{{ $item['name'] }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Станция метро</span>
+                    </div>
+                    <div class="block__input">
+                        <select name="profile[section]" id="" class="js-select">
+                            @foreach(Helpers::getGirlSection() as $key=>$value)
+                                <option value="{{ $key }}"
+                                        @if($key == $profile->section) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Раздел</span>
+                    </div>
+                    <div class="block__input">
+                        <select name="profile[place]" id="" class="js-select" multiple>
+                            <option value="">Не выбрано</option>
+                            @foreach(\App\Models\Place::all() as $item)
+                                <option value="{{ $item['id'] }}"
+                                        @for($i = 0; count($profile->places) > $i; $i++ )
+                                        @if($item['id'] == $profile->places[$i]['id']) selected @endif
+                                    @endfor
+                                >{{ $item['name'] }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Место встречи</span>
+                    </div>
+                </div>
+
+                <div class="profile-edit__row">
+                    <div class="block__input">
+                        <input type="text" name="profile[phone]" value="{{ $profile->phone ?? '' }}">
                         <span class="label">Телефон</span>
                     </div>
                     <div class="block__input">
-                        <input type="text" name="profile[whatsapp]" value="{{ $profile->whatsapp ?? '' }}"
-                               placeholder="WhatsApp">
+                        <input type="text" name="profile[whatsapp]" value="{{ $profile->whatsapp ?? '' }}">
                         <span class="label">WhatsApp</span>
                     </div>
                     <div class="block__input">
-                        <input type="text" name="profile[telegram]" value="{{ $profile->telegram ?? ''}}"
-                               placeholder="Telegram">
+                        <input type="text" name="profile[telegram]" value="{{ $profile->telegram ?? ''}}">
                         <span class="label">Telegram</span>
                     </div>
                 </div>

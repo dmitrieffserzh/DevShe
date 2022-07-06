@@ -26,7 +26,7 @@
             </div>
         </div>-->
     </div>
-    <div class="header__container">
+    <!--<div class="header__container">
         <div class="header-main">
             <a href="{{ route('main') }}" class="header-main__logo">
                 <img src="/images/logo_dark.png" alt="">
@@ -53,7 +53,7 @@
                 @endif
             </div>
         </div>
-    </div>
+    </div>-->
 </header>
 <main class="main">
     <div class="main__container">
