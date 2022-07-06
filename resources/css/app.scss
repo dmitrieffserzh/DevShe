@@ -173,6 +173,8 @@ body {
 
         &__buttons {
             & .button {
+                display: flex;
+                align-items: center;
                 border: 1px Solid #BE0C0C;
                 border-radius: 6px;
                 background: #BE0C0C;
@@ -182,15 +184,15 @@ body {
                 color: #fff;
                 text-decoration: none;
 
-                & span {
+                & span.icon {
                     display: inline-block;
-                    padding: 0 0 0 25px;
+                    width: 20px;
                     height: 20px;
-                    line-height: 1.25rem;
+                    line-height: 0;
                 }
 
                 &--add {
-                    & span {
+                    & span.icon {
                         background-image: url('/images/user_add_icon.png');
                         background-repeat: no-repeat;
                         background-position: left center;
@@ -203,16 +205,26 @@ body {
                     background: transparent;
                     color: #229ED9;
 
-                    & span {
+                    & span.icon {
                         background-image: url('/images/user_icon.png');
                         background-repeat: no-repeat;
                         background-position: left center;
                         background-size: 20px;
                     }
                 }
+                & span.text {
+                    display: inline-block;
+                    padding: 0 .5rem;
+                    height: 20px;
+                    line-height: 1.25rem;
+                }
 
-                &:first-child {
-                    margin: 0 .5rem 0 0;
+
+                //&:first-child {
+                //    margin: 0 .5rem 0 0;
+                //}
+                &:last-child {
+                    margin: 0 0 0 .5rem;
                 }
             }
         }
@@ -280,6 +292,7 @@ body {
             background-image: url("/images/search_icon.png");
             background-repeat: no-repeat;
             background-position: center;
+            background-size: 20px;
         }
 
         &__link {
@@ -311,10 +324,13 @@ body {
 
 @media screen and (max-width: 767px) {
     .header {
-        &__buttons {
-            & .button {
-                & span {
-                    display: none;
+        &-main {
+            &__buttons {
+                & .button {
+                    padding: 1rem;
+                    & span.text {
+                        display: none;
+                    }
                 }
             }
         }
@@ -363,6 +379,7 @@ body {
 
 .aside {
     margin: 0 0 1rem;
+
     &-menu {
         background: #F8F8F8;
         border-radius: 1rem;
@@ -468,10 +485,17 @@ body {
 
 @media screen and(max-width: 767px) {
     .main {
+        &__heading {
+            flex-direction: column;
+        }
+
         & .aside {
             max-width: 100%;
         }
     }
+    //.section {
+    //    margin: 0 -1rem;
+    //}
 }
 
 /*  FOOTER  ========================================================================================================= */
@@ -1486,6 +1510,66 @@ body {
             padding: 0 1rem;
             width: 100%;
         }
+
+        & .rates {
+            &__title {
+                & h2 {
+                    font-size: 16px;
+                }
+            }
+
+            &__list {
+
+                & .rate {
+                    margin: 0 0 1rem;
+                    padding: 1rem 1rem 1rem 5.5rem;
+                    display: flex;
+                    flex-direction: column;
+
+                    &--day {
+                        background-position: 1rem 1rem;
+                    }
+
+                    &--night {
+                        background-position: 1rem 1rem;
+                    }
+
+                    &__item {
+                        &:first-child {
+                            margin: 0;
+                        }
+                    }
+
+                    &__block {
+                        justify-content: space-between;
+                    }
+                    &__value {
+                        min-width: 110px;
+                    }
+                }
+            }
+        }
+        & .contacts {
+            &__phone {
+                font-size: 19px;
+            }
+            &__social {
+                & span {
+                    display: none;
+                }
+            }
+        }
+        & .services {
+            &__title {
+                font-size: 18px;
+            }
+            & .service {
+                padding: .5rem;
+                margin: 0 0 .5rem;
+                width: 100%;
+            }
+        }
+
     }
 }
 
@@ -1524,16 +1608,26 @@ body {
     }
 
     & .image-upload {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 1rem;
         background: #f8f8f8;
         width: 100%;
         height: 350px;
         margin: 0 0 1rem;
-        background-image: url("/images/close_icon.png");
+        background-image: url("/images/add-image_icon.png");
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: 50px;
+        background-size: 95px;
+
+        & p {
+            margin: 9rem 3rem 0;
+            text-align: center;
+            color: #666666;
+            font-size: 13px;
+            line-height: 16px;
+        }
     }
 
     & .thumbs {
@@ -1708,7 +1802,7 @@ body {
 
             &__input {
                 position: relative;
-                width: calc(100%);
+                width: 100%;
                 margin: 0 .5rem;
 
                 & span.label {
@@ -1849,6 +1943,7 @@ body {
         & .information {
             & .block__input {
                 margin: 0 .5rem 1rem;
+                width: auto;
             }
         }
 
@@ -1873,6 +1968,16 @@ body {
 
                     &--night {
                         background-position: 1rem 1rem;
+                    }
+
+                    &__item {
+                        &:first-child {
+                            margin: 0;
+                        }
+                    }
+
+                    &__block {
+                        justify-content: space-between;
                     }
                 }
             }

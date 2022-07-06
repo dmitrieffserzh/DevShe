@@ -14,7 +14,8 @@
             <div class="uploader">
                 <input id="file-input" type="file">
                 <label for="file-input" class="image-upload">
-
+                    <p>Загрузите несколько изображений
+                        или видео с рабочего стола</p>
                 </label>
             </div>
 

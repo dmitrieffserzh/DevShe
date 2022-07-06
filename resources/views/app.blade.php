@@ -46,10 +46,10 @@
                    data-modal="register"><span>Добавить анкету</span></a>
                 @endif
                 @if (Auth::check())
-                    <a href="{{ route('profile.index') }}" class="button button--login"><span>Личный кабинет</span></a>
+                    <a href="{{ route('profile.index') }}" class="button button--login"><span class="icon"></span><span class="text">Личный кабинет</span></a>
                 @else
                     <a href="" class="button button--login js-open-modal"
-                       data-modal="login"><span>Войти в кабинет</span></a>
+                       data-modal="login"><span class="icon"></span><span class="text">Войти в кабинет</span></a>
                 @endif
             </div>
         </div>

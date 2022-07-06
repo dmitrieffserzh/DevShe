@@ -18,7 +18,11 @@
                     <div class="swiper-wrapper">
                         @foreach($profile->attachment as $image)
                             <div class="images__item swiper-slide">
-                                <img src="{{$image->url}}" alt="">
+                                @if($image->extension == 'mp4')
+                                    <embed src="{{$image->url}}" autostart="false" height="auto" width="100%" />
+                                @else
+                                    <img src="{{$image->url}}" alt="">
+                                @endif
                             </div>
                         @endforeach
                     </div>

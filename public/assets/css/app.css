@@ -1051,6 +1051,8 @@ body {
   align-items: center;
 }
 .header-main__buttons .button {
+  display: flex;
+  align-items: center;
   border: 1px Solid #BE0C0C;
   border-radius: 6px;
   background: #BE0C0C;
@@ -1060,13 +1062,13 @@ body {
   color: #fff;
   text-decoration: none;
 }
-.header-main__buttons .button span {
+.header-main__buttons .button span.icon {
   display: inline-block;
-  padding: 0 0 0 25px;
+  width: 20px;
   height: 20px;
-  line-height: 1.25rem;
+  line-height: 0;
 }
-.header-main__buttons .button--add span {
+.header-main__buttons .button--add span.icon {
   background-image: url("/images/user_add_icon.png");
   background-repeat: no-repeat;
   background-position: left center;
@@ -1077,14 +1079,20 @@ body {
   background: transparent;
   color: #229ED9;
 }
-.header-main__buttons .button--login span {
+.header-main__buttons .button--login span.icon {
   background-image: url("/images/user_icon.png");
   background-repeat: no-repeat;
   background-position: left center;
   background-size: 20px;
 }
-.header-main__buttons .button:first-child {
-  margin: 0 0.5rem 0 0;
+.header-main__buttons .button span.text {
+  display: inline-block;
+  padding: 0 0.5rem;
+  height: 20px;
+  line-height: 1.25rem;
+}
+.header-main__buttons .button:last-child {
+  margin: 0 0 0 0.5rem;
 }
 .header-search {
   display: inline-block;
@@ -1141,6 +1149,7 @@ body {
   background-image: url("/images/search_icon.png");
   background-repeat: no-repeat;
   background-position: center;
+  background-size: 20px;
 }
 .header-search__link {
   display: flex;
@@ -1166,7 +1175,10 @@ body {
 }
 
 @media screen and (max-width: 767px) {
-  .header__buttons .button span {
+  .header-main__buttons .button {
+    padding: 1rem;
+  }
+  .header-main__buttons .button span.text {
     display: none;
   }
 }
@@ -1284,6 +1296,9 @@ body {
 }
 
 @media screen and (max-width: 767px) {
+  .main__heading {
+    flex-direction: column;
+  }
   .main .aside {
     max-width: 100%;
   }
@@ -2119,6 +2134,44 @@ body {
     padding: 0 1rem;
     width: 100%;
   }
+  .profile .rates__title h2 {
+    font-size: 16px;
+  }
+  .profile .rates__list .rate {
+    margin: 0 0 1rem;
+    padding: 1rem 1rem 1rem 5.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .profile .rates__list .rate--day {
+    background-position: 1rem 1rem;
+  }
+  .profile .rates__list .rate--night {
+    background-position: 1rem 1rem;
+  }
+  .profile .rates__list .rate__item:first-child {
+    margin: 0;
+  }
+  .profile .rates__list .rate__block {
+    justify-content: space-between;
+  }
+  .profile .rates__list .rate__value {
+    min-width: 110px;
+  }
+  .profile .contacts__phone {
+    font-size: 19px;
+  }
+  .profile .contacts__social span {
+    display: none;
+  }
+  .profile .services__title {
+    font-size: 18px;
+  }
+  .profile .services .service {
+    padding: 0.5rem;
+    margin: 0 0 0.5rem;
+    width: 100%;
+  }
 }
 /*  PROFILE EDIT ===================================================================================================== */
 .profile-edit {
@@ -2149,16 +2202,25 @@ body {
   display: none;
 }
 .profile-edit .image-upload {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 1rem;
   background: #f8f8f8;
   width: 100%;
   height: 350px;
   margin: 0 0 1rem;
-  background-image: url("/images/close_icon.png");
+  background-image: url("/images/add-image_icon.png");
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: 50px;
+  background-size: 95px;
+}
+.profile-edit .image-upload p {
+  margin: 9rem 3rem 0;
+  text-align: center;
+  color: #666666;
+  font-size: 13px;
+  line-height: 16px;
 }
 .profile-edit .thumbs {
   margin: 0 0 1rem;
@@ -2423,6 +2485,7 @@ body {
   }
   .profile-edit .information .block__input {
     margin: 0 0.5rem 1rem;
+    width: auto;
   }
   .profile-edit .rates__title h2 {
     font-size: 16px;
@@ -2438,6 +2501,12 @@ body {
   }
   .profile-edit .rates__list .rate--night {
     background-position: 1rem 1rem;
+  }
+  .profile-edit .rates__list .rate__item:first-child {
+    margin: 0;
+  }
+  .profile-edit .rates__list .rate__block {
+    justify-content: space-between;
   }
   .profile-edit .services .service {
     padding: 0.5rem;
