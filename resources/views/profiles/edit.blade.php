@@ -10,78 +10,101 @@
             @include('profiles.aside')
         </div>
         <div class="profile-edit__column">
-        <!--<div class="profile__images">
-                    <div class="images swiper">
-                        <div class="swiper-wrapper">
-                            @foreach($profile->attachment as $image)
-            <div class="images__item swiper-slide">
-                <img src="{{$image->url}}" alt="">
-                                </div>
-                            @endforeach
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-            <div class="thumbs swiper">
-                <div class="swiper-wrapper">
-@foreach($profile->attachment as $image)
-            <div class="thumbs__item swiper-slide">
-                <img src="{{$image->url}}" alt="">
-                                </div>
-                            @endforeach
-                </div>
-            </div>
-        </div>-->
-
+            {{--            <div class="profile-edit__images">--}}
+            {{--                <div class="images swiper">--}}
+            {{--                    <div class="swiper-wrapper">--}}
+            {{--                        @foreach($profile->attachment as $image)--}}
+            {{--                            <div class="images__item swiper-slide">--}}
+            {{--                                <img src="{{$image->url}}" alt="">--}}
+            {{--                            </div>--}}
+            {{--                        @endforeach--}}
+            {{--                    </div>--}}
+            {{--                    <div class="swiper-button-next"></div>--}}
+            {{--                    <div class="swiper-button-prev"></div>--}}
+            {{--                </div>--}}
+            {{--                <div class="thumbs swiper">--}}
+            {{--                    <div class="swiper-wrapper">--}}
+            {{--                        @foreach($profile->attachment as $image)--}}
+            {{--                            <div class="thumbs__item swiper-slide">--}}
+            {{--                                <img src="{{$image->url}}" alt="">--}}
+            {{--                            </div>--}}
+            {{--                        @endforeach--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
             <div class="description">
-                    <textarea name="profile[description]" id="" cols="30" rows="10"
-                              placeholder="Коротко о себе">{{ $profile->description }}</textarea>
+                <textarea name="profile[description]" id=""
+                          placeholder="Коротко о себе">{{ $profile->description }}</textarea>
             </div>
         </div>
         <div class="profile-edit__column">
             <div class="information">
                 <div class="profile-edit__row">
-                    <input type="text" value="{{ $profile->name }}">
-                    <select name="profile[age]" id="" class="js-select">
-                        @foreach(Helpers::getGirlAge() as $key=>$value)
-                            <option value="{{ $key }}" @if($key == $profile->age) selected @endif>{{ $value }}</option>
-                        @endforeach
-                    </select>
-                    <input type="text" value="{{ $profile->height }}">
-                    <input type="text" value="{{ $profile->weight }}">
+                    <div class="block__input">
+                        <input type="text" value="{{ $profile->name ?? '' }}" placeholder="Имя">
+                        <span class="label">Имя</span>
+                    </div>
+                    <div class="block__input">
+                        <select name="profile[age]" id="" class="js-select">
+                            @foreach(Helpers::getGirlAge() as $key=>$value)
+                                <option value="{{ $key }}"
+                                        @if($key == $profile->age) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Возраст</span>
+                    </div>
+
+                    <div class="block__input">
+                        <input type="text" value="{{ $profile->height }}" placeholder="Рост">
+                        <span class="label">Рост</span>
+                    </div>
+                    <div class="block__input">
+                        <input type="text" value="{{ $profile->weight }}" placeholder="Вес">
+                        <span class="label">Вес</span>
+                    </div>
                 </div>
 
                 <div class="profile-edit__row">
-                    <select name="profile[appearance]" id="" class="js-select">
-                        @foreach(Helpers::getGirlAppearance() as $key=>$value)
-                            <option value="{{ $key }}"
-                                    @if($key == $profile->appearance) selected @endif>{{ $value }}</option>
-                        @endforeach
-                    </select>
-
-                    <select name="profile[breast_size]" id="" class="js-select">
-                        @foreach(Helpers::getGirlBreast() as $key=>$value)
-                            <option value="{{ $key }}"
-                                    @if($key == $profile->breast_size) selected @endif>{{ $value }}</option>
-                        @endforeach
-                    </select>
-
-                    <select name="profile[haircolor]" id="" class="js-select">
-                        @foreach(Helpers::getGirlHaircolor() as $key=>$value)
-                            <option value="{{ $key }}"
-                                    @if($key == $profile->haircolor) selected @endif>{{ $value }}</option>
-                        @endforeach
-                    </select>
+                    <div class="block__input">
+                        <select name="profile[appearance]" id="" class="js-select">
+                            @foreach(Helpers::getGirlAppearance() as $key=>$value)
+                                <option value="{{ $key }}"
+                                        @if($key == $profile->appearance) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Внешность</span>
+                    </div>
+                    <div class="block__input">
+                        <select name="profile[breast_size]" id="" class="js-select">
+                            @foreach(Helpers::getGirlBreast() as $key=>$value)
+                                <option value="{{ $key }}"
+                                        @if($key == $profile->breast_size) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Грудь</span>
+                    </div>
+                    <div class="block__input">
+                        <select name="profile[haircolor]" id="" class="js-select">
+                            @foreach(Helpers::getGirlHaircolor() as $key=>$value)
+                                <option value="{{ $key }}"
+                                        @if($key == $profile->haircolor) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Типаж</span>
+                    </div>
                 </div>
 
 
                 <div class="profile-edit__row">
-                    <select name="profile[haircut]" id="" class="js-select">
-                        @foreach(Helpers::getGirlHaircut() as $key=>$value)
-                            <option value="{{ $key }}"
-                                    @if($key == $profile->haircut) selected @endif>{{ $value }}</option>
-                        @endforeach
-                    </select>
+                    <div class="block__input">
+                        <select name="profile[haircut]" id="" class="js-select">
+                            @foreach(Helpers::getGirlHaircut() as $key=>$value)
+                                <option value="{{ $key }}"
+                                        @if($key == $profile->haircut) selected @endif>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                        <span class="label">Интимная стрижка</span>
+                    </div>
 
                     <label for="breast-natural">
                         Натуральная
@@ -94,11 +117,23 @@
                                @if($profile->breast_type == 1) checked @endif>
                     </label>
                 </div>
-            </div>
-            <div class="contacts">
-                <input type="text" name="profile[phone]" value="{{ $profile->phone ?? '' }}">
-                <input type="text" name="profile[whatsapp]" value="{{ $profile->whatsapp ?? '' }}">
-                <input type="text" name="profile[telegram]" value="{{ $profile->telegram ?? ''}}">
+                <div class="profile-edit__row">
+                    <div class="block__input">
+                        <input type="text" name="profile[phone]" value="{{ $profile->phone ?? '' }}"
+                               placeholder="Телефон">
+                        <span class="label">Телефон</span>
+                    </div>
+                    <div class="block__input">
+                        <input type="text" name="profile[whatsapp]" value="{{ $profile->whatsapp ?? '' }}"
+                               placeholder="WhatsApp">
+                        <span class="label">WhatsApp</span>
+                    </div>
+                    <div class="block__input">
+                        <input type="text" name="profile[telegram]" value="{{ $profile->telegram ?? ''}}"
+                               placeholder="Telegram">
+                        <span class="label">Telegram</span>
+                    </div>
+                </div>
             </div>
 
             <div class="rates">

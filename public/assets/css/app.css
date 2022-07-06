@@ -262,6 +262,7 @@ table {
   display: block;
   height: 28px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -288,6 +289,7 @@ table {
   display: block;
   min-height: 32px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -345,6 +347,7 @@ table {
 .select2-results__option {
   padding: 6px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -902,6 +905,11 @@ table {
   opacity: 1;
 }
 
+:-ms-input-placeholder {
+  font-family: "Core Sans C 35" !important;
+  color: #D1D1D1;
+}
+
 ::placeholder {
   font-family: "Core Sans C 35" !important;
   color: #D1D1D1;
@@ -1143,7 +1151,7 @@ body {
 }
 .main .aside {
   width: 100%;
-  max-width: 300px;
+  max-width: 265px;
 }
 .main .content {
   flex: auto;
@@ -2086,16 +2094,20 @@ body {
 }
 .profile-edit__column {
   padding: 0 1rem;
-  width: calc(50% - 150px);
+  width: calc(55% - 133px);
 }
-.profile-edit__column:first-child {
-  width: 300px;
+.profile-edit__column:nth-child(1) {
+  width: 265px;
+}
+.profile-edit__column:nth-child(2) {
+  width: calc(45% - 133px);
 }
 .profile-edit__column:last-child {
   width: 100%;
 }
 .profile-edit__row {
   display: flex;
+  margin: 0 -0.5rem 1rem;
 }
 .profile-edit .images {
   margin: 0 0 1rem;
@@ -2206,7 +2218,7 @@ body {
   align-items: center;
 }
 .profile-edit .rates__list .rate__name {
-  min-width: 65px;
+  min-width: 73px;
   padding: 0.25rem 0 0.25rem 1rem;
   font-family: "Core Sans C 35";
   font-size: 11px;
@@ -2225,78 +2237,49 @@ body {
 }
 .profile-edit .rates__list .rate__value input {
   padding: 0.25rem;
-  width: 55px;
+  width: 85px;
   border: 1px Solid #f8f8f8;
   border-radius: 0.25rem;
   text-align: center;
 }
-.profile-edit .information__list {
-  columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
+.profile-edit .information .block__input {
+  position: relative;
+  width: 100%;
+  margin: 0 0.5rem;
 }
-.profile-edit .information__item {
-  padding: 0.25rem 0;
+.profile-edit .information .block__input span.label {
+  position: absolute;
+  padding: 0 0.25rem;
+  display: inline-block;
   font-family: "Core Sans C 35";
   font-size: 12px;
-  color: #666666;
-}
-.profile-edit .information__item span {
-  font-family: "Core Sans C 65";
-  color: #000;
-}
-.profile-edit .contacts {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.profile-edit .contacts__phone {
-  display: inline-block;
-  padding: 0.5rem 0.5rem 0.5rem 2rem;
-  font-family: "Core Sans C 75";
-  font-size: 27px;
-  color: #000;
-  background-image: url("/images/phone_blue_icon.png");
-  background-repeat: no-repeat;
-  background-size: 27px;
-  background-position: left center;
-  text-decoration: none;
-}
-.profile-edit .contacts__social {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-.profile-edit .contacts__social span {
-  display: inline-block;
-  padding: 0 0.5rem;
-  font-family: "Core Sans C 35";
-  font-size: 14px;
-}
-.profile-edit .contacts__social a {
-  display: inline-block;
-  width: 2rem;
-  height: 2rem;
+  color: #d1d1d1;
+  background: #fff;
+  top: -5px;
+  left: calc(0.5rem + 1px);
   opacity: 1;
-  transition: opacity 0.3s Linear;
+  transition: top 0.15s Linear, opacity 0.15s Linear;
 }
-.profile-edit .contacts__social a:last-child {
-  margin: 0 0 0 5px;
+.profile-edit .information .block__input input {
+  border: 1px Solid #F8F8F8;
+  padding: 0.75rem;
+  width: 100%;
+  border-radius: 0.25rem;
+  font-family: "Core Sans C 35";
+  font-size: 12px;
+  transition: border 0.5s Linear;
 }
-.profile-edit .contacts__social a:hover {
-  opacity: 0.7;
+.profile-edit .information .block__input input:focus {
+  border: 1px Solid #2AABEE;
 }
-.profile-edit .contacts__social a.ws {
-  background-image: url("/images/messangers_icons.png");
-  background-repeat: no-repeat;
-  background-position: 100% 0;
-  background-size: cover;
+.profile-edit .information .block__input input:focus::-moz-placeholder {
+  visibility: hidden;
 }
-.profile-edit .contacts__social a.tg {
-  background-image: url("/images/messangers_icons.png");
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  background-size: cover;
+.profile-edit .information .block__input input:focus:-ms-input-placeholder {
+  visibility: hidden;
+}
+.profile-edit .information .block__input input:focus::placeholder {
+  visibility: hidden;
 }
 .profile-edit .services {
   margin: 2rem 0;
@@ -2332,20 +2315,6 @@ body {
   margin: 0 0 0.5rem;
   width: 16.666%;
 }
-.profile-edit .services .service__title {
-  padding: 0.4rem 0 0.2rem 1.3rem;
-  font-family: "Core Sans C 45";
-  font-size: 12px;
-  color: #666666;
-  background-image: url("/images/check_icon_false.png");
-  background-repeat: no-repeat;
-  background-size: 15px;
-  background-position: left center;
-}
-.profile-edit .services .service__title.active {
-  background-image: url("/images/check_icon.png");
-  color: #000;
-}
 .profile-edit .services .service__description {
   margin: 0.25rem 0 0;
   font-family: "Core Sans C 45";
@@ -2358,6 +2327,10 @@ body {
   border: 1px Solid #fff;
   border-radius: 0.25rem;
   width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  font-family: "Core Sans C 45";
+  font-size: 10px;
   transition: border 0.3s Linear;
 }
 .profile-edit .services .service__description textarea:focus {
@@ -2430,6 +2403,9 @@ body {
   border: 1px Solid #2AABEE;
 }
 .filter__block .block__input input:focus::-moz-placeholder {
+  visibility: hidden;
+}
+.filter__block .block__input input:focus:-ms-input-placeholder {
   visibility: hidden;
 }
 .filter__block .block__input input:focus::placeholder {

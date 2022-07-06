@@ -17,7 +17,7 @@ class ProfilesController extends Controller {
 
     public function index() {
 
-        $profile = Profile::find( 76 );
+        $profile = Profile::find( 136 );
 
         $this->profile_id = $profile->id;
 
