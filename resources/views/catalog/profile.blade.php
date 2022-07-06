@@ -24,24 +24,22 @@
                                         <source src="{{$image->url}}" type=video/{{$image->extension}}>
                                     </video>
                                     <div id="video-controls">
-                                        <button type="button" id="play-pause_id{{$image->id}}">Play</button>
+                                        <button type="button" id="play-pause_id{{$image->id}}" class="button"></button>
                                     </div>
                                     <script>
-                                        window.onload =function () {
-                                            let video_{{$image->id}} = document.getElementById("video_id{{$image->id}}");
-                                            let playButton_{{$image->id}} = document.getElementById("play-pause_id{{$image->id}}");
-                                            playButton_{{$image->id}}.addEventListener("click", function () {
-                                                if (video_{{$image->id}}.paused === true) {
-                                                    video_{{$image->id}}.play();
-                                                    playButton_{{$image->id}}.classList.remove('play');
-                                                    playButton_{{$image->id}}.classList.add('pause');
-                                                } else {
-                                                    video_{{$image->id}}.pause();
-                                                    playButton_{{$image->id}}.classList.remove('pause');
-                                                    playButton_{{$image->id}}.classList.add('play');
-                                                }
-                                            });
-                                        };
+                                        let video_{{$image->id}} = document.getElementById("video_id{{$image->id}}");
+                                        let playButton_{{$image->id}} = document.getElementById("play-pause_id{{$image->id}}");
+                                        playButton_{{$image->id}}.addEventListener("click", function () {
+                                            if (video_{{$image->id}}.paused === true) {
+                                                video_{{$image->id}}.play();
+                                                playButton_{{$image->id}}.classList.remove('play');
+                                                playButton_{{$image->id}}.classList.add('pause');
+                                            } else {
+                                                video_{{$image->id}}.pause();
+                                                playButton_{{$image->id}}.classList.remove('pause');
+                                                playButton_{{$image->id}}.classList.add('play');
+                                            }
+                                        });
                                     </script>
                                 @else
                                     <img src="{{$image->url}}" alt="">
@@ -55,7 +53,7 @@
                 <div class="thumbs swiper">
                     <div class="swiper-wrapper">
                         @foreach($profile->attachment as $image)
-                            <div class="thumbs__item swiper-slide" style="background-image: url({{$image->url}})">
+                            <div class="thumbs__item swiper-slide" style="background-image: url('{{$image->url}}#t=0.5 ')">
                             </div>
                         @endforeach
                     </div>

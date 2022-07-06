@@ -1114,7 +1114,7 @@ body {
   left: 0;
   right: 0;
   top: 90%;
-  z-index: 1;
+  z-index: 100;
   background: #fff;
   box-shadow: 0 1rem 1rem 0 rgba(0, 0, 0, 0.1);
   border-radius: 0 0 0.5rem 0.5rem;
@@ -2670,4 +2670,21 @@ body {
   .articles__item {
     width: calc(100% - 1rem);
   }
+}
+#video-controls {
+  position: absolute;
+  top: calc(50% - 1.5rem);
+  left: calc(50% - 1.5rem);
+}
+#video-controls .button {
+  border: none;
+  padding: 0;
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(0, 178, 255, 0.5);
+  background-image: url("/images/play_icon.png");
+  background-repeat: no-repeat;
+  background-size: 2rem;
+  background-position: center;
+  border-radius: 0.5rem;
 }
