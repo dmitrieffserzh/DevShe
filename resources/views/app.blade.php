@@ -12,7 +12,7 @@
 <body>
 <header class="header">
     <div class="header__container">
-       <!-- <div class="header-top">
+        <div class="header-top">
             <div class="header-top__menu">
                 <a href="{{ route('catalog.elite') }}"{{ (request()->is('elite')) ? 'class=active' : '' }}>Элитные</a>
                 <a href="{{ route('catalog.individuals') }}"{{ (request()->is('individuals')) ? 'class=active' : '' }}>Индивидуалки</a>
@@ -24,9 +24,9 @@
                 <a href="" class="ws"></a>
                 <a href="" class="tg"></a>
             </div>
-        </div>-->
+        </div>
     </div>
-    <!--<div class="header__container">
+    <div class="header__container">
         <div class="header-main">
             <a href="{{ route('main') }}" class="header-main__logo">
                 <img src="/images/logo_dark.png" alt="">
@@ -53,7 +53,7 @@
                 @endif
             </div>
         </div>
-    </div>-->
+    </div>
 </header>
 <main class="main">
     <div class="main__container">
@@ -98,7 +98,7 @@
 </main>
 <footer class="footer">
     <div class="footer__container">
-        <!--<div class="footer-links">
+        <div class="footer-links">
             <a href="/" class="footer-links__logo">
                 <img src="/images/logo_dark.png" alt="">
             </a>
@@ -113,7 +113,7 @@
                 <a href="" class="ws"></a>
                 <a href="" class="tg"></a>
             </div>
-        </div>-->
+        </div>
         <div class="footer-offer">
             Вся представленная информация, касающаяся анкет и объявлений проституток, носит информационный характер и ни
             при каких условиях не является публичной офертой, определяемой положениями Статьи 437(2) Гражданского

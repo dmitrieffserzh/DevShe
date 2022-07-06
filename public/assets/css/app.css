@@ -963,7 +963,7 @@ body {
   font-size: 1rem;
 }
 
-/*  GRIG  =========================================================================================================== */
+/*  GRID  =========================================================================================================== */
 .container, .copyright__container, .footer__container, .section__container, .main__container, .header__container {
   padding: 0 30px;
   margin: 0 auto;
@@ -973,7 +973,7 @@ body {
 
 @media screen and (max-width: 767px) {
   .container, .copyright__container, .footer__container, .section__container, .main__container, .header__container {
-    padding: 0 15px;
+    padding: 0 16px;
   }
 }
 /*  HEADER  ========================================================================================================= */
@@ -1165,6 +1165,11 @@ body {
   background-size: cover;
 }
 
+@media screen and (max-width: 767px) {
+  .header__buttons .button span {
+    display: none;
+  }
+}
 /*  MAIN  =========================================================================================================== */
 .main {
   padding: 2rem 0;
@@ -1195,6 +1200,9 @@ body {
   font-family: "Core Sans C 75";
 }
 
+.aside {
+  margin: 0 0 1rem;
+}
 .aside-menu {
   background: #F8F8F8;
   border-radius: 1rem;
@@ -1735,7 +1743,6 @@ body {
   justify-content: space-between;
   transition: bottom 0.2s Linear, top 0.2s Linear;
   align-content: flex-start;
-  transition: bottom 0.2s Linear, top 0.2s Linear;
 }
 .profile-item__information .information__column {
   display: flex;
@@ -2138,11 +2145,20 @@ body {
   display: flex;
   margin: 0 -0.5rem 1rem;
 }
+.profile-edit input[type=file] {
+  display: none;
+}
 .profile-edit .image-upload {
+  display: block;
   border-radius: 1rem;
   background: #f8f8f8;
   width: 100%;
   height: 350px;
+  margin: 0 0 1rem;
+  background-image: url("/images/close_icon.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50px;
 }
 .profile-edit .thumbs {
   margin: 0 0 1rem;
@@ -2405,6 +2421,24 @@ body {
   .profile-edit__row {
     flex-direction: column;
   }
+  .profile-edit .information .block__input {
+    margin: 0 0.5rem 1rem;
+  }
+  .profile-edit .rates__title h2 {
+    font-size: 16px;
+  }
+  .profile-edit .rates__list .rate {
+    margin: 0 0 1rem;
+    padding: 1rem 1rem 1rem 5.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .profile-edit .rates__list .rate--day {
+    background-position: 1rem 1rem;
+  }
+  .profile-edit .rates__list .rate--night {
+    background-position: 1rem 1rem;
+  }
   .profile-edit .services .service {
     padding: 0.5rem;
     margin: 0 0 0.5rem;
@@ -2521,7 +2555,6 @@ body {
 .article-item__image {
   display: block;
   min-height: 150px;
-  background-image: url(/images/profile-demo.png);
   background-position: center;
   background-size: cover;
 }

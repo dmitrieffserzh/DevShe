@@ -10,8 +10,12 @@
             @include('profiles.aside')
         </div>
         <div class="profile-edit__column">
-            <div class="image-upload">
 
+            <div class="uploader">
+                <input id="file-input" type="file">
+                <label for="file-input" class="image-upload">
+
+                </label>
             </div>
 
             {{--            <div class="profile-edit__images">--}}
