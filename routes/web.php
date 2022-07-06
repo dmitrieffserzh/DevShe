@@ -29,6 +29,11 @@ Route::post( '/search/metro',                                   [ SearchControll
 Route::get( '/search/metro/devushki-na-stancii-metro-{slug?}',  [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
 
 
+// ARTICLES
+Route::get('articles', [PostController::class, 'index'])->name('post.index');
+Route::get('articles/{slug}', [PostController::class, 'show'])->name('post.show');
+
+
 // PROFILE
 Route::get( 'profile',          [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
 Route::get( 'profile/rates',    [ ProfilesController::class, 'rates' ] )->name( 'profile.rates' );
@@ -45,16 +50,12 @@ Route::match(['get', 'post'], '/masseuses',     [ CatalogController::class, 'sho
 Route::get( '/{section}/{slug}', [ CatalogController::class, 'showProfileCatalog' ] )->name( 'catalog.profile' );
 
 
-// ARTICLES
-Route::get('articles', [PostController::class, 'post.index'])->name('post.index');
-Route::get('articles/{slug}', [PostController::class, 'post.show'])->name('post.show');
-
 
 // REGENERATE PROFILE URL
 //Route::get('/regProfile', [MainController::class, 'regenerateURL'])->name('regProfile');
 //Route::get('/regMetro', [MainController::class, 'regMetroURL'])->name('regMetro');
 
-
+require __DIR__.'/auth.php';
 // PAGES
 Route::get('/{slug}', [PageController::class, 'showPage'])->name('page');
-require __DIR__.'/auth.php';
+

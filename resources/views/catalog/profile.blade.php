@@ -1,7 +1,15 @@
 @extends('app')
 
 @section('h1', $heading ?? 'Личные данные')
-
+@section('profile-meta')
+    <div class="profile-meta">
+        <div class="profile-meta__item profile-meta__item--city-icon">{{ $profile->city ?? '' }}</div>
+        @if(count($profile->stations) > 0)
+            <div class="profile-meta__item profile-meta__item--metro-icon">{{ $profile->stations[0]->name}}</div>
+        @endif
+        <div class="profile-meta__item">id: {{ $profile->id }}</div>
+    </div>
+@endsection
 @section('content')
     <div class="profile">
         <div class="profile__column">
@@ -29,9 +37,6 @@
             </div>
         </div>
         <div class="profile__column">
-            {{ $profile->city ?? '' }} =
-            {{ $profile->stations[0]->name ?? '' }} =
-            id: {{ $profile->id }}
             <div class="rates">
                 <div class="rates__title">
                     <h2>Тарифы:</h2>

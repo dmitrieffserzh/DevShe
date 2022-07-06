@@ -31,16 +31,23 @@
             <span class="show-password"></span>
 
         </label>
-        <label for="user_type_girl">Девушка</label>
-        <input type="radio" id="user_type_girl" name="user_type" value="1">
-
-        <label for="user_type_man">Мужчина</label>
-        <input type="radio" id="user_type_man" name="user_type" value="0">
-
+        <div class="form-register__types">
+            <div class="input_radio">
+                <input type="radio" id="user_type_girl" name="user_type" value="1">
+                <label for="user_type_girl">Женщина</label>
+            </div>
+            <div class="input_radio">
+                <input type="radio" id="user_type_man" name="user_type" value="0" checked>
+                <label for="user_type_man">Мужчина</label>
+            </div>
+        </div>
         <button class="form-register__button" type="submit">Зарегистрироваться</button>
-
+<!--
         <a class="js-open-modal" data-modal="login" href="#">
             {{ __('Already registered?') }}
         </a>
+        -->
+        <p class="form-register__licence">Нажимая на кнопку, Вы соглашаетесь<br>
+            с пользовательским соглашением</p>
     </form>
 </div>

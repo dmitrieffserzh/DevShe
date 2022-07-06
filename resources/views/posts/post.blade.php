@@ -3,5 +3,5 @@
 @section('h1', $heading ?? 'Личные данные')
 
 @section('content')
-    {!! $page->content !!}
+    {!! $post->content !!}
 @endsection

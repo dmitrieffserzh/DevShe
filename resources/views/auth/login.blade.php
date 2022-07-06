@@ -20,16 +20,17 @@
             <span class="show-password"></span>
         </label>
         <button class="form-login__button" type="submit">Войти</button>
-        <div>
-            <label for="">
-                <input type="checkbox" name="remember">
-                Запомнить меня
-            </label>
+        <div class="form-login__actions">
+        <div class="input_radio">
+            <input id="remember-me" type="checkbox" name="remember">
+            <label for="remember-me">Запомнить меня</label>
         </div>
+
         @if (Route::has('password.request'))
             <a class="" href="{{ route('password.request') }}">
                 Забыли пароль?
             </a>
         @endif
+        </div>
     </form>
 </div>

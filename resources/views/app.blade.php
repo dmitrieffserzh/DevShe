@@ -12,7 +12,7 @@
 <body>
 <header class="header">
     <div class="header__container">
-        <!--<div class="header-top">
+        <div class="header-top">
             <div class="header-top__menu">
                 <a href="{{ route('catalog.elite') }}"{{ (request()->is('elite')) ? 'class=active' : '' }}>Элитные</a>
                 <a href="{{ route('catalog.individuals') }}"{{ (request()->is('individuals')) ? 'class=active' : '' }}>Индивидуалки</a>
@@ -24,7 +24,7 @@
                 <a href="" class="ws"></a>
                 <a href="" class="tg"></a>
             </div>
-        </div>-->
+        </div>
     </div>
     <div class="header__container">
         <div class="header-main">
@@ -41,8 +41,10 @@
                 <a href="{{ route('search.metro') }}" class="header-search__link">Поиск по <span></span></a>
             </div>
             <div class="header-main__buttons">
+                @if (!Auth::check())
                 <a href="" class="button button--add js-open-modal"
                    data-modal="register"><span>Добавить анкету</span></a>
+                @endif
                 @if (Auth::check())
                     <a href="{{ route('profile.index') }}" class="button button--login"><span>Личный кабинет</span></a>
                 @else
@@ -59,7 +61,9 @@
             @include('components.main.main-slider',['slides' => $slides])
         @endif
         @hasSection('h1')
-            <h1 class="main__h1">@yield('h1')</h1>
+            <div class="main__heading">
+            <h1 class="main__h1">@yield('h1')</h1>@yield('profile-meta')
+            </div>
         @endif
     </div>
 
@@ -97,13 +101,13 @@
             <a href="/" class="footer-links__logo">
                 <img src="/images/logo_dark.png" alt="">
             </a>
-            <!--<div class="footer-links__menu">
+            <div class="footer-links__menu">
                 <a href="{{ route('catalog.elite') }}"{{ (request()->is('elite')) ? 'class=active' : '' }}>Элитные</a>
                 <a href="{{ route('catalog.individuals') }}"{{ (request()->is('individuals')) ? 'class=active' : '' }}>Индивидуалки</a>
                 <a href="{{ route('catalog.cheap') }}"{{ (request()->is('cheap')) ? 'class=active' : '' }}>Дешевые</a>
                 <a href="{{ route('catalog.bdsm') }}"{{ (request()->is('bdsm')) ? 'class=active' : '' }}>БДСМ</a>
                 <a href="{{ route('catalog.masseuses') }}"{{ (request()->is('masseuses')) ? 'class=active' : '' }}>Массажистки</a>
-            </div>-->
+            </div>
             <div class="footer-links__social">
                 <a href="" class="ws"></a>
                 <a href="" class="tg"></a>
@@ -121,6 +125,7 @@
         <div class="copyright__container">
             <div class="copyright-text">2022 &copy; Все права защищены</div>
             <div class="copyright-links">
+                <a href="{{ route('post.index') }}">Статьи</a>
                 <a href="{{ route('page', ['slug' => 'privacy-policy']) }}">Политика конфиденциальности</a>
                 <a href="{{ route('page', ['slug' => 'user-agreement']) }}">Пользовательское соглашение</a>
             </div>

@@ -110,7 +110,7 @@ class GirlListLayout extends Table {
                                                'status' => $profile->active == 1 ? 0 : 1
                                            ] ),
                                      Link::make( __( 'Edit' ) )
-                                         ->route( 'platform.girls.edit', $profile->id )
+                                         ->route( 'platform.girls.edit', $profile->slug )
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )

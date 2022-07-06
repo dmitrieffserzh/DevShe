@@ -6,6 +6,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\CheckBox;
+use Orchid\Screen\Fields\Cropper;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
@@ -69,11 +70,16 @@ class PostEditScreen extends Screen {
                          ->placeholder( 'Введите заголовок статьи' )
                          ->style( 'width: 100%;' )
                          ->required(),
-                    Input::make( 'page.slug' )
+                    Input::make( 'post.slug' )
                         ->title( 'URL' )
                         ->placeholder( 'Введите URL страницы' )
                         ->style( 'width: 100%;' )
                         ->required(),
+                    Cropper::make('post.image')
+                        ->title('Изображение')
+                        ->width(1140)
+                        ->height(350)
+                        ->targetRelativeUrl(),
                     Quill::make( 'post.content' )
                          ->title( 'Содержимое статьи' )
                          ->placeholder( 'Введите содержимое статьи' )

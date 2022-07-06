@@ -242,7 +242,7 @@ if (searchInput) {
             }).then((response) => {
                 if (response.data !== '') {
                     for (let i = 0; i <= response.data.length; i++) {
-                        searchResult.insertAdjacentHTML('afterbegin', '' + '<a href="/' + sections[response.data[i].section] + '/id' + response.data[i].id + '" class="item">' + '<span>' + response.data[i].name + '</span>' + '<span>id: ' + response.data[i].id + '</span>' + '</a>');
+                        searchResult.insertAdjacentHTML('afterbegin', '' + '<a href="/' + sections[response.data[i].section] + '/' + response.data[i].slug + '" class="item">' + '<span>' + response.data[i].name + '</span>' + '<span>id: ' + response.data[i].id + '</span>' + '</a>');
                     }
                 } else {
                     searchResult.insertAdjacentHTML('afterbegin', '' + '<div class="item">По вашму запросу ничего не найдено</div>');
@@ -255,25 +255,27 @@ if (searchInput) {
 }
 
 // METRO MAP ZOOM
-const metroMap = document.getElementById('map');
-const buttonZoomIn = document.getElementById('zoomIn');
-const buttonZoomOut = document.getElementById('zoomOut');
-const panzoom = Panzoom(metroMap, {
-    maxScale: 5,
-    minScale: 1
-});
-panzoom.zoom(1, {
-    animate: true
-});
-panzoom.pan(100, 100);
+if (window.window.innerWidth < 991) {
+    const metroMap = document.getElementById('map');
+    const buttonZoomIn = document.getElementById('zoomIn');
+    const buttonZoomOut = document.getElementById('zoomOut');
+    const panzoom = Panzoom(metroMap, {
+        maxScale: 5,
+        minScale: 1
+    });
+    panzoom.zoom(1, {
+        animate: true
+    });
+    panzoom.pan(100, 100);
 
-buttonZoomIn.addEventListener('click', panzoom.zoomIn);
-buttonZoomOut.addEventListener('click', panzoom.zoomOut);
+    buttonZoomIn.addEventListener('click', panzoom.zoomIn);
+    buttonZoomOut.addEventListener('click', panzoom.zoomOut);
 
-metroMap.addEventListener('wheel', function (event) {
-    if (!event.shiftKey) return
-    panzoom.zoomWithWheel(event)
-})
+    metroMap.addEventListener('wheel', function (event) {
+        if (!event.shiftKey) return
+        panzoom.zoomWithWheel(event)
+    });
+}
 
 
 // SEARCH GIRL ON METRO STATIONS

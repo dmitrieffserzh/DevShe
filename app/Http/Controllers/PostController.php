@@ -14,14 +14,18 @@ class PostController extends Controller
     }
 
     public function index() {
-        return view('posts.list', [
+        return view('posts.post_list', [
+            'heading' => 'Статьи',
             'posts' => Post::where('active', 1)->paginate(16)
         ]);
     }
 
-    public function show(Request $request) {
-        return view('posts.show', [
-            'post' => Post::where('active', 1)->findOrFail($request->slug)
+    public function show($slug) {
+        $post = Post::where( 'active', 1 )->where('slug', $slug)->first();
+
+        return view('posts.post', [
+            'heading' => $post->title,
+            'post' => $post
         ]);
     }
 }
