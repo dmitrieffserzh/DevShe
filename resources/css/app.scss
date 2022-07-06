@@ -1817,14 +1817,17 @@ body {
     .profile-edit {
         &__column {
             flex-direction: column;
-            width: 100%;
+            width: 100% !important;
+        }
+        &__row {
+            flex-direction: column;
         }
 
         & .services {
             & .service {
                 padding: .5rem;
                 margin: 0 0 .5rem;
-                width: 50%;
+                width: 100%;
             }
         }
     }

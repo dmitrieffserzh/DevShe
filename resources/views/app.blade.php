@@ -91,7 +91,8 @@
         @include('components.main.list_profiles', ['title'=> 'Массажистки', 'items' => $masseusesGirls, 'link' => route('catalog.masseuses')])
     @endif
 
-    <div class="main__container {{ Request::segment(1) == 'profile' ? 'main__container--with-aside' : ''}}">
+{{--    <div class="main__container {{ Request::segment(1) == 'profile' ? 'main__container--with-aside' : ''}}">--}}
+    <div class="main__container">
         @yield('content')
     </div>
 </main>

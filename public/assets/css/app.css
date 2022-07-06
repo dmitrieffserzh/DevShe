@@ -2400,12 +2400,15 @@ body {
 @media screen and (max-width: 767px) {
   .profile-edit__column {
     flex-direction: column;
-    width: 100%;
+    width: 100% !important;
+  }
+  .profile-edit__row {
+    flex-direction: column;
   }
   .profile-edit .services .service {
     padding: 0.5rem;
     margin: 0 0 0.5rem;
-    width: 50%;
+    width: 100%;
   }
 }
 /* FILTER =========================================================================================================== */
