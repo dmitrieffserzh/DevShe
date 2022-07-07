@@ -45,7 +45,7 @@
                         <select name="profile[age]" id="" class="js-select">
                             @foreach(Helpers::getGirlAge() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($profile->age ?? 0 == $key) selected @endif>{{ $value }}</option>
+                                        @if(($profile->age ?? 0) == $key) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Возраст</span>
@@ -67,7 +67,7 @@
                         <select name="profile[haircolor]" id="" class="js-select">
                             @foreach(Helpers::getGirlHaircolor() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($profile->haircolor ?? 0 == $key) selected @endif>{{ $value }}</option>
+                                        @if(($profile->haircolor ?? 0) == $key) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Типаж</span>
@@ -76,7 +76,7 @@
                         <select name="profile[breast_size]" id="" class="js-select">
                             @foreach(Helpers::getGirlBreast() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($profile->breast_size ?? 0 == $key) selected @endif>{{ $value }}</option>
+                                        @if(($profile->breast_size ?? 0) == $key) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Грудь</span>
@@ -100,7 +100,7 @@
                         <select name="profile[appearance]" id="" class="js-select">
                             @foreach(Helpers::getGirlAppearance() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($profile->appearance ?? 0 == $key) selected @endif>{{ $value }}</option>
+                                        @if(($profile->appearance ?? 0) == $key) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Внешность</span>
@@ -109,7 +109,7 @@
                         <select name="profile[haircut]" id="" class="js-select">
                             @foreach(Helpers::getGirlHaircut() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($profile->haircut ?? 0 == $key) selected @endif>{{ $value }}</option>
+                                        @if(($profile->haircut ?? 0) == $key) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Интимная стрижка</span>

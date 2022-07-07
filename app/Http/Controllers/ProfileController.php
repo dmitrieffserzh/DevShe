@@ -35,9 +35,37 @@ class ProfileController extends Controller
 
         $profile = $user->profile;
 
-        if ($profile) {
-            $this->profile_id = $profile->id;
+        if (!$profile) {
+            // NEW PROFILE
+            $profile = new Profile;
+            $profile->user_id = Auth::user()->id;
+            $profile->active = 1;
+            $profile->private = 0;
+            $profile->name = $request->profile['name'] ?? Auth::user()->name;
+            $profile->slug = $request->profile['name'] ? Str::slug($request->profile['name'] . '-' . rand(999, 9999)) : Str::slug(Auth::user()->name . '-' . rand(999, 9999));
+            $profile->phone = $request->profile['phone'] ?? 0;
+            $profile->whatsapp = $request->profile['whatsapp'];
+            $profile->telegram = $request->profile['telegram'];
+            $profile->age = $request->profile['age'] ?? 0;
+            $profile->height = $request->profile['height'];
+            $profile->weight = $request->profile['weight'];
+            $profile->breast_size = $request->profile['breast_size'] ?? 0;
+            $profile->breast_type = $request->profile['breast_type'] ?? 0;
+            $profile->appearance = $request->profile['appearance'] ?? 0;
+            $profile->section = $request->profile['section'] ?? 0;
+            $profile->express = $request->profile['express'] ?? 0;
+            $profile->city = $request->profile['city'] ?? '';
+            $profile->haircut = $request->profile['haircut'];
+            $profile->haircolor = $request->profile['haircolor'] ?? 0;
+            $profile->description = $request->profile['description'] ?? '';
+            $profile->created_at = Carbon::now();
+            $profile->save();
+            $profile->slug = Str::slug($profile->name . '-' . $profile->id);
+            $profile->save();
         }
+
+        $this->profile_id = $profile->id;
+
 
         $services = DB::table('services')
             ->join('services_field', 'services.id', '=', 'services_field.service_id')
@@ -85,8 +113,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        if($user->user_type == 0) {
-            if($user->update($request->profile)) {
+        if ($user->user_type == 0) {
+            if ($user->update($request->profile)) {
                 return response()->json(['success' => 'Профиль успешно обновлен!']);
             }
             return response()->json(['error' => 'Ошибка при обновлении!']);
@@ -127,59 +155,8 @@ class ProfileController extends Controller
             $profile->fields()->createMany($services->toArray());
 
             return response()->json(['success' => 'Профиль успешно обновлен!']);
-        } else {
-            dd($request->profile);
-            // NEW PROFILE
-            $profile = new Profile;
-            $profile->user_id = Auth::user()->id;
-            $profile->active = 1;
-            $profile->private = 0;
-            $profile->name = $request->profile['name'] ?? Auth::user()->name;
-            $profile->slug = $request->profile['name'] ? Str::slug($request->profile['name'] . '-' . rand(999, 9999)) : Str::slug(Auth::user()->name . '-' . rand(999, 9999));
-            $profile->phone = $request->profile['phone'] ?? 0;
-            $profile->whatsapp = $request->profile['whatsapp'];
-            $profile->telegram = $request->profile['telegram'];
-            $profile->age = $request->profile['age'] ?? 0;
-            $profile->height = $request->profile['height'];
-            $profile->weight = $request->profile['weight'];
-            $profile->breast_size = $request->profile['breast_size'] ?? 0;
-            $profile->breast_type = $request->profile['breast_type'] ?? 0;
-            $profile->appearance = $request->profile['appearance'] ?? 0;
-            $profile->section = $request->profile['section'] ?? 0;
-            $profile->express = $request->profile['express'] ?? 0;
-            $profile->city = $request->profile['city'] ?? '';
-            $profile->haircut = $request->profile['haircut'];
-            $profile->haircolor = $request->profile['haircolor'] ?? 0;
-            $profile->description = $request->profile['description'] ?? '';
-            $profile->created_at = Carbon::now();
-            $profile->save();
-            $profile->slug = Str::slug($profile->name . '-' . $profile->id);
-            $profile->save();
-
-            if ($profile) {
-                $profile->places()->sync($request->profile['places']);
-                $profile->stations()->sync($request->profile['stations']);
-                $profile->prices()->create($request->profile['prices']);
-                $profile->attachment()->syncWithoutDetaching($request->profile['attachment'], []);
-
-                $collection = collect($request->profile['services']);
-                $filteredServices = $collection->filter(function ($value) {
-                    if (isset($value['field_id']) && $value['field_id'] == 'on') {
-                        return $value;
-                    }
-                });
-
-                $services = $filteredServices->map(function ($value, $key) {
-                    return [
-                        'field_id' => $key,
-                        'description' => isset($value['description']) ? $value['description'] : null
-                    ];
-                });
-
-                $profile->fields()->createMany($services->toArray());
-            }
-            return response()->json(['success' => 'Хуйнаны!']);
         }
+        return response()->json(['success' => 'Хуйнаны!']);
     }
 
 
@@ -198,7 +175,7 @@ class ProfileController extends Controller
 
         if (Auth::user()->user_type == 0) {
             $model = Auth::user();
-            if(count($model->attachment) > 0) {
+            if (count($model->attachment) > 0) {
                 $model->attachment()->delete();
             }
         }

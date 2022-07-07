@@ -38,7 +38,7 @@
                         <select name="profile[age]" id="" class="js-select">
                             @foreach(Helpers::getGirlAge() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($profile->age ?? 0 == $key) selected @endif>{{ $value }}</option>
+                                        @if(($profile->age ?? 0) == $key) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Возраст</span>
