@@ -349,7 +349,7 @@ function deleteFile() {
         deleteButtons[i].addEventListener('click', () => {
             axios({
                 method: "POST",
-                url: '/profile/deleteFiles',
+                url: '/profile/delete',
                 data: {delete: {id: deleteButtons[i].parentElement.getAttribute('data-id')}},
             }).then((response) => {
                 deleteButtons[i].parentElement.remove();
@@ -374,7 +374,7 @@ if (inputFile) {
 
             axios({
                 method: "POST",
-                url: '/profile/uploadFiles',
+                url: '/profile/upload',
                 data: data,
                 headers: {
                     "Content-Type": "multipart/form-data; boundary=something",
@@ -392,12 +392,9 @@ if (inputFile) {
     });
 }
 
-
-
-
 // SORT FILES
 let sortableThumbs = document.querySelector('.uploader__thumbs');
-if (sortableThumbs.children.length > 1) {
+if (sortableThumbs && sortableThumbs.children.length > 0) {
     Sortable.create(sortableThumbs, {
             sort: true,
             dataIdAttr: 'data-id',
@@ -429,7 +426,7 @@ if (sortableThumbs.children.length > 1) {
 
                 axios({
                     method: "POST",
-                    url: '/profile/sortFiles',
+                    url: '/profile/sort',
                     data: arrSortable
                 }).then((response) => {
                     console.log(response);
@@ -450,11 +447,8 @@ if (profileForm) {
 
         axios({
             method: "POST",
-            url: '/profile/saveProfile',
+            url: '/profile/save',
             data: data,
-            headers: {
-                "Content-Type": "multipart/form-data; boundary=something",
-            }
         }).then((response) => {
 
             console.log(response);

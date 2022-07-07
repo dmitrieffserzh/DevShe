@@ -23,14 +23,14 @@ use App\Http\Controllers\PageController;
 Route::get( '/', [ MainController::class, 'index' ] )->name( 'main' );
 
 // SEARCH
-Route::post( '/search',                                         [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
-Route::get( '/search/metro',                                    [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
-Route::post( '/search/metro',                                   [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
-Route::get( '/search/metro/devushki-na-stancii-metro-{slug?}',  [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
+Route::post( 'search',                                          [ SearchController::class, 'ajaxSearch' ] )->name( 'search' );
+Route::get(  'search/metro',                                    [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
+Route::post( 'search/metro',                                    [ SearchController::class, 'searchMetro' ] )->name( 'search.metro' );
+Route::get(  'search/metro/devushki-na-stancii-metro-{slug?}',  [ SearchController::class, 'searchMetroResult' ] )->name( 'search.metro.result' );
 
 
 // ARTICLES
-Route::get('articles', [PostController::class, 'index'])->name('post.index');
+Route::get('articles',        [PostController::class, 'index'])->name('post.index');
 Route::get('articles/{slug}', [PostController::class, 'show'])->name('post.show');
 
 
@@ -38,10 +38,10 @@ Route::get('articles/{slug}', [PostController::class, 'show'])->name('post.show'
 Route::get( 'profile',              [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
 Route::get( 'profile/rates',        [ ProfilesController::class, 'rates' ] )->name( 'profile.rates' );
 Route::get( 'profile/payments',     [ ProfilesController::class, 'payments' ] )->name( 'profile.payments' );
-Route::post('profile/uploadFiles',  [ ProfilesController::class, 'uploadFiles' ] )->name( 'profile.upload' );
-Route::post('profile/deleteFiles',  [ ProfilesController::class, 'deleteFiles' ] )->name( 'profile.delete' );
-Route::post('profile/sortFiles',    [ ProfilesController::class, 'sortFiles' ] )->name( 'profile.sort' );
-Route::post('profile/saveProfile',  [ ProfilesController::class, 'saveProfile' ] )->name( 'profile.save' );
+Route::post('profile/upload',       [ ProfilesController::class, 'uploadFiles' ] )->name( 'profile.upload' );
+Route::post('profile/delete',       [ ProfilesController::class, 'deleteFiles' ] )->name( 'profile.delete' );
+Route::post('profile/sort',         [ ProfilesController::class, 'sortFiles' ] )->name( 'profile.sort' );
+Route::post('profile/save',         [ ProfilesController::class, 'saveProfile' ] )->name( 'profile.save' );
 
 
 // CATALOG GIRLS

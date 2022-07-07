@@ -42,13 +42,15 @@
             </div>
             <div class="header-main__buttons">
                 @if (!Auth::check())
-                <a href="" class="button button--add js-open-modal"
+                <a href="#" class="button button--add js-open-modal"
                    data-modal="register"><span class="icon"></span><span class="text">Добавить анкету</span></a>
                 @endif
-                @if (Auth::check())
+                @if (Auth::check() && !Route::is('profile.*'))
                     <a href="{{ route('profile.index') }}" class="button button--login"><span class="icon"></span><span class="text">Личный кабинет</span></a>
+                    @elseif(Route::is('profile.*'))
+                        <a href="{{ route('logout') }}" class="button button--logout"><span class="icon"></span><span class="text">Выйти</span></a>
                     @elseif(!Auth::check())
-                    <a href="" class="button button--login js-open-modal"
+                    <a href="#" class="button button--login js-open-modal"
                        data-modal="login"><span class="icon"></span><span class="text">Войти в кабинет</span></a>
                 @endif
             </div>

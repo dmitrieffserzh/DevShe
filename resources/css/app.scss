@@ -172,6 +172,7 @@ body {
         }
 
         &__buttons {
+            display: flex;
             & .button {
                 display: flex;
                 align-items: center;
@@ -212,7 +213,18 @@ body {
                         background-size: 20px;
                     }
                 }
+                &--logout {
+                    border: 1px Solid #229ED9;
+                    background: transparent;
+                    color: #229ED9;
 
+                    & span.icon {
+                        background-image: url('/images/logout_blue_icon.png');
+                        background-repeat: no-repeat;
+                        background-position: left center;
+                        background-size: 20px;
+                    }
+                }
                 & span.text {
                     display: inline-block;
                     padding: 0 .5rem;
@@ -224,9 +236,9 @@ body {
                 //&:first-child {
                 //    margin: 0 .5rem 0 0;
                 //}
-                //&:last-child {
-                //  margin: 0 0 0 .5rem;
-                //}
+                &:last-child {
+                  margin: 0 0 0 .5rem;
+                }
             }
         }
     }
@@ -372,14 +384,15 @@ body {
             padding: 0.25rem 0.55rem;
 
             &__buttons {
-                display: flex;
-
                 & .button {
                     padding: .75rem;
-                    margin: 0 0 0 0.25rem;
+                    margin: 0 0 0 .25rem;
 
                     & span.text {
                         display: none;
+                    }
+                    &:last-child {
+                        margin: 0 0 0 .25rem;
                     }
                 }
             }
@@ -535,6 +548,7 @@ body {
         @extend .container;
     }
 
+
     &__title {
         margin: 1.5rem 0;
         font-family: 'Core Sans C 75';
@@ -545,6 +559,13 @@ body {
 
 @media screen and(max-width: 767px) {
     .main {
+        &__container--with-aside {
+            display: flex;
+            flex-direction: column;
+        }
+        & .content {
+            padding: 0;
+        }
         &__heading {
             flex-direction: column;
         }
@@ -686,14 +707,15 @@ body {
     .footer {
         &-links {
             flex-direction: column;
-            align-content: flex-start;
-            align-items: flex-start;
+            align-items: center;
+            align-content: center;
 
             &__menu {
-                //column-count: 2;
+                column-count: 2;
+                text-align: center;
                 & a {
                     margin: .75rem 0;
-                    width: 50%;
+                    width: 100%;
                 }
             }
         }
@@ -1005,6 +1027,27 @@ body {
     }
 }
 
+@media screen and (max-width: 767px){
+    .rates {
+        &__item {
+            flex-direction: column;
+        }
+        & .rate {
+            &__title {
+                font-family: 'Core Sans C 75';
+                font-size: 1.1rem;
+            }
+        }
+        & .offers {
+            &__title {
+                margin: 0 0 .5rem;
+                font-family: 'Core Sans C 75';
+                font-size: 1rem;
+            }
+        }
+    }
+}
+///////
 .button {
     display: inline-block;
     border: 1px Solid #BE0C0C;

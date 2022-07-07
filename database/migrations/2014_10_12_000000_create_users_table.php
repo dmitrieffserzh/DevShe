@@ -11,6 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->integer( 'user_type' )->default(0);
             $table->string( 'name' );
+            $table->integer( 'age' );
+            $table->string( 'city' );
             $table->string( 'email' )->unique();
             $table->timestamp( 'email_verified_at' )->nullable();
             $table->string( 'password' );

@@ -30,8 +30,7 @@
                 </div>
             </div>
             <div class="description">
-                <textarea name="profile[description]" id=""
-                          placeholder="Коротко о себе">{{ $profile->description ?? '' }}</textarea>
+                <textarea name="profile[description]" id="">{{ $profile->description ?? '' }}</textarea>
                 <span class="label">Напишите немного о себе</span>
             </div>
         </div>
@@ -40,7 +39,7 @@
                 <div class="profile-edit__row">
                     <div class="block__input">
                         <input type="text" name="profile[name]" value="{{ $profile->name ?? '' }}">
-                        <span class="label">Имя</span>
+                        <span class="label">Ваше имя</span>
                     </div>
                     <div class="block__input">
                         <select name="profile[age]" id="" class="js-select">
