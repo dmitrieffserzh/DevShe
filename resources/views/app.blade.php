@@ -109,6 +109,7 @@
                 <a href="{{ route('catalog.cheap') }}"{{ (request()->is('cheap')) ? 'class=active' : '' }}>Дешевые</a>
                 <a href="{{ route('catalog.bdsm') }}"{{ (request()->is('bdsm')) ? 'class=active' : '' }}>БДСМ</a>
                 <a href="{{ route('catalog.masseuses') }}"{{ (request()->is('masseuses')) ? 'class=active' : '' }}>Массажистки</a>
+                <a href="{{ route('post.index') }}"{{ Route::is('post.*') ? 'class=active' : '' }}>Статьи</a>
             </div>
             <div class="footer-links__social">
                 <a href="" class="ws"></a>
@@ -127,7 +128,6 @@
         <div class="copyright__container">
             <div class="copyright-text">2022 &copy; Все права защищены</div>
             <div class="copyright-links">
-                <a href="{{ route('post.index') }}">Статьи</a>
                 <a href="{{ route('page', ['slug' => 'privacy-policy']) }}">Политика конфиденциальности</a>
                 <a href="{{ route('page', ['slug' => 'user-agreement']) }}">Пользовательское соглашение</a>
             </div>

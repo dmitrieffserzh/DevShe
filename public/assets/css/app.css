@@ -2291,12 +2291,19 @@ body {
 .profile-edit__column:last-child {
   width: 100%;
 }
+.profile-edit__column.no-wide:last-child {
+  padding: 0 1rem;
+  width: calc(55% - 133px);
+}
 .profile-edit__row {
   display: flex;
   margin: 0 -0.5rem 1rem;
 }
 .profile-edit input[type=file] {
   display: none;
+}
+.profile-edit .uploader {
+  margin: 0 0 2rem;
 }
 .profile-edit .uploader__input {
   display: flex;
@@ -2518,6 +2525,21 @@ body {
 }
 .profile-edit .information .block__input input:focus::placeholder {
   visibility: hidden;
+}
+.profile-edit .information .block__input textarea {
+  padding: 1rem;
+  border: 1px Solid #f8f8f8;
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 200px;
+  font-family: "Core Sans C 35";
+  line-height: 1.3rem;
+  border-radius: 0.25rem;
+  transition: border 0.3s Linear;
+}
+.profile-edit .information .block__input textarea:focus {
+  border: 1px Solid #2AABEE;
 }
 .profile-edit .information .input_radio {
   margin: 0 0.5rem 0.6rem;
@@ -2811,4 +2833,53 @@ body {
   background-size: 2rem;
   background-position: center;
   border-radius: 50%;
+}
+
+/* PAYMENTS ========================================================================================================= */
+.payments__title {
+  font-family: "Core Sans C 75";
+  font-size: 24px;
+  margin: 0 0 1.5rem;
+}
+.payments__list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.payments__item {
+  border: 1px Solid #E5E5E5;
+  height: 80px;
+  width: calc(25% - 1rem);
+  background-repeat: no-repeat;
+  background-size: 3rem;
+  background-position: center;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: box-shadow 0.3s Linear, border 0.3s Linear;
+}
+.payments__item--visa {
+  background-image: url("/images/visa_logo.png");
+}
+.payments__item--mastercard {
+  background-image: url("/images/mastercard_logo.png");
+}
+.payments__item--qiwi {
+  background-image: url("/images/qiwi_logo.png");
+}
+.payments__item--yamoney {
+  background-image: url("/images/yamoney_logo.png");
+}
+.payments__item:hover {
+  border: 1px Solid #E5E5E5;
+  box-shadow: 0 0 2px 3px #2aabee;
+}
+
+@media screen and (max-width: 767px) {
+  .payments__title {
+    font-family: "Core Sans C 75";
+    font-size: 1.1rem;
+    margin: 0 0 1.5rem;
+  }
 }

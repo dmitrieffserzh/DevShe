@@ -380,13 +380,13 @@ if (inputFile) {
                     "Content-Type": "multipart/form-data; boundary=something",
                 }
             }).then((response) => {
-
+                if (inputFile.classList.contains('man'))
+                    thumbContainer.innerHTML = '';
                 for (let i = 0; response.data.length > i; i++) {
                     thumbContainer.insertAdjacentHTML("beforeend", '' +
                         '<div class="uploader__thumbs-item" data-id="' + response.data[i].id + '" data-sort="' + response.data[i].sort + '" style="background-image: url(' + response.data[i].relativeUrl + ')"><span class="delete"></span></div>');
                 }
-                //deleteFile();
-                console.log(response);
+                //console.log(response);
             });
         }
     });

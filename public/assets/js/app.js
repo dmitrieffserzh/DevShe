@@ -3389,12 +3389,12 @@ if (inputFile) {
           "Content-Type": "multipart/form-data; boundary=something"
         }
       }).then(function (response) {
+        if (inputFile.classList.contains('man')) thumbContainer.innerHTML = '';
+
         for (var _i3 = 0; response.data.length > _i3; _i3++) {
           thumbContainer.insertAdjacentHTML("beforeend", '' + '<div class="uploader__thumbs-item" data-id="' + response.data[_i3].id + '" data-sort="' + response.data[_i3].sort + '" style="background-image: url(' + response.data[_i3].relativeUrl + ')"><span class="delete"></span></div>');
-        } //deleteFile();
+        } //console.log(response);
 
-
-        console.log(response);
       });
     }
   });

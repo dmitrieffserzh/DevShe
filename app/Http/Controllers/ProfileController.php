@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class ProfilesController extends Controller
+class ProfileController extends Controller
 {
 
     public function __construct()
@@ -26,8 +26,6 @@ class ProfilesController extends Controller
     {
 
         $user = Auth::user();
-//        $user = $user->load('profile');
-//        dd($user);
         if ($user->user_type == 0) {
             return view('profiles.edit_man', [
                 'profile' => $user
@@ -85,6 +83,14 @@ class ProfilesController extends Controller
 
     public function saveProfile(Request $request)
     {
+        $user = Auth::user();
+
+        if($user->user_type == 0) {
+            if($user->update($request->profile)) {
+                return response()->json(['success' => 'Профиль успешно обновлен!']);
+            }
+            return response()->json(['error' => 'Ошибка при обновлении!']);
+        }
 
         $profile = Profile::where('user_id', Auth::user()->id)->first();
 
@@ -184,35 +190,54 @@ class ProfilesController extends Controller
 
     public function payments()
     {
-        return view('profiles.index', ['heading' => 'Оплата']);
+        return view('profiles.payments', ['heading' => 'Оплата']);
     }
 
     public function uploadFiles(Request $request)
     {
-        $profile = Profile::where('user_id', Auth::user()->id)->firstOrFail();
+
+        if (Auth::user()->user_type == 0) {
+            $model = Auth::user();
+            if(count($model->attachment) > 0) {
+                $model->attachment()->delete();
+            }
+        }
+
+        if (Auth::user()->user_type == 1) {
+            $model = Profile::where('user_id', Auth::user()->id)->firstOrFail();
+        }
 
         $filesRequest = $request->file('files');
         $attachment = [];
         for ($i = 0; count($filesRequest) > $i; $i++) {
             $files = new File($filesRequest[$i]);
-            $attached = $profile->attachment()->syncWithoutDetaching($files->load(), []);
-            $attachment[] = $profile->attachment()->where('attachment_id', $attached['attached'][0])->first();
+            $attached = $model->attachment()->syncWithoutDetaching($files->load(), []);
+            $attachment[] = $model->attachment()->where('attachment_id', $attached['attached'][0])->first();
         }
 
         return response()->json($attachment);
     }
 
-    public function deleteFiles(Request $request)
+    public
+    function deleteFiles(Request $request)
     {
-        $profile = Profile::where('user_id', Auth::user()->id)->firstOrFail();
+        if (Auth::user()->user_type == 0) {
+            $model = Auth::user();
+        }
+
+        if (Auth::user()->user_type == 1) {
+            $model = Profile::where('user_id', Auth::user()->id)->firstOrFail();
+        }
+
         for ($i = 0; count($request->delete) > $i; $i++) {
-            $profile->attachment()->where('attachment_id', $request->delete['id'])->delete();
+            $model->attachment()->where('attachment_id', $request->delete['id'])->delete();
         }
 
         return response()->json();
     }
 
-    public function sortFiles(Request $request)
+    public
+    function sortFiles(Request $request)
     {
         foreach ($request->post() as $item) {
             DB::table('attachments')->where('id', $item['id'])->update(['sort' => $item['sort']]);

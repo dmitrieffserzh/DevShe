@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\CatalogController;
-use App\Http\Controllers\ProfilesController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PageController;
@@ -35,13 +35,13 @@ Route::get('articles/{slug}', [PostController::class, 'show'])->name('post.show'
 
 
 // PROFILE
-Route::get( 'profile',              [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
-Route::get( 'profile/rates',        [ ProfilesController::class, 'rates' ] )->name( 'profile.rates' );
-Route::get( 'profile/payments',     [ ProfilesController::class, 'payments' ] )->name( 'profile.payments' );
-Route::post('profile/upload',       [ ProfilesController::class, 'uploadFiles' ] )->name( 'profile.upload' );
-Route::post('profile/delete',       [ ProfilesController::class, 'deleteFiles' ] )->name( 'profile.delete' );
-Route::post('profile/sort',         [ ProfilesController::class, 'sortFiles' ] )->name( 'profile.sort' );
-Route::post('profile/save',         [ ProfilesController::class, 'saveProfile' ] )->name( 'profile.save' );
+Route::get( 'profile',              [ ProfileController::class, 'index' ] )->name( 'profile.index' );
+Route::get( 'profile/rates',        [ ProfileController::class, 'rates' ] )->name( 'profile.rates' );
+Route::get( 'profile/payments',     [ ProfileController::class, 'payments' ] )->name( 'profile.payments' );
+Route::post('profile/upload',       [ ProfileController::class, 'uploadFiles' ] )->name( 'profile.upload' );
+Route::post('profile/delete',       [ ProfileController::class, 'deleteFiles' ] )->name( 'profile.delete' );
+Route::post('profile/sort',         [ ProfileController::class, 'sortFiles' ] )->name( 'profile.sort' );
+Route::post('profile/save',         [ ProfileController::class, 'saveProfile' ] )->name( 'profile.save' );
 
 
 // CATALOG GIRLS
