@@ -84,42 +84,87 @@ class ProfilesController extends Controller {
 
         $profile = Profile::where( 'user_id', Auth::user()->id )->firstOrFail();
 
-        $profile->updated_at = Carbon::now();
+        if ( $profile ) {
 
-        $profile->update( $request->profile );
-        $profile->places()->sync( $request->profile['places'] );
+            $profile->updated_at = Carbon::now();
 
-        if ( empty( $request->profile['stations'] ) ) {
-            $profile->stations()->detach();
-        } else {
-            $profile->stations()->sync( $request->profile['stations'] );
-        }
+            $profile->update( $request->profile );
+            $profile->places()->sync( $request->profile['places'] );
 
-        $profile->prices()->update( $request->profile['prices'] );
-
-        //$profile->attachment()->syncWithoutDetaching($request->files, []);
-
-        $collection       = collect( $request->profile['services'] );
-        $filteredServices = $collection->filter( function ( $value ) {
-            if ( isset( $value['field_id'] ) && $value['field_id'] == 'on' ) {
-                return $value;
+            if ( empty( $request->profile['stations'] ) ) {
+                $profile->stations()->detach();
+            } else {
+                $profile->stations()->sync( $request->profile['stations'] );
             }
-        } );
 
-        $services = $filteredServices->map( function ( $value, $key ) {
-            return [
-                'field_id'    => $key,
-                'description' => isset( $value['description'] ) ? $value['description'] : null
-            ];
-        } );
+            $profile->prices()->update( $request->profile['prices'] );
 
-        $profile->fields()->delete();
-        $profile->fields()->createMany( $services->toArray() );
+            $collection       = collect( $request->profile['services'] );
+            $filteredServices = $collection->filter( function ( $value ) {
+                if ( isset( $value['field_id'] ) && $value['field_id'] == 'on' ) {
+                    return $value;
+                }
+            } );
 
+            $services = $filteredServices->map( function ( $value, $key ) {
+                return [
+                    'field_id'    => $key,
+                    'description' => isset( $value['description'] ) ? $value['description'] : null
+                ];
+            } );
 
-//        return view( 'pages.page', [
-//            'heading' => 'Профиль успешно сохранен'
-//        ] );
+            $profile->fields()->delete();
+            $profile->fields()->createMany( $services->toArray() );
+
+            return response()->json( [ 'success' => 'Профиль успешно обновлен!' ] );
+        } else {
+            // NEW PROFILE
+            $profile              = new Profile;
+            $profile->active      = $request->profile['active'];
+            $profile->private     = $request->profile['private'];
+            $profile->name        = $request->profile['name'];
+            $profile->slug        = $request->profile['name'] ? Str::slug( $request->profile['name'] . '-' . rand( 999, 9999 ) ) : Str::slug( Auth::user()->name . '-' . rand( 999, 9999 ) );
+            $profile->phone       = $request->profile['phone'] ?? 0;
+            $profile->whatsapp    = $request->profile['whatsapp'];
+            $profile->telegram    = $request->profile['telegram'];
+            $profile->age         = $request->profile['age']?? 0;
+            $profile->height      = $request->profile['height'];
+            $profile->weight      = $request->profile['weight'];
+            $profile->breast_size = $request->profile['breast_size']?? 0;
+            $profile->breast_type = $request->profile['breast_type']?? 0;
+            $profile->appearance  = $request->profile['appearance']?? 0;
+            $profile->section     = $request->profile['section']?? 0;
+            $profile->express     = $request->profile['express']?? 0;
+            $profile->city        = $request->profile['city']??'';
+            $profile->haircut     = $request->profile['haircut'];
+            $profile->haircolor   = $request->profile['haircolor']?? 0;
+            $profile->description = $request->profile['description']??'';
+            $profile->created_at  = Carbon::now();
+            $profile->save();
+            $profile->slug = Str::slug( $profile->name . '-' . $profile->id );
+            $profile->save();
+
+            $profile->places()->sync( $request->profile['places'] );
+            $profile->stations()->sync( $request->profile['stations'] );
+            $profile->prices()->create( $request->profile['prices'] );
+            $profile->attachment()->syncWithoutDetaching( $request->profile['attachment'], [] );
+
+            $collection       = collect( $request->profile['services'] );
+            $filteredServices = $collection->filter( function ( $value ) {
+                if ( isset( $value['field_id'] ) && $value['field_id'] == 'on' ) {
+                    return $value;
+                }
+            } );
+
+            $services = $filteredServices->map( function ( $value, $key ) {
+                return [
+                    'field_id'    => $key,
+                    'description' => isset( $value['description'] ) ? $value['description'] : null
+                ];
+            } );
+
+            $profile->fields()->createMany( $services->toArray() );
+        }
     }
 
 

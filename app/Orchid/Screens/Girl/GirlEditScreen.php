@@ -358,6 +358,7 @@ class GirlEditScreen extends Screen
         $profile->active = $request->profile['active'];
         $profile->private = $request->profile['private'];
         $profile->name = $request->profile['name'];
+        $profile->slug = rand(999, 9999);
         $profile->phone = $request->profile['phone'];
         $profile->whatsapp = $request->profile['whatsapp'];
         $profile->telegram = $request->profile['telegram'];
@@ -374,6 +375,8 @@ class GirlEditScreen extends Screen
         $profile->haircolor = $request->profile['haircolor'];
         $profile->description = $request->profile['description'];
         $profile->created_at = Carbon::now();
+        $profile->save();
+        $profile->slug = Str::slug($profile->name . '-' . $profile->id);
         $profile->save();
 
         $profile->places()->sync($request->profile['places']);
