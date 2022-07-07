@@ -42,7 +42,7 @@
                         <span class="label">Ваше имя</span>
                     </div>
                     <div class="block__input">
-                        <select name="profile[age]" id="" class="js-select">
+                        <select name="profile[age]" id="" class="js-select" required>
                             @foreach(Helpers::getGirlAge() as $key=>$value)
                                 <option value="{{ $key }}"
                                         @if(($profile->age ?? 0) == $key) selected @endif>{{ $value }}</option>
@@ -52,11 +52,11 @@
                     </div>
                     <div class="block__group">
                         <div class="block__input">
-                            <input type="text" name="profile[height]" value="{{ $profile->height ?? ''}}">
+                            <input type="text" name="profile[height]" value="{{ $profile->height ?? ''}}" required>
                             <span class="label">Рост</span>
                         </div>
                         <div class="block__input">
-                            <input type="text" name="profile[weight]" value="{{ $profile->weight ?? ''}}">
+                            <input type="text" name="profile[weight]" value="{{ $profile->weight ?? ''}}" required>
                             <span class="label">Вес</span>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                         <span class="label">Интимная стрижка</span>
                     </div>
                     <div class="block__input">
-                        <input type="text" name="profile[city]" value="{{ $profile->city ?? '' }}">
+                        <input type="text" name="profile[city]" value="{{ $profile->city ?? '' }}" required>
                         <span class="label">Город</span>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                         <span class="label">Станция метро</span>
                     </div>
                     <div class="block__input">
-                        <select name="profile[section]" id="" class="js-select">
+                        <select name="profile[section]" id="" class="js-select" required>
                             @foreach(Helpers::getGirlSection() as $key=>$value)
                                 <option value="{{ $key }}"
                                         @if($profile->section ?? 0 == $key) selected @endif>{{ $value }}</option>
@@ -145,7 +145,7 @@
                         <span class="label">Раздел</span>
                     </div>
                     <div class="block__input">
-                        <select name="profile[places][]" id="" class="js-select" multiple>
+                        <select name="profile[places][]" id="" class="js-select" multiple required>
                             <option value="">Не выбрано</option>
                             @foreach(\App\Models\Place::all() as $item)
                                 <option value="{{ $item['id'] }}"
@@ -163,7 +163,7 @@
 
                 <div class="profile-edit__row">
                     <div class="block__input">
-                        <input type="text" name="profile[phone]" value="{{ $profile->phone ?? '' }}">
+                        <input type="text" name="profile[phone]" value="{{ $profile->phone ?? '' }}" required>
                         <span class="label">Телефон</span>
                     </div>
                     <div class="block__input">

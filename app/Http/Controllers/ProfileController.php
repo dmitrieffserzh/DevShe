@@ -22,7 +22,7 @@ class ProfileController extends Controller
 
     private $profile_id = '';
 
-    public function index()
+    public function index(Request $request)
     {
 
         $user = Auth::user();
@@ -42,23 +42,19 @@ class ProfileController extends Controller
             $profile->active = 1;
             $profile->private = 0;
             $profile->name = $request->profile['name'] ?? Auth::user()->name;
-            $profile->slug = $request->profile['name'] ? Str::slug($request->profile['name'] . '-' . rand(999, 9999)) : Str::slug(Auth::user()->name . '-' . rand(999, 9999));
+            $profile->slug = $request->profile['name'] ?? rand(999, 9999);
             $profile->phone = $request->profile['phone'] ?? 0;
-            $profile->whatsapp = $request->profile['whatsapp'];
-            $profile->telegram = $request->profile['telegram'];
             $profile->age = $request->profile['age'] ?? 0;
-            $profile->height = $request->profile['height'];
-            $profile->weight = $request->profile['weight'];
+            $profile->height = $request->profile['height'] ?? 0;
+            $profile->weight = $request->profile['weight'] ?? 0;
             $profile->breast_size = $request->profile['breast_size'] ?? 0;
             $profile->breast_type = $request->profile['breast_type'] ?? 0;
             $profile->appearance = $request->profile['appearance'] ?? 0;
             $profile->section = $request->profile['section'] ?? 0;
             $profile->express = $request->profile['express'] ?? 0;
             $profile->city = $request->profile['city'] ?? '';
-            $profile->haircut = $request->profile['haircut'];
             $profile->haircolor = $request->profile['haircolor'] ?? 0;
             $profile->description = $request->profile['description'] ?? '';
-            $profile->created_at = Carbon::now();
             $profile->save();
             $profile->slug = Str::slug($profile->name . '-' . $profile->id);
             $profile->save();
