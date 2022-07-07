@@ -262,7 +262,6 @@ table {
   display: block;
   height: 28px;
   -moz-user-select: none;
-   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -289,7 +288,6 @@ table {
   display: block;
   min-height: 32px;
   -moz-user-select: none;
-   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -347,7 +345,6 @@ table {
 .select2-results__option {
   padding: 6px;
   -moz-user-select: none;
-   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -929,11 +926,6 @@ table {
   opacity: 1;
 }
 
-:-ms-input-placeholder {
-  font-family: "Core Sans C 35" !important;
-  color: #D1D1D1;
-}
-
 ::placeholder {
   font-family: "Core Sans C 35" !important;
   color: #D1D1D1;
@@ -1091,9 +1083,6 @@ body {
   height: 20px;
   line-height: 1.25rem;
 }
-.header-main__buttons .button:last-child {
-  margin: 0 0 0 0.5rem;
-}
 .header-search {
   display: inline-block;
   position: relative;
@@ -1175,10 +1164,57 @@ body {
 }
 
 @media screen and (max-width: 767px) {
+  .header-top__menu {
+    display: flex;
+    flex: auto;
+    margin: 0 1rem 0 0;
+    overflow: hidden;
+    overflow-x: scroll;
+    padding: 0.5rem 1rem 0.5rem 0;
+  }
+  .header-top__menu::-webkit-scrollbar {
+    display: none;
+  }
+  .header-top__menu a {
+    margin: 0 0.5rem;
+  }
+  .header-top__menu a:first-child {
+    margin: 0 0.5rem 0 0;
+  }
+  .header-top__menu a:last-child {
+    margin: 0 0 0 0.5rem;
+  }
+  .header-top__social {
+    display: flex;
+    position: relative;
+  }
+  .header-top__social:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -3.5rem;
+    bottom: 0;
+    width: 3rem;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgb(255, 255, 255));
+  }
+  .header-main {
+    padding: 0.25rem 0.55rem;
+  }
+  .header-main__buttons {
+    display: flex;
+  }
   .header-main__buttons .button {
-    padding: 1rem;
+    padding: 0.75rem;
+    margin: 0 0 0 0.25rem;
   }
   .header-main__buttons .button span.text {
+    display: none;
+  }
+  .header-search {
+    margin: 0 0.2rem 0 0.5rem;
+  }
+  .header-search__link .text {
     display: none;
   }
 }
@@ -1299,6 +1335,10 @@ body {
   .main__heading {
     flex-direction: column;
   }
+  .main__h1 {
+    font-size: 1.2rem;
+    padding: 1rem 0 0.5rem;
+  }
   .main .aside {
     max-width: 100%;
   }
@@ -1401,6 +1441,10 @@ body {
     align-content: flex-start;
     align-items: flex-start;
   }
+  .footer-links__menu a {
+    margin: 0.75rem 0;
+    width: 50%;
+  }
   .copyright__container {
     flex-direction: column;
     align-items: flex-start;
@@ -1411,6 +1455,8 @@ body {
   }
   .copyright-links {
     order: 1;
+    line-height: 1.5rem;
+    margin: 1rem 0;
   }
   .copyright-links a {
     display: block;
@@ -1708,7 +1754,7 @@ body {
   background-position: center center;
 }
 .main-slider__title {
-  margin: 8rem 0 0 4rem;
+  margin: 11rem 0 0 4rem;
   font-family: "Core Sans C 75";
   font-size: 38px;
   line-height: 52px;
@@ -1716,6 +1762,14 @@ body {
   max-width: 400px;
 }
 
+@media screen and (max-width: 767px) {
+  .main-slider__title {
+    margin: 8rem auto 0;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+  }
+}
 /*  PROFILES LISTS ================================================================================================== */
 .profiles-list {
   margin: 0 -0.5rem;
@@ -1879,7 +1933,7 @@ body {
   align-items: center;
 }
 .profile .images__item img {
-  width: 100%;
+  width: 130%;
 }
 .profile .thumbs {
   margin: 0 0 1rem;
@@ -1888,7 +1942,7 @@ body {
 }
 .profile .thumbs__item {
   border-radius: 0.5rem;
-  height: 100px;
+  height: auto;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -2201,7 +2255,7 @@ body {
 .profile-edit input[type=file] {
   display: none;
 }
-.profile-edit .image-upload {
+.profile-edit .uploader__input {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2215,28 +2269,44 @@ body {
   background-position: center center;
   background-size: 95px;
 }
-.profile-edit .image-upload p {
+.profile-edit .uploader__input p {
   margin: 9rem 3rem 0;
   text-align: center;
   color: #666666;
   font-size: 13px;
   line-height: 16px;
 }
-.profile-edit .thumbs {
-  margin: 0 0 1rem;
-  width: 100%;
-  height: 100px;
+.profile-edit .uploader__thumbs {
+  margin: 0 -0.5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
-.profile-edit .thumbs__item {
-  border-radius: 0.5rem;
-  height: 100px;
+.profile-edit .uploader__thumbs-item {
+  display: inline-block;
+  position: relative;
+  margin: 0.5rem;
+  width: calc(25% - 1rem);
+  height: 78px;
+  background-color: #f8f8f8;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  overflow: hidden;
+  border-radius: 0.5rem;
 }
-.profile-edit .thumbs__item img {
-  width: 100%;
+.profile-edit .uploader__thumbs-item > .delete {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  background: #df0031;
+  color: #fff;
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.25);
 }
 .profile-edit .description {
   position: relative;
@@ -2395,9 +2465,6 @@ body {
   border: 1px Solid #2AABEE;
 }
 .profile-edit .information .block__input input:focus::-moz-placeholder {
-  visibility: hidden;
-}
-.profile-edit .information .block__input input:focus:-ms-input-placeholder {
   visibility: hidden;
 }
 .profile-edit .information .block__input input:focus::placeholder {
@@ -2572,9 +2639,6 @@ body {
 .filter__block .block__input input:focus::-moz-placeholder {
   visibility: hidden;
 }
-.filter__block .block__input input:focus:-ms-input-placeholder {
-  visibility: hidden;
-}
 .filter__block .block__input input:focus::placeholder {
   visibility: hidden;
 }
@@ -2586,6 +2650,17 @@ body {
   width: 100%;
 }
 
+@media screen and (max-width: 767px) {
+  .filter {
+    flex-direction: column;
+  }
+  .filter__block {
+    width: auto;
+  }
+  .filter__block.block {
+    width: 94%;
+  }
+}
 /* ZOOM MAP ========================================================================================================= */
 #map-container {
   overflow: hidden;

@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Orchid\Platform\Models\User as Authenticatable;
+use Orchid\Attachment\Attachable;
 
 class User extends Authenticatable {
+    //use Attachable;
 
     protected $table = 'users';
 

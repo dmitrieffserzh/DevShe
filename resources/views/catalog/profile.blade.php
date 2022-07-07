@@ -195,7 +195,8 @@
                 @endforeach
             </div>
             <div class="add-testimonial">
-                <a href="#" class="button">Оставить отзыв</a>
+                <a href="#" class="button js-open-modal"
+                   data-modal="add-testimonial">Оставить отзыв</a>
             </div>
         </div>
     </div>

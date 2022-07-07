@@ -38,6 +38,7 @@ Route::get('articles/{slug}', [PostController::class, 'show'])->name('post.show'
 Route::get( 'profile',          [ ProfilesController::class, 'index' ] )->name( 'profile.index' );
 Route::get( 'profile/rates',    [ ProfilesController::class, 'rates' ] )->name( 'profile.rates' );
 Route::get( 'profile/payments', [ ProfilesController::class, 'payments' ] )->name( 'profile.payments' );
+Route::post('profile/uploads',  [ ProfilesController::class, 'uploads' ] )->name( 'profile.upload' );
 
 
 // CATALOG GIRLS

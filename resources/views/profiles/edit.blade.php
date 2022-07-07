@@ -3,8 +3,7 @@
 @section('h1', $heading ?? 'Личные данные')
 
 @section('content')
-
-    {{--    <div class="content">--}}
+    <script src="http://SortableJS.github.io/Sortable/Sortable.js"></script>
     <div class="profile-edit">
         <div class="profile-edit__column">
             @include('profiles.aside')
@@ -12,38 +11,42 @@
         <div class="profile-edit__column">
 
             <div class="uploader">
-                <input id="file-input" type="file">
-                <label for="file-input" class="image-upload">
+                <input id="file-input" ref="file" type="file" multiple>
+                <label for="file-input" class="uploader__input">
                     <p>Загрузите несколько изображений
                         или видео с рабочего стола</p>
                 </label>
-            </div>
 
-            {{--            <div class="profile-edit__images">--}}
-            {{--                <div class="images swiper">--}}
-            {{--                    <div class="swiper-wrapper">--}}
-            {{--                        @foreach($profile->attachment as $image)--}}
-            {{--                            <div class="images__item swiper-slide">--}}
-            {{--                                <img src="{{$image->url}}" alt="">--}}
-            {{--                            </div>--}}
-            {{--                        @endforeach--}}
-            {{--                    </div>--}}
-            {{--                    <div class="swiper-button-next"></div>--}}
-            {{--                    <div class="swiper-button-prev"></div>--}}
-            {{--                </div>--}}
-            {{--                <div class="thumbs swiper">--}}
-            {{--                    <div class="swiper-wrapper">--}}
-            {{--                        @foreach($profile->attachment as $image)--}}
-            {{--                            <div class="thumbs__item swiper-slide">--}}
-            {{--                                <img src="{{$image->url}}" alt="">--}}
-            {{--                            </div>--}}
-            {{--                        @endforeach--}}
-            {{--                    </div>--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
+                <div class="uploader__thumbs">
+                    @if(!empty($profile->attachment))
+                        @foreach($profile->attachment as $image)
+                            <div class="uploader__thumbs-item" data-id="{{ $image->id }}" data-sort="{{ $image->sort }}"
+                                 style="background-image: url('{{ $image->url }}')">
+                                <span class="delete">х</span>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <script>
+                    let sortableThumbs = document.querySelector('.uploader__thumbs');
+                    Sortable.create(sortableThumbs, {
+                            sort: true,
+                            dataIdAttr: 'data-id',
+                            animation: 300,
+
+                            // Element dragging ended
+                            onEnd: function (event) {
+                                for (let i = 0; event.from.children.length > i; i++) {
+                                    event.from.children[i].setAttribute('data-sort', i);
+                                }
+                            },
+                        }
+                    );
+                </script>
+            </div>
             <div class="description">
                 <textarea name="profile[description]" id=""
-                          placeholder="Коротко о себе">{{ $profile->description }}</textarea>
+                          placeholder="Коротко о себе">{{ $profile->description ?? '' }}</textarea>
                 <span class="label">Напишите немного о себе</span>
             </div>
         </div>
@@ -58,18 +61,18 @@
                         <select name="profile[age]" id="" class="js-select">
                             @foreach(Helpers::getGirlAge() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($key == $profile->age) selected @endif>{{ $value }}</option>
+                                        @if($key == !empty($profile->age)) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Возраст</span>
                     </div>
                     <div class="block__group">
                         <div class="block__input">
-                            <input type="text" value="{{ $profile->height }}">
+                            <input type="text" value="{{ $profile->height ?? ''}}">
                             <span class="label">Рост</span>
                         </div>
                         <div class="block__input">
-                            <input type="text" value="{{ $profile->weight }}">
+                            <input type="text" value="{{ $profile->weight ?? ''}}">
                             <span class="label">Вес</span>
                         </div>
                     </div>
@@ -80,7 +83,7 @@
                         <select name="profile[haircolor]" id="" class="js-select">
                             @foreach(Helpers::getGirlHaircolor() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($key == $profile->haircolor) selected @endif>{{ $value }}</option>
+                                        @if($key == !empty($profile->haircolor)) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Типаж</span>
@@ -89,7 +92,7 @@
                         <select name="profile[breast_size]" id="" class="js-select">
                             @foreach(Helpers::getGirlBreast() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($key == $profile->breast_size) selected @endif>{{ $value }}</option>
+                                        @if($key == !empty($profile->breast_size)) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Грудь</span>
@@ -97,12 +100,12 @@
                     <div class="block__group block__group--column ">
                         <div class="input_radio">
                             <input id="breast-natural" type="radio" name="profile[breast_type]" value="0"
-                                   @if($profile->breast_type == 0) checked @endif>
+                                   @if(!empty($profile->breast_type) == 0) checked @endif>
                             <label for="breast-natural">Натуральная</label>
                         </div>
                         <div class="input_radio">
                             <input id="breast-silicon" type="radio" name="profile[breast_type]" value="1"
-                                   @if($profile->breast_type == 1) checked @endif>
+                                   @if(!empty($profile->breast_type) == 1) checked @endif>
                             <label for="breast-silicon">Силикон</label>
                         </div>
                     </div>
@@ -114,7 +117,7 @@
                         <select name="profile[appearance]" id="" class="js-select">
                             @foreach(Helpers::getGirlAppearance() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($key == $profile->appearance) selected @endif>{{ $value }}</option>
+                                        @if($key == !empty($profile->appearance)) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Внешность</span>
@@ -123,7 +126,7 @@
                         <select name="profile[haircut]" id="" class="js-select">
                             @foreach(Helpers::getGirlHaircut() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($key == $profile->haircut) selected @endif>{{ $value }}</option>
+                                        @if($key == !empty($profile->haircut)) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Интимная стрижка</span>
@@ -140,9 +143,11 @@
                             <option value="">Не выбрано</option>
                             @foreach(\App\Models\Station::all() as $item)
                                 <option value="{{ $item['id'] }}"
+                                        @if(!empty($profile->stations))
                                         @for($i = 0; count($profile->stations) > $i; $i++ )
                                         @if($item['id'] == $profile->stations[$i]['id']) selected @endif
-                                    @endfor
+                                        @endfor
+                                        @endif
                                 >{{ $item['name'] }}</option>
                             @endforeach
                         </select>
@@ -152,7 +157,7 @@
                         <select name="profile[section]" id="" class="js-select">
                             @foreach(Helpers::getGirlSection() as $key=>$value)
                                 <option value="{{ $key }}"
-                                        @if($key == $profile->section) selected @endif>{{ $value }}</option>
+                                        @if($key == !empty($profile->section)) selected @endif>{{ $value }}</option>
                             @endforeach
                         </select>
                         <span class="label">Раздел</span>
@@ -162,9 +167,11 @@
                             <option value="">Не выбрано</option>
                             @foreach(\App\Models\Place::all() as $item)
                                 <option value="{{ $item['id'] }}"
+                                        @if(!empty($profile->places))
                                         @for($i = 0; count($profile->places) > $i; $i++ )
                                         @if($item['id'] == $profile->places[$i]['id']) selected @endif
-                                    @endfor
+                                        @endfor
+                                        @endif
                                 >{{ $item['name'] }}</option>
                             @endforeach
                         </select>
@@ -305,5 +312,4 @@
             </div>
         </div>
     </div>
-    {{--    </div>--}}
 @endsection

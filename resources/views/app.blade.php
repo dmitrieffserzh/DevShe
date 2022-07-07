@@ -33,21 +33,21 @@
             </a>
             <div class="header-main__search">
                 <div class="header-search">
-                    <input type="text" name="search" placeholder="Введите имя или id девушки"
+                    <input type="text" name="search" placeholder="Имя или id"
                            class="header-search__input" autocomplete="off">
                     <button class="header-search__button"></button>
                     <div class="header-search__result"></div>
                 </div>
-                <a href="{{ route('search.metro') }}" class="header-search__link">Поиск по <span></span></a>
+                <a href="{{ route('search.metro') }}" class="header-search__link"><soan class="text">Поиск по </soan><span></span></a>
             </div>
             <div class="header-main__buttons">
                 @if (!Auth::check())
                 <a href="" class="button button--add js-open-modal"
-                   data-modal="register"><span>Добавить анкету</span></a>
+                   data-modal="register"><span class="icon"></span><span class="text">Добавить анкету</span></a>
                 @endif
                 @if (Auth::check())
                     <a href="{{ route('profile.index') }}" class="button button--login"><span class="icon"></span><span class="text">Личный кабинет</span></a>
-                @else
+                    @elseif(!Auth::check())
                     <a href="" class="button button--login js-open-modal"
                        data-modal="login"><span class="icon"></span><span class="text">Войти в кабинет</span></a>
                 @endif
@@ -138,6 +138,19 @@
     @include('auth.register')
     @include('auth.login')
 @endif
+
+<div class="modal" data-modal="add-testimonial">
+    <svg class="modal__close js-modal-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+                d="M23.954 21.03l-9.184-9.095 9.092-9.174-1.832-1.807-9.09 9.179-9.176-9.088-1.81 1.81 9.186 9.105-9.095 9.184 1.81 1.81 9.112-9.192 9.18 9.1z"
+                fill="#D1D1D1"></path>
+    </svg>
+    <p class="modal__title">Оставить отзыв</p>
+    <p class="modal__subtitle"></p>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+</div>
+
+
 <div class="overlay" id="overlay-modal"></div>
 <script>
     const sections = {!! json_encode(\App\Helpers::getGirlSectionUrl()) !!};

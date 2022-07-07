@@ -6,6 +6,7 @@ import Swiper, {Autoplay, Thumbs} from 'swiper';
 import 'swiper/css';
 import 'select2/dist/js/select2.min';
 import Panzoom from '@panzoom/panzoom/dist/panzoom';
+//import Sortable from 'sortablejs/Sortable.min';
 
 
 window.onload = function () {
@@ -259,22 +260,24 @@ if (window.window.innerWidth < 991) {
     const metroMap = document.getElementById('map');
     const buttonZoomIn = document.getElementById('zoomIn');
     const buttonZoomOut = document.getElementById('zoomOut');
-    const panzoom = Panzoom(metroMap, {
-        maxScale: 5,
-        minScale: 1
-    });
-    panzoom.zoom(1, {
-        animate: true
-    });
-    panzoom.pan(100, 100);
+    if (metroMap) {
+        const panzoom = Panzoom(metroMap, {
+            maxScale: 5,
+            minScale: 1
+        });
+        panzoom.zoom(1, {
+            animate: true
+        });
+        panzoom.pan(100, 100);
 
-    buttonZoomIn.addEventListener('click', panzoom.zoomIn);
-    buttonZoomOut.addEventListener('click', panzoom.zoomOut);
+        buttonZoomIn.addEventListener('click', panzoom.zoomIn);
+        buttonZoomOut.addEventListener('click', panzoom.zoomOut);
 
-    metroMap.addEventListener('wheel', function (event) {
-        if (!event.shiftKey) return
-        panzoom.zoomWithWheel(event)
-    });
+        metroMap.addEventListener('wheel', function (event) {
+            if (!event.shiftKey) return
+            panzoom.zoomWithWheel(event)
+        });
+    }
 }
 
 
@@ -340,4 +343,53 @@ if (buttonLoadMore) {
     });
 }
 
+// // SORT IMAGES
+// let sortableThumbs = document.querySelector('.uploader__thumbs');
+// Sortable.create(sortableThumbs, {
+//         sort: true,
+//         dataIdAttr: 'data-id',
+//         animation: 300,
+//
+//         // Element dragging ended
+//         onEnd: function (event) {
+//             alert('');
+//             for (let i = 0; event.from.children.length > i; i++) {
+//                 event.from.children[i].setAttribute('data-sort', i);
+//             }
+//         },
+//     }
+// );
 
+
+// UPLOAD PHOTOS
+let inputFile = document.getElementById('file-input');
+if (inputFile) {
+    inputFile.addEventListener('change', (event) => {
+        if (event.target.files.length) {
+
+            const selectedFile = document.getElementById("file-input").files;
+
+            let data = new FormData();
+
+            for( let i = 0; i < event.target.files.length; i++ ){
+                let file = event.target.files[i];
+                data.append('files[' + i + ']', file);
+            }
+
+            axios({
+                method: "POST",
+                url: '/profile/uploads',
+                data: data,
+                headers: {
+                    "Content-Type": "multipart/form-data; boundary=something",
+                }
+            }).then((response) => {
+                console.log(response);
+            });
+
+            console.log(event.target.files[0])
+        }
+    });
+
+
+}

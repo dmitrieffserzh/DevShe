@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Orchid\Presenters\GirlPresenter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Filters\Filterable;
