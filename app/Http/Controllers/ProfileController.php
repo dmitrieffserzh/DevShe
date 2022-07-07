@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Price;
 use App\Models\Profile;
 use App\Models\Rate;
 use Illuminate\Support\Str;
@@ -131,7 +132,11 @@ class ProfileController extends Controller
                 $profile->stations()->sync($request->profile['stations']);
             }
 
-            $profile->prices()->update($request->profile['prices']);
+            if($profile->prices) {
+                $profile->prices()->update($request->profile['prices']);
+            } else {
+                $profile->prices()->create($request->profile['prices']);
+            }
 
             $collection = collect($request->profile['services']);
             $filteredServices = $collection->filter(function ($value) {
