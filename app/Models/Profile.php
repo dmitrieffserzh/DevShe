@@ -65,6 +65,6 @@ class Profile extends Model {
     }
 
     public function prices() {
-        return $this->hasOne( Price::class );
+        return $this->hasOne( Price::class);
     }
 }

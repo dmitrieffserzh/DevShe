@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
-class RegisteredUserController extends Controller
-{
+class RegisteredUserController extends Controller {
 
 //    public function create()
 //    {
@@ -20,25 +19,24 @@ class RegisteredUserController extends Controller
 //    }
 
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'user_type' => ['required', 'integer', 'max:1'],
-        ]);
+    public function store( Request $request ) {
+        $request->validate( [
+            'name'      => [ 'required', 'string', 'max:255' ],
+            'email'     => [ 'required', 'string', 'email', 'max:255', 'unique:users' ],
+            'password'  => [ 'required', 'confirmed', Rules\Password::defaults() ],
+            'user_type' => [ 'required', 'integer', 'max:1' ],
+        ] );
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        $user = User::create( [
+            'name'      => $request->name,
+            'email'     => $request->email,
+            'password'  => Hash::make( $request->password ),
             'user_type' => $request->user_type,
-        ]);
+        ] );
 
-        event(new Registered($user));
+        event( new Registered( $user ) );
 
-        Auth::login($user);
+        Auth::login( $user );
 
         return json_encode( [ 'success' => 'ok', 'message' => 'Регистрация успешно выполнена!' ] );
     }

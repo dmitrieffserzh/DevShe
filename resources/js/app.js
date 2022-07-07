@@ -6,7 +6,7 @@ import Swiper, {Autoplay, Thumbs} from 'swiper';
 import 'swiper/css';
 import 'select2/dist/js/select2.min';
 import Panzoom from '@panzoom/panzoom/dist/panzoom';
-//import Sortable from 'sortablejs/Sortable.min';
+import Sortable from 'sortablejs';
 
 
 window.onload = function () {
@@ -343,53 +343,121 @@ if (buttonLoadMore) {
     });
 }
 
-// // SORT IMAGES
-// let sortableThumbs = document.querySelector('.uploader__thumbs');
-// Sortable.create(sortableThumbs, {
-//         sort: true,
-//         dataIdAttr: 'data-id',
-//         animation: 300,
-//
-//         // Element dragging ended
-//         onEnd: function (event) {
-//             alert('');
-//             for (let i = 0; event.from.children.length > i; i++) {
-//                 event.from.children[i].setAttribute('data-sort', i);
-//             }
-//         },
-//     }
-// );
-
+function deleteFile() {
+    let deleteButtons = document.querySelectorAll('.delete');
+    for (let i = 0; deleteButtons.length > i; i++) {
+        deleteButtons[i].addEventListener('click', () => {
+            axios({
+                method: "POST",
+                url: '/profile/deleteFiles',
+                data: {delete: {id: deleteButtons[i].parentElement.getAttribute('data-id')}},
+            }).then((response) => {
+                deleteButtons[i].parentElement.remove();
+                console.log(response);
+            });
+        })
+    }
+}
 
 // UPLOAD PHOTOS
 let inputFile = document.getElementById('file-input');
+let thumbContainer = document.querySelector('.uploader__thumbs');
 if (inputFile) {
     inputFile.addEventListener('change', (event) => {
         if (event.target.files.length) {
-
-            const selectedFile = document.getElementById("file-input").files;
-
             let data = new FormData();
 
-            for( let i = 0; i < event.target.files.length; i++ ){
+            for (let i = 0; i < event.target.files.length; i++) {
                 let file = event.target.files[i];
                 data.append('files[' + i + ']', file);
             }
 
             axios({
                 method: "POST",
-                url: '/profile/uploads',
+                url: '/profile/uploadFiles',
                 data: data,
                 headers: {
                     "Content-Type": "multipart/form-data; boundary=something",
                 }
             }).then((response) => {
+
+                for (let i = 0; response.data.length > i; i++) {
+                    thumbContainer.insertAdjacentHTML("beforeend", '' +
+                        '<div class="uploader__thumbs-item" data-id="' + response.data[i].id + '" data-sort="' + response.data[i].sort + '" style="background-image: url(' + response.data[i].relativeUrl + ')"><span class="delete"></span></div>');
+                }
+                //deleteFile();
                 console.log(response);
             });
-
-            console.log(event.target.files[0])
         }
     });
+}
 
 
+
+
+// SORT FILES
+let sortableThumbs = document.querySelector('.uploader__thumbs');
+if (sortableThumbs.children.length > 1) {
+    Sortable.create(sortableThumbs, {
+            sort: true,
+            dataIdAttr: 'data-id',
+            animation: 500,
+            filter: '.delete',
+            onFilter: function () {
+
+                // ХЗЗЗЗЗЗЗЗЗЗЗЗЗ
+                // let deleteButtons = document.querySelectorAll('.delete');
+                // for (let i = 0; deleteButtons.length > i; i++) {
+                //     deleteButtons[i].addEventListener('click', () => {
+                //         deleteButtons[i].parentElement.remove();
+                //     })
+                // }
+                deleteFile();
+            },
+            onEnd: function (event) {
+                for (let i = 0; event.from.children.length > i; i++) {
+                    event.from.children[i].setAttribute('data-sort', i);
+                }
+
+                let arrSortable = [];
+                for (let i = 0; sortableThumbs.children.length > i; i++) {
+                    arrSortable.push({
+                        id: sortableThumbs.children[i].getAttribute('data-id'),
+                        sort: sortableThumbs.children[i].getAttribute('data-sort')
+                    });
+                }
+
+                axios({
+                    method: "POST",
+                    url: '/profile/sortFiles',
+                    data: arrSortable
+                }).then((response) => {
+                    console.log(response);
+                });
+            },
+        }
+    );
+}
+
+
+// SAVE PROFILE
+let profileForm = document.getElementById('profile-form');
+if (profileForm) {
+    profileForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let data = new FormData(profileForm);
+
+        axios({
+            method: "POST",
+            url: '/profile/saveProfile',
+            data: data,
+            headers: {
+                "Content-Type": "multipart/form-data; boundary=something",
+            }
+        }).then((response) => {
+
+            console.log(response);
+        });
+    })
 }

@@ -24,7 +24,7 @@ class Price extends Model {
     ];
 
     // RELATIONS
-    public function profiless() {
-        return $this->belongsTo( Price::class );
+    public function profile() {
+        return $this->belongsTo( Profile::class);
     }
 }

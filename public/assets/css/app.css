@@ -262,6 +262,7 @@ table {
   display: block;
   height: 28px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -288,6 +289,7 @@ table {
   display: block;
   min-height: 32px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -345,6 +347,7 @@ table {
 .select2-results__option {
   padding: 6px;
   -moz-user-select: none;
+   -ms-user-select: none;
        user-select: none;
   -webkit-user-select: none;
 }
@@ -924,6 +927,11 @@ table {
   font-family: "Core Sans C 35" !important;
   color: #D1D1D1;
   opacity: 1;
+}
+
+:-ms-input-placeholder {
+  font-family: "Core Sans C 35" !important;
+  color: #D1D1D1;
 }
 
 ::placeholder {
@@ -2300,13 +2308,19 @@ body {
   position: absolute;
   top: 0.25rem;
   right: 0.25rem;
+  z-index: 100;
   width: 1rem;
   height: 1rem;
-  background: #df0031;
+  background-color: #e50032;
+  background-image: url("/images/delete_icon.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 48%;
   color: #fff;
   text-align: center;
-  border-radius: 50%;
+  border-radius: 0.25rem;
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
 .profile-edit .description {
   position: relative;
@@ -2465,6 +2479,9 @@ body {
   border: 1px Solid #2AABEE;
 }
 .profile-edit .information .block__input input:focus::-moz-placeholder {
+  visibility: hidden;
+}
+.profile-edit .information .block__input input:focus:-ms-input-placeholder {
   visibility: hidden;
 }
 .profile-edit .information .block__input input:focus::placeholder {
@@ -2637,6 +2654,9 @@ body {
   border: 1px Solid #2AABEE;
 }
 .filter__block .block__input input:focus::-moz-placeholder {
+  visibility: hidden;
+}
+.filter__block .block__input input:focus:-ms-input-placeholder {
   visibility: hidden;
 }
 .filter__block .block__input input:focus::placeholder {
