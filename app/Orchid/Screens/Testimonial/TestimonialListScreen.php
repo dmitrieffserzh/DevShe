@@ -40,7 +40,7 @@ class TestimonialListScreen extends Screen {
         if ( $testimonial->save() ) {
             Toast::info( 'Статус отзыва успешно изменен!' );
 
-            return redirect()->route( 'platform.slides' );
+            return redirect()->route( 'platform.testimonials' );
         }
     }
 

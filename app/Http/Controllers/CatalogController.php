@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers;
 use App\Models\Profile;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ class CatalogController extends Controller {
     function showProfileCatalog( $section, $slug ) {
 
         $profile = Profile::where( 'active', 1 )->where( 'slug', $slug )->first();
+        $testimonials = Testimonial::where( 'active', 1 )->where( 'profile_id', $profile->id )->get();
 
         if ( $profile['section'] != array_search( $section, Helpers::getGirlSectionUrl() ) ) {
             abort( 404 );
@@ -58,7 +60,7 @@ class CatalogController extends Controller {
         array_push( $arrServices, [ 'title' => $item->block_title, 'services' => $servicesList ] );
 
         return view( 'catalog.profile', [
-            'testimonials' => '',
+            'testimonials' => $testimonials,
             'heading'    => $profile->name,
             'section_id' => $profile->section,
             'profile'    => $profile->load( [ 'attachment', 'prices', 'stations' ] ),
