@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
-class Testimonial extends Model
-{
+class Testimonial extends Model {
     use Filterable;
     use HasFactory;
     use AsSource;
@@ -20,14 +19,15 @@ class Testimonial extends Model
         'content',
     ];
 
-    protected $allowedFilters = ['id', 'title', 'active'];
-    protected $allowedSorts = ['id', 'active', 'sort'];
+    protected $allowedFilters = [ 'id', 'title', 'active' ];
+    protected $allowedSorts = [ 'id', 'active', 'sort' ];
 
     // RELATIONS
     public function profile() {
         return $this->belongsTo( Profile::class );
     }
+
     public function userProfile() {
-        return $this->belongsTo( User::class, 'user_id', 'id');
+        return $this->belongsTo( User::class, 'user_id', 'id' );
     }
 }

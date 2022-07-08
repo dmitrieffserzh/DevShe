@@ -2,9 +2,8 @@
 
 namespace App\Orchid\Screens\Testimonial;
 
-use App\Models\Slider;
 use App\Models\Testimonial;
-use App\Orchid\Layouts\Slider\SliderListLayout;
+use App\Orchid\Layouts\Testimonial\TestimonialListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
@@ -13,7 +12,7 @@ use Orchid\Support\Facades\Toast;
 class TestimonialListScreen extends Screen {
     public function query(): iterable {
         return [
-            'slider' => Testimonial::filters()->defaultSort( 'id', 'desc' )->paginate(),
+            'testimonial' => Testimonial::filters()->defaultSort( 'id', 'desc' )->paginate(),
         ];
     }
 
@@ -31,14 +30,14 @@ class TestimonialListScreen extends Screen {
 
     public function layout(): iterable {
         return [
-            SliderListLayout::class,
+            TestimonialListLayout::class,
         ];
     }
 
     public function status( Request $request ) {
-        $slide         = Slider::findOrFail( $request->get( 'id' ) );
-        $slide->active = $request->get( 'status' );
-        if ( $slide->save() ) {
+        $testimonial         = Testimonial::findOrFail( $request->get( 'id' ) );
+        $testimonial->active = $request->get( 'status' );
+        if ( $testimonial->save() ) {
             Toast::info( 'Статус отзыва успешно изменен!' );
 
             return redirect()->route( 'platform.slides' );
@@ -46,7 +45,7 @@ class TestimonialListScreen extends Screen {
     }
 
     public function remove( Request $request ): void {
-        Slider::findOrFail( $request->get( 'id' ) )->delete();
+        Testimonial::findOrFail( $request->get( 'id' ) )->delete();
         Toast::info( 'Отзыв успешно удален' );
     }
 }
