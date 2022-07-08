@@ -47,7 +47,7 @@ class TestimonialListLayout extends Table {
               ->filter( Input::make() )
               ->render( function ( Testimonial $testimonial ) {
                   return '<b>' . Link::make( \Illuminate\Support\Str::limit($testimonial->content, $limit = 60, $end = '...') )
-                                     ->route( 'platform.slides.edit', $testimonial->id ) . '</b>';
+                                     ->route( 'platform.testimonials.edit', $testimonial->id ) . '</b>';
               } ),
             TD::make( 'created_at', 'Дата создания' )
               ->sort()
@@ -71,14 +71,14 @@ class TestimonialListLayout extends Table {
                                  ->icon( 'options-vertical' )
                                  ->list( [
                                      Button::make( $testimonial->active == 1 ? 'Деактивировать' : 'Активировать' )
-                                           ->route( 'platform.slides' )
+                                           ->route( 'platform.testimonials' )
                                            ->icon( 'power' )
                                            ->method( 'status', [
                                                'id'     => $testimonial->id,
                                                'status' => $testimonial->active == 1 ? 0 : 1
                                            ] ),
                                      Link::make( __( 'Edit' ) )
-                                         ->route( 'platform.slides.edit', $testimonial->id )
+                                         ->route( 'platform.testimonials.edit', $testimonial->id )
                                          ->icon( 'pencil' ),
 
                                      Button::make( __( 'Delete' ) )

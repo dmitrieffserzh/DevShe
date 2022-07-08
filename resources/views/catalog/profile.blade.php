@@ -201,11 +201,11 @@
                    data-modal="add-testimonial">Оставить отзыв</a>
             </div>
             @endif
-            @if(count($profile->testimonials) > 0)
+            @if(count($testimonials) > 0)
                 <div class="testimonials">
                     <h2 class="testimonials__title">Отзывы</h2>
                     <div class="testimonials__list">
-                        @foreach($profile->testimonials as $item)
+                        @foreach($testimonials as $item)
                             <div class="testimonials__item">
                                 @php
                                 $user = $item->userProfile;

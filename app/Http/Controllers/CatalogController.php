@@ -58,6 +58,7 @@ class CatalogController extends Controller {
         array_push( $arrServices, [ 'title' => $item->block_title, 'services' => $servicesList ] );
 
         return view( 'catalog.profile', [
+            'testimonials' => '',
             'heading'    => $profile->name,
             'section_id' => $profile->section,
             'profile'    => $profile->load( [ 'attachment', 'prices', 'stations' ] ),
