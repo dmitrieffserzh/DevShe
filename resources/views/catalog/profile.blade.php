@@ -201,7 +201,7 @@
                    data-modal="add-testimonial">Оставить отзыв</a>
             </div>
             @endif
-            @if($profile->testimonials)
+            @if(count($profile->testimonials) > 0)
                 <div class="testimonials">
                     <h2 class="testimonials__title">Отзывы</h2>
                     <div class="testimonials__list">
