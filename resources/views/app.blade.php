@@ -32,12 +32,12 @@
                 <img src="/images/logo_dark.png" alt="">
             </a>
             <div class="header-main__search">
-                <div class="header-search">
+                <form class="header-search" action="{{ route('search') }}">
                     <input type="text" name="search" placeholder="Имя или id"
                            class="header-search__input" autocomplete="off">
-                    <button class="header-search__button"></button>
+                    <button type="submit" class="header-search__button"></button>
                     <div class="header-search__result"></div>
-                </div>
+                </form>
                 <a href="{{ route('search.metro') }}" class="header-search__link"><soan class="text">Поиск по </soan><span></span></a>
             </div>
             <div class="header-main__buttons">
@@ -59,8 +59,12 @@
 </header>
 <main class="main">
     <div class="main__container">
+
+
         @if (Request::path() == '/' && $slides)
             @include('components.main.main-slider',['slides' => $slides])
+        @else
+            @yield('breadcrumbs')
         @endif
         @hasSection('h1')
             <div class="main__heading">
@@ -96,6 +100,7 @@
     <div class="main__container {{ Request::segment(1) == 'profile' ? 'main__container--with-aside' : ''}}">
         @yield('content')
     </div>
+    @yield('related')
 </main>
 <footer class="footer">
     <div class="footer__container">
@@ -139,19 +144,7 @@
     @include('auth.register')
     @include('auth.login')
 @endif
-
-<div class="modal" data-modal="add-testimonial">
-    <svg class="modal__close js-modal-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path
-                d="M23.954 21.03l-9.184-9.095 9.092-9.174-1.832-1.807-9.09 9.179-9.176-9.088-1.81 1.81 9.186 9.105-9.095 9.184 1.81 1.81 9.112-9.192 9.18 9.1z"
-                fill="#D1D1D1"></path>
-    </svg>
-    <p class="modal__title">Оставить отзыв</p>
-    <p class="modal__subtitle"></p>
-    <textarea name="" id="" cols="30" rows="10"></textarea>
-</div>
-
-
+@yield('modal')
 <div class="overlay" id="overlay-modal"></div>
 <script>
     const sections = {!! json_encode(\App\Helpers::getGirlSectionUrl()) !!};

@@ -11,9 +11,7 @@ class PageController extends Controller {
     }
 
     public function showPage( $slug ) {
-
-        $page = Page::where( 'active', '=', 1 )->where( 'slug', $slug )->first();
-
-        return view( 'pages.page', [ 'page' => $page, 'heading' => $page->title ] );
+        $page = Page::where( 'active', '=', 1 )->where( 'slug', $slug )->firstOrFail();
+        return view( 'pages.page', [ 'page' => $page, 'heading' => $page->title ]);
     }
 }

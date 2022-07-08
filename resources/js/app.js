@@ -229,11 +229,11 @@ let searchResult = document.querySelector('.header-search__result');
 if (searchInput) {
     let timeout;
     searchInput.addEventListener('keyup', function (event) {
+        searchResult.innerHTML = '';
 
         if (timeout) {
             clearTimeout(timeout);
         }
-        searchResult.innerHTML = '';
 
         timeout = setTimeout(() => {
             axios({
@@ -243,7 +243,12 @@ if (searchInput) {
             }).then((response) => {
                 if (response.data !== '') {
                     for (let i = 0; i <= response.data.length; i++) {
-                        searchResult.insertAdjacentHTML('afterbegin', '' + '<a href="/' + sections[response.data[i].section] + '/' + response.data[i].slug + '" class="item">' + '<span>' + response.data[i].name + '</span>' + '<span>id: ' + response.data[i].id + '</span>' + '</a>');
+                        if (i < 5) {
+                            searchResult.insertAdjacentHTML('afterbegin', '' + '<a href="/' + sections[response.data[i].section] + '/' + response.data[i].slug + '" class="item"><span>' + response.data[i].name + '</span><span>id: ' + response.data[i].id + '</span></a>');
+                        } else {
+                            searchResult.insertAdjacentHTML('beforeend', '' + '<a href="/search?search=' + searchInput.value + '" class="item"><span>Смотреть все результаты</span></a>');
+                            break;
+                        }
                     }
                 } else {
                     searchResult.insertAdjacentHTML('afterbegin', '' + '<div class="item">По вашму запросу ничего не найдено</div>');
@@ -251,7 +256,7 @@ if (searchInput) {
             }).catch((error) => {
                 console.log(error);
             });
-        }, 1500);
+        }, 500);
     });
 }
 
@@ -290,14 +295,14 @@ if (stations) {
         stations[i].addEventListener('click', () => {
             axios({
                 method: 'POST',
-                url: '/search/metro',
+                url: '/search-metro',
                 data: {station: stations[i].textContent}
             }).then((response) => {
                 if (response.data.slug != '') {
                     modal.querySelector('.modal__title').innerHTML = response.data.name;
                     modal.querySelector('.modal__content').innerHTML = '' +
                         '<p style="padding: 0 0 1rem">Найдено девушек: ' + response.data.count + '</p>' +
-                        '<a href="/search/metro/devushki-na-stancii-metro-' + response.data.slug + '" class="button">Показать</a>';
+                        '<a href="/search-metro/devushki-na-stancii-metro-' + response.data.slug + '" class="button">Показать</a>';
                     modal.classList.add('active');
                     overlay.classList.add('active');
                 } else {
@@ -401,14 +406,6 @@ if (sortableThumbs && sortableThumbs.children.length > 0) {
             animation: 500,
             filter: '.delete',
             onFilter: function () {
-
-                // ХЗЗЗЗЗЗЗЗЗЗЗЗЗ
-                // let deleteButtons = document.querySelectorAll('.delete');
-                // for (let i = 0; deleteButtons.length > i; i++) {
-                //     deleteButtons[i].addEventListener('click', () => {
-                //         deleteButtons[i].parentElement.remove();
-                //     })
-                // }
                 deleteFile();
             },
             onEnd: function (event) {
@@ -457,6 +454,35 @@ if (profileForm) {
             modalSave.classList.add('active');
             overlay.classList.add('active');
 
+            //console.log(response);
+        });
+    })
+}
+
+
+// ADD TESTIMONIAL
+let testimonialForm = document.getElementById('testimonial-form');
+let modalAddTestimonial = document.querySelector('.modal[data-modal="add-testimonial"]');
+if (testimonialForm) {
+    testimonialForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let data = new FormData(testimonialForm);
+
+        axios({
+            method: "POST",
+            url: '/add-testimonial',
+            data: data,
+        }).then((response) => {
+            modalAddTestimonial.innerHTML = '';
+
+            modalAddTestimonial.querySelector('.modal__content').innerHTML = '' +
+                '<div class="modal__alert">' + response.data.success + '</div>';
+            modalAddTestimonial.classList.add('active');
+            overlay.classList.add('active');
+            setTimeout(()=> {
+                window.location.reload();
+            }, 3000)
             //console.log(response);
         });
     })

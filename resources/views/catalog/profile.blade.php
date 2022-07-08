@@ -1,5 +1,5 @@
 @extends('app')
-
+{{--@section('breadcrumbs', Diglactic\Breadcrumbs\Breadcrumbs::render('catalog.profile', $heading, $section_id))--}}
 @section('h1', $heading ?? 'Профиль')
 @section('profile-meta')
     <div class="profile-meta">
@@ -53,7 +53,8 @@
                 <div class="thumbs swiper">
                     <div class="swiper-wrapper">
                         @foreach($profile->attachment as $image)
-                            <div class="thumbs__item swiper-slide" style="background-image: url('{{$image->url}}#t=0.5 ')">
+                            <div class="thumbs__item swiper-slide"
+                                 style="background-image: url('{{$image->url}}#t=0.5 ')">
                             </div>
                         @endforeach
                     </div>
@@ -194,15 +195,68 @@
                     </div>
                 @endforeach
             </div>
+            @if(Auth::check() && Auth::user()->user_type == 0)
             <div class="add-testimonial">
                 <a href="#" class="button js-open-modal"
                    data-modal="add-testimonial">Оставить отзыв</a>
             </div>
+            @endif
+            @if($profile->testimonials)
+                <div class="testimonials">
+                    <h2 class="testimonials__title">Отзывы</h2>
+                    <div class="testimonials__list">
+                        @foreach($profile->testimonials as $item)
+                            <div class="testimonials__item">
+                                @php
+                                $user = $item->userProfile;
+                                $image = $user->attachment()->first();
+
+                                if($image) {
+									$url = $image->url();
+                                } else {
+                                     $url = '/images/no-avatar.jpg';
+                                }
+                                @endphp
+                                <div class="testimonials__item-avatar" style="background-image: url('{{$url}}')">
+                                </div>
+                                <div class="testimonials__item-content">
+                                    <h3 class="testimonials__item-name">
+                                        {{ $item->userProfile->name }}
+                                    </h3>
+                                    {{$item->content}}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 
-    @if(isset($related))
-        @include('components.main.slider_profiles', ['id'=> 'new-girls', 'title'=> 'Похожие девушки', 'items' => $related])
-    @endif
 
+        @section('related')
+            @if(isset($related))
+                @include('components.main.slider_profiles', ['id'=> 'new-girls', 'title'=> 'Похожие девушки', 'items' => $related])
+            @endif
+        @stop
+
+
+@endsection
+@section('modal')
+    <div class="modal" data-modal="add-testimonial">
+        <svg class="modal__close js-modal-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                d="M23.954 21.03l-9.184-9.095 9.092-9.174-1.832-1.807-9.09 9.179-9.176-9.088-1.81 1.81 9.186 9.105-9.095 9.184 1.81 1.81 9.112-9.192 9.18 9.1z"
+                fill="#D1D1D1"></path>
+        </svg>
+        <p class="modal__title">Оставить отзыв</p>
+        <p class="modal__subtitle"></p>
+        <div class="modal__content">
+            <form id="testimonial-form" class="testimonial-form">
+                <input type="hidden" name="testimonial[profile_id]" value="{{ $profile->id }}">
+                <textarea name="testimonial[content]" id="" rows="10"></textarea>
+                <button type="submit" class="button">Отправить</button>
+            </form>
+        </div>
+    </div>
 @endsection

@@ -67,4 +67,7 @@ class Profile extends Model {
     public function prices() {
         return $this->hasOne( Price::class);
     }
+    public function testimonials() {
+        return $this->hasMany( Testimonial::class );
+    }
 }

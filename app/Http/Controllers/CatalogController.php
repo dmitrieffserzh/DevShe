@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CatalogController extends Controller {
@@ -13,7 +14,7 @@ class CatalogController extends Controller {
 
     function showProfileCatalog( $section, $slug ) {
 
-        $profile = Profile::where( 'active', 1 )->where('slug', $slug)->first();
+        $profile = Profile::where( 'active', 1 )->where( 'slug', $slug )->first();
 
         if ( $profile['section'] != array_search( $section, Helpers::getGirlSectionUrl() ) ) {
             abort( 404 );
@@ -57,78 +58,107 @@ class CatalogController extends Controller {
         array_push( $arrServices, [ 'title' => $item->block_title, 'services' => $servicesList ] );
 
         return view( 'catalog.profile', [
-            'heading'  => $profile->name,
-            'profile'  => $profile->load( [ 'attachment', 'prices', 'stations' ] ),
-            'related'  => $related->load( 'attachment' ),
-            'services' => $arrServices
+            'heading'    => $profile->name,
+            'section_id' => $profile->section,
+            'profile'    => $profile->load( [ 'attachment', 'prices', 'stations' ] ),
+            'related'    => $related->load( 'attachment' ),
+            'services'   => $arrServices
         ] );
     }
 
     function showEliteCatalog( Request $request ) {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 1 )->paginate( 16 );
+        $section_id = 1;
+        $profiles   = Profile::where( 'active', 1 )->where( 'section', $section_id )->paginate( 16 );
 
         if ( $request->ajax() ) {
             return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
         }
 
         return view( 'catalog.profile_list', [
-            'profiles' => $profiles,
-            'heading'  => 'Элитные девушки Москвы'
+            'profiles'   => $profiles,
+            'section_id' => $section_id,
+            'heading'    => 'Элитные девушки Москвы',
+            'title'      => 'Элитные'
         ] );
     }
 
     function showIndividualsCatalog( Request $request ) {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 2 )->paginate( 16 );
+        $section_id = 2;
+        $profiles   = Profile::where( 'active', 1 )->where( 'section', $section_id )->paginate( 16 );
 
         if ( $request->ajax() ) {
             return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
         }
 
         return view( 'catalog.profile_list', [
-            'profiles' => $profiles,
-            'heading'  => 'Девшки индивидуалки Москвы'
+            'profiles'   => $profiles,
+            'section_id' => $section_id,
+            'heading'    => 'Девшки индивидуалки Москвы',
+            'title'      => 'Индивидуалки'
         ] );
     }
 
 
     function showCheapCatalog( Request $request ) {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 3 )->paginate( 16 );
+        $section_id = 3;
+        $profiles   = Profile::where( 'active', 1 )->where( 'section', $section_id )->paginate( 16 );
 
         if ( $request->ajax() ) {
             return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
         }
 
         return view( 'catalog.profile_list', [
-            'profiles' => $profiles,
-            'heading'  => 'Дешевые девушки Москвы'
+            'profiles'   => $profiles,
+            'section_id' => $section_id,
+            'heading'    => 'Дешевые девушки Москвы',
+            'title'      => 'Дешевые'
         ] );
     }
 
 
     function showBdsmCatalog( Request $request ) {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 4 )->paginate( 16 );
+        $section_id = 4;
+        $profiles   = Profile::where( 'active', 1 )->where( 'section', $section_id )->paginate( 16 );
 
         if ( $request->ajax() ) {
             return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
         }
 
         return view( 'catalog.profile_list', [
-            'profiles' => $profiles,
-            'heading'  => 'БДСМ девушки Москвы'
+            'profiles'   => $profiles,
+            'section_id' => $section_id,
+            'heading'    => 'БДСМ девушки Москвы',
+            'title'      => 'БДСМ'
         ] );
     }
 
 
     function showMasseusesCatalog( Request $request ) {
-        $profiles = Profile::where( 'active', 1 )->where( 'section', 5 )->paginate( 16 );
+        $section_id = 5;
+        $profiles   = Profile::where( 'active', 1 )->where( 'section', $section_id )->paginate( 16 );
 
         if ( $request->ajax() ) {
             return view( 'components.profiles.item_list_ajax', [ 'profiles' => $profiles ] );
         }
 
         return view( 'catalog.profile_list', [
-            'profiles' => $profiles,
-            'heading'  => 'Массажистки Москвы'
+            'profiles'   => $profiles,
+            'section_id' => $section_id,
+            'heading'    => 'Массажистки Москвы',
+            'title'      => 'Массажистки'
         ] );
+    }
+
+    function addTestimonial( Request $request ) {
+        if ( $request->ajax() && Auth::check() ) {
+
+            $profile = Profile::where( 'id', $request->testimonial['profile_id'] )->with('testimonials')->first();
+           // dd($profile);
+
+
+            $profile->testimonials()->create( array_merge( $request->testimonial, [ 'user_id' => Auth::user()->id ] ) );
+
+            return response()->json( [ 'success' => 'Отзыв успешно добавлен!' ] );
+        }
     }
 }

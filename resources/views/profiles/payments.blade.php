@@ -1,5 +1,5 @@
 @extends('app')
-
+@section('breadcrumbs', Diglactic\Breadcrumbs\Breadcrumbs::render('profile.payments', $heading))
 @section('h1', $heading ?? 'Личные данные')
 
 @section('content')

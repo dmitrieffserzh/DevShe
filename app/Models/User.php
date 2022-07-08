@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Orchid\Platform\Models\User as Authenticatable;
 use Orchid\Attachment\Attachable;
+use Orchid\Screen\AsSource;
 
 class User extends Authenticatable {
+    use HasFactory;
     use Attachable;
+    use AsSource;
 
     protected $table = 'users';
 

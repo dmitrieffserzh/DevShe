@@ -15,14 +15,19 @@ class Testimonial extends Model
 
     protected $fillable = [
         'active',
-        'sort',
-        'image',
-        'title',
-        'description',
-        'button_link',
-        'button_text'
+        'profile_id',
+        'user_id',
+        'content',
     ];
 
     protected $allowedFilters = ['id', 'title', 'active'];
     protected $allowedSorts = ['id', 'active', 'sort'];
+
+    // RELATIONS
+    public function profile() {
+        return $this->belongsTo( Profile::class );
+    }
+    public function userProfile() {
+        return $this->belongsTo( User::class, 'user_id', 'id');
+    }
 }

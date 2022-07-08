@@ -137,6 +137,7 @@ class Helpers {
         ];
     }
 
+
     public static function getGirlSectionUrlValue( $key ) {
         $values = self::getGirlSectionUrl();
 

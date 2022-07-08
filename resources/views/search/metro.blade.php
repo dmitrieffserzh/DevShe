@@ -1,5 +1,5 @@
 @extends('app')
-
+@section('breadcrumbs', Diglactic\Breadcrumbs\Breadcrumbs::render('search.metro'))
 @section('h1', $heading ?? 'Личные данные')
 
 @section('content')
