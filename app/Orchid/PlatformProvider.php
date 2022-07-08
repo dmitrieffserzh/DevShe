@@ -50,6 +50,9 @@ class PlatformProvider extends OrchidServiceProvider {
             Menu::make( 'Статьи' )
                 ->icon( 'list' )
                 ->route( 'platform.posts' ),
+            Menu::make( 'Отзывы' )
+                ->icon( 'picture' )
+                ->route( 'platform.testimonials' ),
             Menu::make( 'Слайдер на главной' )
                 ->icon( 'picture' )
                 ->route( 'platform.slides' ),

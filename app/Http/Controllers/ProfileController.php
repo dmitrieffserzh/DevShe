@@ -132,11 +132,12 @@ class ProfileController extends Controller
                 $profile->stations()->sync($request->profile['stations']);
             }
 
-            if($profile->prices) {
+            if($profile->prices()->exists()) {
                 $profile->prices()->update($request->profile['prices']);
             } else {
                 $profile->prices()->create($request->profile['prices']);
             }
+            
 
             $collection = collect($request->profile['services']);
             $filteredServices = $collection->filter(function ($value) {

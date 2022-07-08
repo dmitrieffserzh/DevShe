@@ -141,7 +141,7 @@ if (logonForm) {
     logonForm.addEventListener('submit', function (event) {
         event.preventDefault();
         axios({
-            method: 'POST', url: 'login', data: new FormData(logonForm)
+            method: 'POST', url: '/login', data: new FormData(logonForm)
         }).then((response) => {
             document.querySelector('.form-login__alert').innerText = '';
             document.querySelector('.form-login__alert').innerText = response.data.message;
@@ -165,7 +165,7 @@ if (registerForm) {
     registerForm.addEventListener('submit', function (event) {
         event.preventDefault();
         axios({
-            method: 'POST', url: 'register', data: new FormData(registerForm)
+            method: 'POST', url: '/register', data: new FormData(registerForm)
         }).then((response) => {
             document.querySelector('.form-register__alert').innerText = '';
             document.querySelector('.form-register__alert').innerText = response.data.message;
@@ -439,6 +439,7 @@ if (sortableThumbs && sortableThumbs.children.length > 0) {
 
 // SAVE PROFILE
 let profileForm = document.getElementById('profile-form');
+let modalSave = document.querySelector('.modal[data-modal="profile-save"]');
 if (profileForm) {
     profileForm.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -451,7 +452,12 @@ if (profileForm) {
             data: data,
         }).then((response) => {
 
-            console.log(response);
+            modalSave.querySelector('.modal__content').innerHTML = '' +
+                '<div class="modal__alert">' + response.data.success + '</div>';
+            modalSave.classList.add('active');
+            overlay.classList.add('active');
+
+            //console.log(response);
         });
     })
 }

@@ -3121,7 +3121,7 @@ if (logonForm) {
     event.preventDefault();
     axios({
       method: 'POST',
-      url: 'login',
+      url: '/login',
       data: new FormData(logonForm)
     }).then(function (response) {
       document.querySelector('.form-login__alert').innerText = '';
@@ -3147,7 +3147,7 @@ if (registerForm) {
     event.preventDefault();
     axios({
       method: 'POST',
-      url: 'register',
+      url: '/register',
       data: new FormData(registerForm)
     }).then(function (response) {
       document.querySelector('.form-register__alert').innerText = '';
@@ -3446,6 +3446,7 @@ if (sortableThumbs && sortableThumbs.children.length > 0) {
 
 
 var profileForm = document.getElementById('profile-form');
+var modalSave = document.querySelector('.modal[data-modal="profile-save"]');
 
 if (profileForm) {
   profileForm.addEventListener('submit', function (event) {
@@ -3456,7 +3457,9 @@ if (profileForm) {
       url: '/profile/save',
       data: data
     }).then(function (response) {
-      console.log(response);
+      modalSave.querySelector('.modal__content').innerHTML = '' + '<div class="modal__alert">' + response.data.success + '</div>';
+      modalSave.classList.add('active');
+      overlay.classList.add('active'); //console.log(response);
     });
   });
 }

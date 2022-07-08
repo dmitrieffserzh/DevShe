@@ -189,14 +189,14 @@
                                 <div class="rate__name">1 час</div>
                                 <div class="rate__value">
                                     <input type="text" name="profile[prices][day_one_hour_in]"
-                                           value="{{ $profile->prices->day_one_hour_in??'' }}">
+                                           value="{{ $profile->prices->day_one_hour_in ?? '' }}">
                                 </div>
                             </div>
                             <div class="rate__block">
                                 <div class="rate__name">2 часа</div>
                                 <div class="rate__value">
                                     <input type="text" name="profile[prices][day_two_hours_in]"
-                                           value="{{ $profile->prices->day_two_hours_in??'' }}">
+                                           value="{{ $profile->prices->day_two_hours_in ??' ' }}">
                                 </div>
                             </div>
                         </div>
@@ -205,15 +205,15 @@
                             <div class="rate__block">
                                 <div class="rate__name">1 час</div>
                                 <div class="rate__value">
-                                    <input type="text" name="profile[prices][day_one_hour_in]"
-                                           value="{{ $profile->prices->day_one_hour_out??'' }}">
+                                    <input type="text" name="profile[prices][day_one_hour_out]"
+                                           value="{{ $profile->prices->day_one_hour_out ?? '' }}">
                                 </div>
                             </div>
                             <div class="rate__block">
                                 <div class="rate__name">2 часа</div>
                                 <div class="rate__value">
                                     <input type="text" name="profile[prices][day_two_hours_out]"
-                                           value="{{ $profile->prices->day_two_hours_out??'' }}">
+                                           value="{{ $profile->prices->day_two_hours_out ?? '' }}">
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,7 @@
                                 <div class="rate__name">1 час</div>
                                 <div class="rate__value">
                                     <input type="text" name="profile[prices][night_one_hour_in]"
-                                           value="{{$profile->prices->night_one_hour_in??''}}">
+                                           value="{{$profile->prices->night_one_hour_in ?? ''}}">
                                 </div>
                             </div>
                             <div class="rate__block">
@@ -306,4 +306,13 @@
             </div>
         </div>
     </form>
+    <div class="modal" data-modal="profile-save">
+        <svg class="modal__close js-modal-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+                    d="M23.954 21.03l-9.184-9.095 9.092-9.174-1.832-1.807-9.09 9.179-9.176-9.088-1.81 1.81 9.186 9.105-9.095 9.184 1.81 1.81 9.112-9.192 9.18 9.1z"
+                    fill="#D1D1D1"></path>
+        </svg>
+        <p class="modal__title"></p>
+        <div class="modal__content"></div>
+    </div>
 @endsection

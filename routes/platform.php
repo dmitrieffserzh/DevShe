@@ -24,6 +24,8 @@ use App\Orchid\Screens\Slider\SliderEditScreen;
 use App\Orchid\Screens\Slider\SliderListScreen;
 use App\Orchid\Screens\Page\PageEditScreen;
 use App\Orchid\Screens\Page\PageListScreen;
+use App\Orchid\Screens\Testimonial\TestimonialEditScreen;
+use App\Orchid\Screens\Testimonial\TestimonialListScreen;
 
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -151,6 +153,35 @@ Route::screen( 'pages', PageListScreen::class )
              ->parent( 'platform.index' )
              ->push( 'Страницы' );
      } );
+
+// TESTIMONIALS ============================================================================================================ //
+// MAIN > TESTIMONIALS > EDIT
+Route::screen( 'testimonials/{id}/edit', TestimonialEditScreen::class )
+    ->name( 'platform.testimonials.edit' )
+    ->breadcrumbs( function ( Trail $trail, $profile ) {
+        return $trail
+            ->parent( 'platform.testimonials' )
+            ->push( __( 'Edit' ), route( 'platform.testimonials.edit', $profile ) );
+    } );
+
+// MAIN > TESTIMONIALS > CREATE
+Route::screen( 'testimonials/create', TestimonialEditScreen::class )
+    ->name( 'platform.testimonials.create' )
+    ->breadcrumbs( function ( Trail $trail ) {
+        return $trail
+            ->parent( 'platform.testimonials' )
+            ->push( __( 'Create' ), route( 'platform.testimonials.create' ) );
+    } );
+
+// MAIN > TESTIMONIALS
+Route::screen( 'testimonials', TestimonialListScreen::class )
+    ->name( 'platform.testimonials' )
+    ->breadcrumbs( function ( Trail $trail ) {
+        return $trail
+            ->parent( 'platform.index' )
+            ->push( 'Отзывы' );
+    } );
+
 
 // SLIDER =========================================================================================================== //
 // MAIN > SLIDER > EDIT

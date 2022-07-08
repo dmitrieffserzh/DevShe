@@ -52,6 +52,16 @@
     &__content {
         margin: 2rem 0 0;
     }
+    &__alert {
+        display: inline-block;
+        padding: 1.4rem 0 1.5rem 2rem;
+        margin: -2rem 0 0;
+        font-size: 15px;
+        background-image: url('/images/check_icon.png');
+        background-repeat: no-repeat;
+        background-size: 1.5rem;
+        background-position: left calc(50% - 4px);
+    }
     &__close {
         width: 15px;
         height: 15px;

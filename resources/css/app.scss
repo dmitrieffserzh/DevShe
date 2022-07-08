@@ -206,6 +206,9 @@ body {
           border: 1px Solid #229ED9;
           background: transparent;
           color: #229ED9;
+          &:hover {
+            background: transparent;
+          }
 
           & span.icon {
             background-image: url('/images/user_icon.png');
@@ -219,6 +222,9 @@ body {
           border: 1px Solid #229ED9;
           background: transparent;
           color: #229ED9;
+          &:hover {
+            background: transparent;
+          }
 
           & span.icon {
             background-image: url('/images/logout_blue_icon.png');
@@ -1068,6 +1074,10 @@ body {
   font-size: .85rem;
   color: #fff;
   text-decoration: none;
+  transition: background-color .3s Linear;
+  &:hover {
+    background: #e83a3a;
+  }
 }
 
 .view-all,

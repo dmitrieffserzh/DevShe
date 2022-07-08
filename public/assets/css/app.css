@@ -226,6 +226,16 @@ table {
 .modal__content {
   margin: 2rem 0 0;
 }
+.modal__alert {
+  display: inline-block;
+  padding: 1.4rem 0 1.5rem 2rem;
+  margin: -2rem 0 0;
+  font-size: 15px;
+  background-image: url("/images/check_icon.png");
+  background-repeat: no-repeat;
+  background-size: 1.5rem;
+  background-position: left calc(50% - 4px);
+}
 .modal__close {
   width: 15px;
   height: 15px;
@@ -1074,6 +1084,9 @@ body {
   background: transparent;
   color: #229ED9;
 }
+.header-main__buttons .button--login:hover {
+  background: transparent;
+}
 .header-main__buttons .button--login span.icon {
   background-image: url("/images/user_icon.png");
   background-repeat: no-repeat;
@@ -1084,6 +1097,9 @@ body {
   border: 1px Solid #229ED9;
   background: transparent;
   color: #229ED9;
+}
+.header-main__buttons .button--logout:hover {
+  background: transparent;
 }
 .header-main__buttons .button--logout span.icon {
   background-image: url("/images/logout_blue_icon.png");
@@ -1744,6 +1760,10 @@ body {
   font-size: 0.85rem;
   color: #fff;
   text-decoration: none;
+  transition: background-color 0.3s Linear;
+}
+.button:hover {
+  background: #e83a3a;
 }
 
 .view-all,

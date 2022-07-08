@@ -19,7 +19,7 @@ use App\Http\Controllers\PageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+require __DIR__.'/auth.php';
 Route::get( '/', [ MainController::class, 'index' ] )->name( 'main' );
 
 // SEARCH
@@ -59,7 +59,7 @@ Route::get( '/{section}/{slug}', [ CatalogController::class, 'showProfileCatalog
 //Route::get('/regProfile', [MainController::class, 'regenerateURL'])->name('regProfile');
 //Route::get('/regMetro', [MainController::class, 'regMetroURL'])->name('regMetro');
 
-require __DIR__.'/auth.php';
+
 // PAGES
 Route::get('/{slug}', [PageController::class, 'showPage'])->name('page');
 
