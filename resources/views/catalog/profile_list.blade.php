@@ -1,5 +1,5 @@
 @extends('app')
-{{--@section('breadcrumbs', Diglactic\Breadcrumbs\Breadcrumbs::render('catalog.'.Helpers::getGirlSectionUrlValue($section_id), $section_id, $title))--}}
+@section('breadcrumbs', Diglactic\Breadcrumbs\Breadcrumbs::render('catalog.'.Helpers::getGirlSectionUrlValue($section_id), $title))
 @section('h1', $heading ?? 'Каталог девушек')
 
 @section('content')

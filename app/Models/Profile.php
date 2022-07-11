@@ -36,7 +36,9 @@ class Profile extends Model {
         'haircut',
         'haircolor',
         'description',
-        'balance',
+        'rate_top',
+        'rate_new',
+        'rate_mark',
     ];
 
     protected $hidden = [];

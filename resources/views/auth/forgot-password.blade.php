@@ -1,36 +1,17 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
-
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-        </div>
-
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
-
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+<div class="modal" data-modal="forgot-password">
+    <svg class="modal__close js-modal-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-1.832-1.807-9.09 9.179-9.176-9.088-1.81 1.81 9.186 9.105-9.095 9.184 1.81 1.81 9.112-9.192 9.18 9.1z"
+                fill="#D1D1D1"></path>
+    </svg>
+    <p class="modal__title">Восстановить пароль</p>
+    <p class="modal__subtitle">Если Вы забыли пароль, введите E-mail. Контрольная строка смены пароля, а также ваши регистрационные данные, будут высланы вам по E-mail</p>
+    <form class="form-login" method="POST" action="">
+        <div class="form-login__alert"></div>
+        @csrf
+        <label for="">
+            <input class="form-login__input icon icon--email" type="text" name="email"  value="{{ old('email')}}" placeholder="E-mail" required
+                   autofocus>
+        </label>
+        <button class="form-login__button" type="submit">Восстановить</button>
+    </form>
+</div>

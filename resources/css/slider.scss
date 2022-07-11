@@ -1,0 +1,81 @@
+.min-max-slider {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5px;
+  padding: 2px;
+  background: #FFF;
+  display: none;
+  background: #fff;
+}
+
+.min-max-slider > label {
+  display: none;
+}
+
+span.value {
+  height: 1em;
+  font-size: .9rem;
+  display: inline-block;
+}
+
+span.value.lower::before {
+  content: "     ";
+  display: inline-block;
+}
+
+span.value.upper::before {
+  content: "     ";
+  display: inline-block;
+  margin-left: 2rem;
+}
+
+.min-max-slider > .legend {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 35px !important;
+}
+
+.min-max-slider > .legend > * {
+  font-size: 12px !important;
+  opacity: 0.22;
+}
+
+.min-max-slider > input {
+  cursor: pointer;
+  position: absolute;
+}
+
+/* webkit specific styling */
+.min-max-slider > input {
+  -webkit-appearance: none;
+  outline: none !important;
+  background: transparent;
+  background-image: linear-gradient(to bottom, transparent 0%, transparent 30%, #5996f8 30%, #5996f8 60%, transparent 60%, transparent 100%);
+}
+
+.min-max-slider > input::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 18px; /* Set a specific slider handle width */
+  height: 18px; /* Slider handle height */
+  background: #fff; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border: 2px solid #4a8fff;
+  border-radius: 100%;
+}
+
+.min-max-slider > input::-webkit-slider-runnable-track {
+  cursor: pointer;
+}
+
+.lower {
+  position: absolute;
+  left: 0;
+  top: 3px;
+}
+.upper {
+  position: absolute;
+  right: 0;
+  top: 3px;
+}

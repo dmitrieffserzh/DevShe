@@ -146,7 +146,6 @@ class Helpers {
 
     public static function getGirlAgeValue( $key ) {
         $values = self::getGirlAge();
-
         return $values[ $key ];
     }
 

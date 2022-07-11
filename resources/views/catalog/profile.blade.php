@@ -1,5 +1,5 @@
 @extends('app')
-{{--@section('breadcrumbs', Diglactic\Breadcrumbs\Breadcrumbs::render('catalog.profile', $heading, $section_id))--}}
+@section('breadcrumbs', Diglactic\Breadcrumbs\Breadcrumbs::render('catalog.profile', $profile))
 @section('h1', $heading ?? 'Профиль')
 @section('profile-meta')
     <div class="profile-meta">
@@ -17,7 +17,7 @@
                 <div class="images swiper">
                     <div class="swiper-wrapper">
                         @foreach($profile->attachment as $image)
-                            <div class="images__item swiper-slide">
+                            <div class="images__item swiper-slide @if($profile->section == 1) wtmrk @endif">
                                 @if($image->extension == 'mp4')
                                     <video id="video_id{{$image->id}}" width="100%" height="auto">
                                         {{--                                        <source src=”http://techslides.com/demos/sample-videos/small.ogv” type=video/ogg>--}}

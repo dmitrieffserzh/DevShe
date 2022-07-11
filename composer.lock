@@ -2265,16 +2265,16 @@
         },
         {
             "name": "orchid/blade-icons",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orchidsoftware/blade-icons.git",
-                "reference": "209a6b8c25e7545d2bb6eb1765fac0921c853c7a"
+                "reference": "b067f77a831d259976f7761dbef985475804c57b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orchidsoftware/blade-icons/zipball/209a6b8c25e7545d2bb6eb1765fac0921c853c7a",
-                "reference": "209a6b8c25e7545d2bb6eb1765fac0921c853c7a",
+                "url": "https://api.github.com/repos/orchidsoftware/blade-icons/zipball/b067f77a831d259976f7761dbef985475804c57b",
+                "reference": "b067f77a831d259976f7761dbef985475804c57b",
                 "shasum": ""
             },
             "require": {
@@ -2311,15 +2311,15 @@
             "description": "An easy way inline SVG images in your Blade templates.",
             "support": {
                 "issues": "https://github.com/orchidsoftware/blade-icons/issues",
-                "source": "https://github.com/orchidsoftware/blade-icons/tree/2.0.0"
+                "source": "https://github.com/orchidsoftware/blade-icons/tree/2.1.0"
             },
             "funding": [
                 {
-                    "url": "https://www.paypal.me/tabuna/10usd",
-                    "type": "custom"
+                    "url": "https://opencollective.com/orchid",
+                    "type": "open_collective"
                 }
             ],
-            "time": "2022-02-10T09:20:10+00:00"
+            "time": "2022-07-09T12:15:44+00:00"
         },
         {
             "name": "orchid/icons",

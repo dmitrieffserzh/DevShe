@@ -21,12 +21,12 @@ class MainController extends Controller
 
         // GET GIRLS
         $slides = Slider::where('active', '=', 1)->get()->sortBy('sort');
-        $eliteGirls = Profile::where('active', '=', 1)->where('section', '=', 1)->limit(8)->get();
-        $newGirls = Profile::where('active', '=', 1)->limit(20)->get();
-        $individualGirls = Profile::where('active', '=', 1)->where('section', '=', 2)->limit(8)->get();
-        $topGirls = Profile::where('active', '=', 1)->limit(20)->get();
+        $eliteGirls = Profile::where('active', '=', 1)->where('section', '=', 1)->latest('created_at')->limit(8)->get();
+        $newGirls = Profile::where('active', '=', 1)->latest('created_at')->limit(20)->get();
+        $individualGirls = Profile::where('active', '=', 1)->where('section', '=', 2)->limit(8)->get()->sortByDesc('id');
+        $topGirls = Profile::where('active', '=', 1)->limit(20)->get()->sortByDesc('id');
         $cheapGirls = Profile::where('active', '=', 1)->where('section', '=', 3)->with('prices')->limit(8)->get()->sortBy('prices.day_one_hour_in');;
-        $masseusesGirls = Profile::where('section', '=', 5)->limit(4)->get();
+        $masseusesGirls = Profile::where('section', '=', 5)->limit(4)->get()->sortByDesc('id');
 
 
         return view('main', [

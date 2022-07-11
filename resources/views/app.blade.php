@@ -143,6 +143,7 @@
 @if (!Auth::check())
     @include('auth.register')
     @include('auth.login')
+    @include('auth.forgot-password')
 @endif
 @yield('modal')
 <div class="overlay" id="overlay-modal"></div>

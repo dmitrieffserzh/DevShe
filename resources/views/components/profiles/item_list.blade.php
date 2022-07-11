@@ -1,4 +1,23 @@
-<div class="profile-item" style="background-image: url('{{ $item->attachment()->first()->url() }}')">
+@php
+
+$attach = $item->attachment()->first();
+
+    if($attach) {
+        $img = $attach->url();
+    }
+
+@endphp
+
+
+
+<div class="profile-item @if($item->rate_mark) shadow @endif"
+     style="background-image: url('{{ $img ?? '' }}')">
+    @if($item->rate_new)
+    <div class="marks marks--new"></div>
+    @endif
+    @if($item->rate_top)
+    <div class="marks marks--top"></div>
+        @endif
     <div class="profile-item__information information">
         <div class="information__column">
             <div class="information__item">
@@ -9,7 +28,7 @@
         <div class="information__column">
             <div class="information__item">
                 <div class="item">Возраст:</div>
-                <div class="value">{{ Helpers::getGirlAgeValue($item->age) ?? '-'}}</div>
+                <div class="value">{{ $item->age?Helpers::getGirlAgeValue($item->age): '-'}}</div>
             </div>
             <div class="information__item">
                 <div class="item">Рост:</div>
@@ -17,7 +36,7 @@
             </div>
             <div class="information__item">
                 <div class="item">Грудь:</div>
-                <div class="value">{{ Helpers::getGirlBreastValue($item->breast_size) }}</div>
+                <div class="value">{{ $item->breast_size ? Helpers::getGirlBreastValue($item->breast_size) : '-' }}</div>
             </div>
         </div>
         <div class="information__column">
@@ -41,6 +60,8 @@
             </div>
         </div>
     </div>
+        @if($item->section)
     <a href="{{ route('catalog.profile', ['section' => \App\Helpers::getGirlSectionUrlValue($item->section), 'slug' => $item->slug] ) }}"
        class="profile-item__link"></a>
+            @endif
 </div>

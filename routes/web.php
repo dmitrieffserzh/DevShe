@@ -44,6 +44,8 @@ Route::post('profile/upload',                                   [ ProfileControl
 Route::post('profile/delete',                                   [ ProfileController::class, 'deleteFiles' ]             )->name( 'profile.delete' );
 Route::post('profile/sort',                                     [ ProfileController::class, 'sortFiles' ]               )->name( 'profile.sort' );
 Route::post('profile/save',                                     [ ProfileController::class, 'saveProfile' ]             )->name( 'profile.save' );
+Route::get('profile/delete',                                    [ ProfileController::class, 'deleteProfile' ]           )->name( 'profile.delete' );
+Route::get('profile/status',                                    [ ProfileController::class, 'statusProfile' ]           )->name( 'profile.status' );
 
 
 // CATALOG GIRLS
@@ -53,7 +55,8 @@ Route::match(['get', 'post'], 'cheap',                          [ CatalogControl
 Route::match(['get', 'post'], 'bdsm',                           [ CatalogController::class, 'showBdsmCatalog' ]         )->name( 'catalog.bdsm' );
 Route::match(['get', 'post'], 'masseuses',                      [ CatalogController::class, 'showMasseusesCatalog' ]    )->name( 'catalog.masseuses' );
 
-Route::post('add-testimonial',                                  [ CatalogController::class, 'addTestimonial' ]          )->name( 'profile.add-testimonial' );
+Route::post('filter',                                           [ CatalogController::class, 'filter' ] )->name( 'catalog.filter' );
+Route::post('add-testimonial',                                  [ CatalogController::class, 'addTestimonial' ]          )->name( 'catalog.add-testimonial' );
 
 Route::get( '{section}/{slug}',                                 [ CatalogController::class, 'showProfileCatalog' ]      )->name( 'catalog.profile' );
 

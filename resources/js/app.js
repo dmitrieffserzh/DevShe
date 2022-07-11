@@ -7,10 +7,9 @@ import 'swiper/css';
 import 'select2/dist/js/select2.min';
 import Panzoom from '@panzoom/panzoom/dist/panzoom';
 import Sortable from 'sortablejs';
-
+import Inputmask from "inputmask";
 
 window.onload = function () {
-    $('.js-select').select2({width: '100%'});
 
     const main_slider = new Swiper('.main-slider', {
         modules: [Autoplay], autoplay: {
@@ -79,7 +78,74 @@ window.onload = function () {
             swiper: profile_thumbs,
         },
     });
+
+
+    $('.js-select').select2({width: '100%'}).trigger("change");
+
+    $('.js-select-price').on('select2:open', function () {
+        let priceBox = document.getElementById('price');
+        let selectBox = document.querySelector('.select2-container--open');
+
+        if (!selectBox.querySelector('#price')) {
+            let sp = undefined;
+            selectBox.insertBefore(priceBox, sp);
+            priceBox.style.display = 'block';
+            let slider = document.querySelector('.min-max-slider');
+            init(slider);
+        } else {
+            priceBox.style.display = 'block'
+        }
+    })
+    $('.js-select-price').on('select2:close', function () {
+        let priceBox = document.getElementById('price');
+        priceBox.style.display = 'none'
+    });
+
+
+    const formFilter = document.getElementById('filter');
+    if (formFilter) {
+        let inputFilter = formFilter.querySelectorAll('input');
+
+        inputFilter.forEach(function (elem) {
+            elem.addEventListener('input', function () {
+                getResult(formFilter);
+            });
+        });
+    }
+
+    $('.js-select').on('select2:close', function () {
+        getResult(formFilter);
+    })
+
+
+    function getResult(formFilter) {
+        let timeout;
+        let data = new FormData(formFilter);
+        let cont = document.querySelector('.profiles-list');
+
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+
+        timeout = setTimeout(() => {
+            axios({
+                method: "POST",
+                url: '/filter',
+                data: data,
+            }).then((response) => {
+                cont.innerHTML = '';
+                cont.insertAdjacentHTML('beforeend', response.data);
+                //console.log(response);
+            });
+        }, 1500);
+    }
 }
+let phoneInput = document.querySelector('input[name="profile[phone]"]');
+if(phoneInput) {
+    var im = new Inputmask("+7 (999) 999-99-99");
+    im.mask(phoneInput);
+}
+
 
 document.addEventListener('DOMContentLoaded', function () {
     let modalButtons = document.querySelectorAll('.js-open-modal'), overlay = document.querySelector('#overlay-modal'),
@@ -93,7 +159,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
             modalElem.classList.add('active');
             overlay.classList.add('active');
-
         });
     });
 
@@ -302,7 +367,7 @@ if (stations) {
                     modal.querySelector('.modal__title').innerHTML = response.data.name;
                     modal.querySelector('.modal__content').innerHTML = '' +
                         '<p style="padding: 0 0 1rem">Найдено девушек: ' + response.data.count + '</p>' +
-                        '<a href="/search-metro/devushki-na-stancii-metro-' + response.data.slug + '" class="button">Показать</a>';
+                        '<a href="/search-metro/devushki-na-stancii-metro-' + response.data.slug + '" class="button" style="display: inline-block">Показать</a>';
                     modal.classList.add('active');
                     overlay.classList.add('active');
                 } else {
@@ -312,7 +377,7 @@ if (stations) {
                     modal.classList.add('active');
                     overlay.classList.add('active');
                 }
-                console.log(response);
+                //console.log(response);
             }).catch((error) => {
                 console.log(error);
             });
@@ -358,7 +423,7 @@ function deleteFile() {
                 data: {delete: {id: deleteButtons[i].parentElement.getAttribute('data-id')}},
             }).then((response) => {
                 deleteButtons[i].parentElement.remove();
-                console.log(response);
+                //console.log(response);
             });
         })
     }
@@ -480,10 +545,124 @@ if (testimonialForm) {
                 '<div class="modal__alert">' + response.data.success + '</div>';
             modalAddTestimonial.classList.add('active');
             overlay.classList.add('active');
-            setTimeout(()=> {
+            setTimeout(() => {
                 window.location.reload();
             }, 3000)
             //console.log(response);
         });
     })
 }
+
+
+var thumbsize = 20;
+
+function draw(slider, splitvalue) {
+
+    /* set function vars */
+    var min = slider.querySelector('.min');
+    var max = slider.querySelector('.max');
+    var lower = slider.querySelector('.lower');
+    var upper = slider.querySelector('.upper');
+    var legend = slider.querySelector('.legend');
+    var thumbsize = parseInt(slider.getAttribute('data-thumbsize'));
+    var rangewidth = parseInt(slider.getAttribute('data-rangewidth'));
+    var rangemin = parseInt(slider.getAttribute('data-rangemin'));
+    var rangemax = parseInt(slider.getAttribute('data-rangemax'));
+
+    /* set min and max attributes */
+    min.setAttribute('max', splitvalue);
+    max.setAttribute('min', splitvalue);
+
+    /* set css */
+    min.style.width = parseInt(thumbsize + ((splitvalue - rangemin) / (rangemax - rangemin)) * (rangewidth - (2 * thumbsize))) + 'px';
+    max.style.width = parseInt(thumbsize + ((rangemax - splitvalue) / (rangemax - rangemin)) * (rangewidth - (2 * thumbsize))) + 'px';
+    min.style.left = '0px';
+    max.style.left = parseInt(min.style.width) + 'px';
+    min.style.top = lower.offsetHeight + 'px';
+    max.style.top = lower.offsetHeight + 'px';
+    legend.style.marginTop = min.offsetHeight + 'px';
+    slider.style.height = (lower.offsetHeight + min.offsetHeight + legend.offsetHeight) + 'px';
+
+    /* correct for 1 off at the end */
+    if (max.value > (rangemax - 1)) max.setAttribute('data-value', rangemax);
+
+    /* write value and labels */
+    max.value = max.getAttribute('data-value');
+    min.value = min.getAttribute('data-value');
+    lower.innerHTML = min.getAttribute('data-value');
+    upper.innerHTML = max.getAttribute('data-value');
+
+}
+
+function init(slider) {
+    /* set function vars */
+    var min = slider.querySelector('.min');
+    var max = slider.querySelector('.max');
+    var rangemin = parseInt(min.getAttribute('min'));
+    var rangemax = parseInt(max.getAttribute('max'));
+    var avgvalue = (rangemin + rangemax) / 2;
+    var legendnum = slider.getAttribute('data-legendnum');
+
+    /* set data-values */
+    min.setAttribute('data-value', rangemin);
+    max.setAttribute('data-value', rangemax);
+
+    /* set data vars */
+    slider.setAttribute('data-rangemin', rangemin);
+    slider.setAttribute('data-rangemax', rangemax);
+    slider.setAttribute('data-thumbsize', thumbsize);
+    slider.setAttribute('data-rangewidth', slider.offsetWidth);
+
+    /* write labels */
+    var lower = document.createElement('span');
+    var upper = document.createElement('span');
+    lower.classList.add('lower', 'value');
+    upper.classList.add('upper', 'value');
+    lower.appendChild(document.createTextNode(rangemin));
+    upper.appendChild(document.createTextNode(rangemax));
+    slider.insertBefore(lower, min.previousElementSibling);
+    slider.insertBefore(upper, min.previousElementSibling);
+
+    /* write legend */
+    var legend = document.createElement('div');
+    legend.classList.add('legend');
+    var legendvalues = [];
+    for (var i = 0; i < legendnum; i++) {
+        legendvalues[i] = document.createElement('div');
+        var val = Math.round(rangemin + (i / (legendnum - 1)) * (rangemax - rangemin));
+        legendvalues[i].appendChild(document.createTextNode(val));
+        legend.appendChild(legendvalues[i]);
+
+    }
+    slider.appendChild(legend);
+
+    /* draw */
+    draw(slider, avgvalue);
+
+    /* events */
+    min.addEventListener("input", function () {
+        update(min);
+    });
+    max.addEventListener("input", function () {
+        update(max);
+    });
+}
+
+function update(el) {
+    /* set function vars */
+    var slider = el.parentElement;
+    var min = slider.querySelector('#min');
+    var max = slider.querySelector('#max');
+    var minvalue = Math.floor(min.value);
+    var maxvalue = Math.floor(max.value);
+
+    /* set inactive values before draw */
+    min.setAttribute('data-value', minvalue);
+    max.setAttribute('data-value', maxvalue);
+
+    var avgvalue = (minvalue + maxvalue) / 2;
+
+    /* draw */
+    draw(slider, avgvalue);
+}
+

@@ -35,6 +35,16 @@
             </div>
         </div>
         <div class="profile-edit__column">
+            <div class="profile-actions">
+            @if($profile->active == 1)
+                <a href="{{ route('profile.status') }}" class="button button--status"><span class="icon"></span><span class="text">Снять с публикации</span></a>
+            @else
+                    <a href="{{ route('profile.status') }}" class="button button--status"><span class="icon"></span><span class="text">Опубликовать</span></a>
+                @endif
+
+
+                <a href="{{ route('profile.delete') }}" class="button button--delete"><span class="icon"></span><span class="text">Удалить анкету</span></a>
+        </div>
             <div class="information">
                 <div class="profile-edit__row">
                     <div class="block__input">
@@ -163,15 +173,15 @@
 
                 <div class="profile-edit__row">
                     <div class="block__input">
-                        <input type="text" name="profile[phone]" value="{{ $profile->phone ?? '' }}" required>
+                        <input type="text" class="input-icon input-icon-ph" name="profile[phone]" value="{{ $profile->phone ?? '' }}" required>
                         <span class="label">Телефон</span>
                     </div>
                     <div class="block__input">
-                        <input type="text" name="profile[whatsapp]" value="{{ $profile->whatsapp ?? '' }}">
+                        <input type="text" class="input-icon input-icon-ws" name="profile[whatsapp]" value="{{ $profile->whatsapp ?? '' }}">
                         <span class="label">WhatsApp</span>
                     </div>
                     <div class="block__input">
-                        <input type="text" name="profile[telegram]" value="{{ $profile->telegram ?? ''}}">
+                        <input type="text" class="input-icon input-icon-tg" name="profile[telegram]" value="{{ $profile->telegram ?? ''}}">
                         <span class="label">Telegram</span>
                     </div>
                 </div>

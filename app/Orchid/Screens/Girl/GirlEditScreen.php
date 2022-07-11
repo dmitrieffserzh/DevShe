@@ -155,6 +155,18 @@ class GirlEditScreen extends Screen
                     ]),
 
                     Group::make([
+                        CheckBox::make('profile.rate_top')
+                            ->placeholder('Top')
+                            ->sendTrueOrFalse(),
+                        CheckBox::make('profile.rate_new')
+                            ->placeholder('New')
+                            ->sendTrueOrFalse(),
+                        CheckBox::make('profile.rate_mark')
+                            ->placeholder('Выделить')
+                            ->sendTrueOrFalse(),
+                    ]),
+
+                    Group::make([
                         Input::make('profile.name')
                             ->title('Имя')
                             ->placeholder('Введите имя')

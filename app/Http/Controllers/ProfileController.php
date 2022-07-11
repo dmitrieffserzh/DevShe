@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Price;
 use App\Models\Profile;
 use App\Models\Rate;
@@ -38,7 +39,7 @@ class ProfileController extends Controller {
             // NEW PROFILE
             $profile          = new Profile;
             $profile->user_id = Auth::user()->id;
-            $profile->active  = 1;
+            $profile->active  = 0;
             $profile->private = 0;
             $profile->name    = $request->profile['name'] ?? Auth::user()->name;
             $profile->save();
@@ -146,6 +147,34 @@ class ProfileController extends Controller {
 
         return response()->json( [ 'success' => 'Хуйнаны!' ] );
     }
+
+
+
+    function statusProfile() {
+        $profile = Profile::where('user_id', Auth::id())->firstOrFail();
+
+        if($profile->active == 1) {
+            $profile->active = 0;
+        } else {
+            $profile->active = 1;
+        }
+        if($profile->update())
+            return Redirect::to('profile');
+
+    }
+
+function deleteProfile() {
+    $profile = Profile::where('user_id', Auth::id())->firstOrFail();
+    if($profile->delete())
+        return Redirect::to('profile');
+}
+
+
+
+
+
+
+
 
 
     public function rates() {
